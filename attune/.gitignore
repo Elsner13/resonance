@@ -46,3 +46,8 @@ next-env.d.ts
 # clerk configuration (can include secrets)
 /.clerk/
 .firecrawl/
+
+# Agent logs (queue.json is committed but logs are not)
+agents/logs/
+agents/creator-output/
+agents/scout-report.md
