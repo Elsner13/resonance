@@ -68,18 +68,20 @@ Blended from two references: zerotoui's rounded tablet/card frame + BJJMM's bold
 |---|---|
 | Frame size | 1080 × 1350px (portrait, better Instagram feed presence) |
 | Outer background | `#080806` (void, full bleed) |
-| Inner card | Rounded rectangle ~960 × 1260px, `#111110`, corner radius 48px |
+| Inner card | Rounded rectangle ~960 × 1260px, `#C10907` (Cosmic Crimson Red), corner radius 48px |
 | Card notches | Semicircle cutouts top center + bottom center, ~40px radius, `#080806` fill |
 | Primary text | `#F2EDD7` (warm cream) |
-| Accent / highlight | `#C8A96E` (gold) |
+| Accent / highlight | `#C8A96E` (gold — pairs heraldically with crimson) |
 | CTA gold | `#D4AF37` |
-| Divider rule | 60px wide, 3px tall, `#C8A96E`, placed below headline |
+| Divider rule | 60px wide, 3px tall, `#F2EDD7` cream (legible on crimson card) |
 | Heading font (editorial) | Cormorant Garamond Italic — concept names, philosophical statements |
 | Heading font (impact word) | DM Sans Bold — ONE key word per headline, `#C8A96E` gold |
 | Body font | DM Sans Regular, `#F2EDD7`, 28-32px |
-| Label / mono font | Geist Mono, `#C8A96E`, 14-16px, all caps, tracked |
-| Brand mark | "ATTUNE" in Geist Mono tracked caps, `#C8A96E`, top left of inner card |
-| Slide number | Top right of inner card, Geist Mono, `#C8A96E`, single digit (e.g. `2`) |
+| Label / mono font | Geist Mono, `#F2EDD7` cream, 14-16px, all caps, tracked |
+| Brand mark | "ATTUNE" in Geist Mono tracked caps, `#F2EDD7` cream, top left of inner card |
+| Slide number | Top right of inner card, Geist Mono, `#F2EDD7` cream, single digit (e.g. `2`) |
+
+**Sampled from:** `nanobanana-output/8bit_pixel_art_style_newsletter_.png` — dominant crimson pixel: R:193 G:9 B:7
 
 ---
 
