@@ -1,99 +1,264 @@
-"use client";
+import { Container } from "@/components/site/Container";
+import { Section, SectionHeader } from "@/components/site/Section";
+import { OfferCard } from "@/components/site/OfferCard";
+import { CTA } from "@/components/site/CTA";
+import { Reveal, StaggerGroup, StaggerItem } from "@/components/motion/Reveal";
+import { HeroHeadline } from "@/components/motion/HeroHeadline";
+import { SignalUnderline } from "@/components/motion/SignalUnderline";
+import { Counter } from "@/components/motion/Counter";
+import { ShineButton } from "@/components/motion/ShineButton";
+import { GridBg } from "@/components/motion/GridBg";
+import { MarqueeRow } from "@/components/motion/MarqueeRow";
+import { Portrait } from "@/components/motion/Portrait";
 
-import { useRef } from "react";
-import { motion, useScroll, useTransform, useSpring } from "framer-motion";
-import { Hero } from "@/components/marketing/Hero";
-import { FoundationsSection } from "@/components/marketing/FoundationsSection";
-import { AttractorSection } from "@/components/marketing/AttractorSection";
-import { AttuneOSSection } from "@/components/marketing/AttuneOSSection";
-import { SignalSection } from "@/components/marketing/SignalSection";
-import { CosmicFooter } from "@/components/marketing/CosmicFooter";
-import { ConstellationCanvas } from "@/components/marketing/ConstellationCanvas";
-import { CommandCenter } from "@/components/marketing/CommandCenter";
-
-const SPRING = { stiffness: 100, damping: 30, restDelta: 0.001 };
-
-function ScrollProgress() {
-  const { scrollYProgress } = useScroll();
-  const scaleX = useSpring(scrollYProgress, {
-    stiffness: 200,
-    damping: 50,
-    restDelta: 0.001,
-  });
-
-  return (
-    <motion.div
-      className="fixed left-0 right-0 top-0 z-60 h-[2px] origin-left bg-attune-green shadow-[0_0_8px_rgba(0,255,148,0.5)]"
-      style={{ scaleX }}
-    />
-  );
-}
-
-function ScrollBackdrop() {
-  const { scrollYProgress } = useScroll();
-  const backgroundColor = useTransform(
-    scrollYProgress,
-    [0, 0.10, 0.25, 0.42, 0.58, 0.75, 0.90, 1.0],
-    [
-      "#050505",
-      "#040907",
-      "#070410",
-      "#040710",
-      "#0a0904",
-      "#050605",
-      "#050505",
-      "#050505",
-    ]
-  );
-
-  return (
-    <motion.div
-      className="pointer-events-none fixed inset-0"
-      style={{ backgroundColor, zIndex: -1 }}
-    />
-  );
-}
-
-export default function UniverseHub() {
-  const heroRef = useRef<HTMLDivElement>(null);
-
-  const { scrollYProgress } = useScroll({
-    target: heroRef,
-    offset: ["start start", "end start"],
-  });
-
-  const scaleRaw = useTransform(scrollYProgress, [0, 1], [1, 3]);
-  const opacityRaw = useTransform(scrollYProgress, [0, 0.75], [1, 0]);
-
-  const warpScale = useSpring(scaleRaw, SPRING);
-  const warpOpacity = useSpring(opacityRaw, SPRING);
-
+export default function HomePage() {
   return (
     <>
-      <ScrollProgress />
-      <ScrollBackdrop />
-      <CommandCenter />
+      {/* ── Hero ── */}
+      <section className="relative overflow-hidden border-b border-rule">
+        <GridBg variant="dots" />
+        <Container className="relative grid items-end gap-12 py-20 md:grid-cols-[1.5fr_1fr] md:gap-16 md:py-28 lg:gap-20">
+          <div>
+            <Reveal as="div" duration={0.55}>
+              <div className="eyebrow eyebrow-signal mb-6">
+                Resonance · by Sam Elsner
+              </div>
+            </Reveal>
+            <HeroHeadline className="balance">
+              Perform when it{" "}
+              <SignalUnderline delay={0.85}>counts</SignalUnderline>.
+            </HeroHeadline>
+            <Reveal
+              as="p"
+              delay={0.5}
+              duration={0.7}
+              className="copy-lg mt-7 max-w-2xl pretty text-ink/85"
+            >
+              A school for athletes and coaches who refuse to be average.
+              Private 1-on-1 mentorship, live coach cohorts, and the Resonance
+              newsletter — built around the way humans actually learn.
+            </Reveal>
+            <Reveal
+              delay={0.7}
+              className="mt-8 flex flex-wrap items-center gap-3"
+            >
+              <ShineButton>
+                <CTA href="/mentorship" variant="primary">
+                  Apply for mentorship
+                </CTA>
+              </ShineButton>
+              <CTA href="/cohort" variant="secondary">
+                See the coach cohort
+              </CTA>
+            </Reveal>
+          </div>
 
-      <main className="noise-overlay relative lg:pl-14">
-        <motion.div
-          className="pointer-events-none fixed inset-0 z-0 will-change-transform"
-          style={{ scale: warpScale, opacity: warpOpacity }}
-        >
-          <ConstellationCanvas />
-        </motion.div>
+          <div className="md:max-w-sm md:justify-self-end">
+            <Portrait
+              src="/sam-headshot.jpg"
+              alt="Sam Elsner — founder of Resonance, two-time NCAA national champion in the discus."
+              ratio="4/5"
+              eyebrow="Sam Elsner"
+              caption="Founder · Coach"
+              index="N° 01"
+              priority
+            />
+          </div>
+        </Container>
+      </section>
 
-        <div ref={heroRef}>
-          <Hero />
+      {/* ── Marquee strip ── */}
+      <div className="border-b border-rule bg-bone py-6">
+        <MarqueeRow
+          speed={70}
+          items={[
+            "Performance",
+            "Consistency",
+            "Coachability",
+            "Game-Ready",
+            "Ecological Lens",
+            "Forged",
+            "Resonance",
+          ]}
+          itemClassName="text-ink/70"
+        />
+      </div>
+
+      {/* ── Programs grid ── */}
+      <Section>
+        <Reveal>
+          <SectionHeader
+            eyebrow="Programs & Writing"
+            title={<>Three rooms. One lens.</>}
+            lede="Each is a different intensity of the same work — becoming the kind of athlete or coach the moment respects."
+            layout="split"
+          />
+        </Reveal>
+
+        <div className="mt-12 grid gap-6 md:gap-8">
+          <Reveal>
+            <OfferCard
+              layout="feature"
+              eyebrow="Flagship · 1-on-1 coaching"
+              status="Applications open"
+              signalAccent
+              title="Resonance Mentorship"
+              description={
+                <>
+                  <p>
+                    My private 1-on-1 coaching service for serious athletes who
+                    want to become more consistent, more coachable, and more
+                    game-ready — so they earn more trust, more minutes, and
+                    better opportunities.
+                  </p>
+                  <p>
+                    Weekly coaching, 24/7 access, film review, and a custom
+                    Athlete Operating System built around your sport, body, and
+                    schedule. Backed by a 90-day Game-Ready Guarantee.
+                  </p>
+                </>
+              }
+              href="/mentorship"
+              cta="Apply for a spot"
+              meta="12 athletes · Next intake opens May 18, 2026"
+            />
+          </Reveal>
+
+          <StaggerGroup className="grid gap-6 md:grid-cols-2 md:gap-8">
+            <StaggerItem>
+              <OfferCard
+                eyebrow="8 weeks · Live"
+                status="5 spots"
+                title="Resonance Cohort"
+                description={
+                  <p>
+                    An 8-week live cohort for coaches who want to lead better
+                    under pressure. Build your pressure-response system,
+                    coaching philosophy upgrade, and team adversity playbook.
+                  </p>
+                }
+                href="/cohort"
+                cta="See the cohort"
+                meta="First cohort · June 15, 2026"
+              />
+            </StaggerItem>
+
+            <StaggerItem>
+              <OfferCard
+                eyebrow="Free · Weekly"
+                title="The Resonance Newsletter"
+                description={
+                  <p>
+                    A weekly letter on athletic skill, performance, and the
+                    ecological lens. Long-form essays for athletes, coaches,
+                    and parents who want a better frame than motivational
+                    coaching.
+                  </p>
+                }
+                href="https://samelsner.substack.com/"
+                cta="Read the latest"
+                meta="Every Friday morning · Free"
+              />
+            </StaggerItem>
+          </StaggerGroup>
+
+          <Reveal>
+            <OfferCard
+              eyebrow="About"
+              title="The lens behind Resonance"
+              description={
+                <p>
+                  Why athletes don’t lose opportunities to talent — they lose
+                  them to inconsistency, scattered preparation, and a misread
+                  of what the game is asking. The story behind the work, and
+                  how I’ll coach you.
+                </p>
+              }
+              href="/about"
+              cta="Read about Sam"
+            />
+          </Reveal>
         </div>
-        <FoundationsSection />
-        <AttractorSection />
-        <AttuneOSSection />
-        <SignalSection />
-        <CosmicFooter />
+      </Section>
 
-        {/* Mobile dock spacer */}
-        <div className="h-20 lg:hidden" />
-      </main>
+      {/* ── Inverted philosophy strip ── */}
+      <Section inverted>
+        <div className="grid gap-12 md:grid-cols-[1fr_1.4fr] md:gap-20">
+          <Reveal>
+            <div className="eyebrow text-bone/60 mb-5">The lens</div>
+            <h2 className="text-bone balance">
+              Talent gets you noticed. Consistency gets you trusted.
+            </h2>
+          </Reveal>
+          <Reveal delay={0.15} className="copy-lg pretty text-bone/80">
+            <p>
+              Most athletes don’t lose opportunities because they lack talent.
+              They lose them because their performance is inconsistent, their
+              preparation is scattered, or they don’t fully understand what the
+              game is asking from them.
+            </p>
+            <p className="mt-5">
+              More training isn’t always the answer. Better training is.
+              Resonance is built around how humans actually learn — through
+              perception, environment, and reps that match the real demands of
+              the game.
+            </p>
+          </Reveal>
+        </div>
+
+        <StaggerGroup
+          className="mt-16 grid gap-px overflow-hidden rounded-lg border border-bone/15 bg-bone/15 md:grid-cols-3"
+          stagger={0.12}
+        >
+          <StaggerItem className="bg-ink p-7 md:p-8">
+            <div className="font-sans text-3xl font-semibold tracking-tightest text-bone md:text-4xl">
+              <Counter value={5000} suffix="+" duration={2.2} />
+            </div>
+            <div className="copy mt-3 pretty text-bone/70">
+              Athletes coached, youth level through NFL and NHL.
+            </div>
+          </StaggerItem>
+          <StaggerItem className="bg-ink p-7 md:p-8">
+            <div className="font-sans text-3xl font-semibold tracking-tightest text-bone md:text-4xl">
+              <Counter value={8} suffix=" yrs" duration={1.8} />
+            </div>
+            <div className="copy mt-3 pretty text-bone/70">
+              Coaching across performance, mentality, recovery, and film.
+            </div>
+          </StaggerItem>
+          <StaggerItem className="bg-ink p-7 md:p-8">
+            <div className="font-sans text-3xl font-semibold tracking-tightest text-bone md:text-4xl">
+              <Counter value={2} prefix="" suffix="× NCAA" duration={1.5} />
+            </div>
+            <div className="copy mt-3 pretty text-bone/70">
+              National champion in the discus. Six-time All-American.
+            </div>
+          </StaggerItem>
+        </StaggerGroup>
+      </Section>
+
+      {/* ── Final CTA ── */}
+      <Section divider>
+        <div className="grid items-end gap-8 md:grid-cols-[1.5fr_1fr] md:gap-16">
+          <Reveal>
+            <div className="eyebrow eyebrow-signal mb-5">Start here</div>
+            <h2 className="balance">
+              The opportunity is already in front of you. The question is
+              whether you’re ready for it.
+            </h2>
+          </Reveal>
+          <Reveal delay={0.15} className="flex flex-wrap gap-3 md:justify-end">
+            <ShineButton>
+              <CTA href="/mentorship" variant="primary">
+                Apply for mentorship
+              </CTA>
+            </ShineButton>
+            <CTA href="https://samelsner.substack.com/" variant="secondary">
+              Read the newsletter
+            </CTA>
+          </Reveal>
+        </div>
+      </Section>
     </>
   );
 }
