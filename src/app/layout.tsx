@@ -1,60 +1,59 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
-import { Playfair_Display } from "next/font/google";
-import { SmoothScrollProvider } from "@/components/providers/SmoothScrollProvider";
+import { Geist, Geist_Mono, Source_Serif_4 } from "next/font/google";
+import { ThemeProvider } from "@/components/providers/ThemeProvider";
 import "./globals.css";
 
 const geistSans = Geist({
-  variable: "--font-geist-sans",
+  variable: "--font-sans",
   subsets: ["latin"],
 });
 
 const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+  variable: "--font-mono",
   subsets: ["latin"],
 });
 
-const playfair = Playfair_Display({
-  variable: "--font-playfair-display",
+const sourceSerif = Source_Serif_4({
+  variable: "--font-serif",
   subsets: ["latin"],
-  weight: ["400", "500", "600", "700", "800", "900"],
+  weight: ["400", "500", "600", "700"],
 });
+
+const SITE = {
+  name: "Resonance by Sam Elsner",
+  url: "https://resonance.coach",
+  description:
+    "A school for athletes and coaches who want to perform when it counts. Mentorship, cohorts, and the Resonance newsletter from Sam Elsner.",
+};
 
 export const metadata: Metadata = {
-  title: "Attune | Master Any Skill via Ecological Psychology",
-  description:
-    "Master any domain faster than traditional methods. Use the Attune OS and Ecological Psychology to align your perception and action for elite performance.",
+  metadataBase: new URL(SITE.url),
+  title: {
+    default: SITE.name,
+    template: "%s | Resonance",
+  },
+  description: SITE.description,
   keywords: [
-    "Ecological Psychology",
-    "Skill Acquisition",
-    "Attune OS",
-    "Personal Brand",
-    "Learning Framework",
+    "Sam Elsner",
+    "Resonance",
+    "Athlete mentorship",
+    "Coaching cohort",
+    "Sport performance",
+    "Ecological dynamics",
+    "Skill acquisition",
   ],
-  metadataBase: new URL("https://attune.world"),
   openGraph: {
-    title: "Attune | Master Any Skill via Ecological Psychology",
-    description:
-      "Master any domain faster than traditional methods. Use the Attune OS and Ecological Psychology to align your perception and action for elite performance.",
-    url: "https://attune.world",
-    siteName: "Attune",
-    images: [
-      {
-        url: "/og-image.png",
-        width: 1200,
-        height: 630,
-        alt: "Attune — Ecological Mastery",
-      },
-    ],
+    title: SITE.name,
+    description: SITE.description,
+    url: SITE.url,
+    siteName: "Resonance",
     locale: "en_US",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Attune | Master Any Skill via Ecological Psychology",
-    description:
-      "Master any domain faster than traditional methods. Use the Attune OS and Ecological Psychology to align your perception and action for elite performance.",
-    images: ["/og-image.png"],
+    title: SITE.name,
+    description: SITE.description,
   },
   icons: {
     icon: "/favicon.ico",
@@ -67,11 +66,16 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="dark">
+    <html lang="en" suppressHydrationWarning>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} ${playfair.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} ${sourceSerif.variable}`}
       >
-        <SmoothScrollProvider>{children}</SmoothScrollProvider>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `try{var t=localStorage.getItem('resonance-theme')||((matchMedia('(prefers-color-scheme: dark)').matches)?'dark':'light');document.documentElement.classList.toggle('dark',t==='dark');document.documentElement.dataset.theme=t;document.documentElement.style.colorScheme=t;}catch(e){}`,
+          }}
+        />
+        <ThemeProvider>{children}</ThemeProvider>
       </body>
     </html>
   );
