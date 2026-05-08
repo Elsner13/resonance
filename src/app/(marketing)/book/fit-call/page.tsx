@@ -22,8 +22,8 @@ export const metadata: Metadata = {
  *
  * Cal.com embed docs: https://cal.com/docs/core-features/embed
  */
-const CAL_USERNAME = ""; // e.g. "samelsner"
-const CAL_EVENT = "fit-call"; // must match your Cal.com event slug
+const CAL_USERNAME = "samelsner";
+const CAL_EVENT = "resonance-fit-call";
 
 export default function BookFitCallPage() {
   const calLink = CAL_USERNAME
