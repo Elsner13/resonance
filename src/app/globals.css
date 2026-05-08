@@ -1,0 +1,369 @@
+@import "tailwindcss";
+
+@config "../../tailwind.config.ts";
+
+/* ─────────────────────────────────────────────────────────────
+   Resonance — light, editorial design system
+   Inspired by anthropic.com. Single accent: signal red (#FD363B).
+   ───────────────────────────────────────────────────────────── */
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-ink: #141413;
+  --color-bone: #faf9f5;
+  --color-rule: #e5e7eb;
+  --color-muted: #6b6b65;
+  --color-signal: #FD363B;
+  --color-signal-ink: #B72327;
+
+  --font-sans: var(--font-sans);
+  --font-serif: var(--font-serif);
+  --font-mono: var(--font-mono);
+}
+
+:root {
+  --background: #faf9f5;
+  --foreground: #141413;
+}
+
+/* ─── Base ─── */
+
+@layer base {
+  * {
+    border-color: #e5e7eb;
+  }
+
+  html {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+
+  body {
+    background: var(--background);
+    color: var(--foreground);
+    font-family: var(--font-serif), Georgia, serif;
+    font-size: 16px;
+    line-height: 1.5;
+    font-feature-settings: "ss01", "ss02";
+  }
+
+  ::selection {
+    background: #141413;
+    color: #faf9f5;
+  }
+
+  /* Editorial type defaults */
+  h1, h2, h3, h4, h5 {
+    font-family: var(--font-sans), system-ui, sans-serif;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    color: #141413;
+  }
+
+  h1 {
+    font-size: clamp(2.75rem, 6vw, 4.25rem);
+    line-height: 1.05;
+    font-weight: 700;
+    letter-spacing: -0.03em;
+  }
+
+  h2 {
+    font-size: clamp(1.875rem, 3.4vw, 2.5rem);
+    line-height: 1.1;
+  }
+
+  h3 {
+    font-size: clamp(1.25rem, 2vw, 1.5rem);
+    line-height: 1.2;
+  }
+
+  p {
+    color: #141413;
+  }
+
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  hr {
+    border: 0;
+    border-top: 1px solid #e5e7eb;
+  }
+
+  ::placeholder {
+    color: #6b6b65;
+  }
+}
+
+/* ─── Component primitives ─── */
+
+@layer components {
+
+  /* Container — centered editorial column */
+  .shell {
+    max-width: 76rem;
+    margin-inline: auto;
+    padding-inline: clamp(1.25rem, 4vw, 2.5rem);
+  }
+
+  /* Section spacing */
+  .section {
+    padding-block: clamp(4.5rem, 9vw, 9rem);
+  }
+
+  .section-tight {
+    padding-block: clamp(3rem, 6vw, 5rem);
+  }
+
+  /* Buttons — Anthropic style, square, restrained */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    height: 44px;
+    min-width: 132px;
+    padding-inline: 1.125rem;
+    border-radius: 4px;
+    font-family: var(--font-sans), system-ui, sans-serif;
+    font-size: 0.9375rem;
+    font-weight: 500;
+    letter-spacing: -0.005em;
+    line-height: 1;
+    transition: background-color 200ms ease, color 200ms ease, border-color 200ms ease, transform 200ms ease;
+    cursor: pointer;
+    user-select: none;
+    white-space: nowrap;
+  }
+
+  .btn-primary {
+    background: #141413;
+    color: #faf9f5;
+    border: 1px solid #141413;
+  }
+  .btn-primary:hover {
+    background: #2a2a28;
+    border-color: #2a2a28;
+  }
+
+  .btn-secondary {
+    background: transparent;
+    color: #141413;
+    border: 1px solid #141413;
+  }
+  .btn-secondary:hover {
+    background: #141413;
+    color: #faf9f5;
+  }
+
+  .btn-signal {
+    background: #FD363B;
+    color: #faf9f5;
+    border: 1px solid #FD363B;
+  }
+  .btn-signal:hover {
+    background: #B72327;
+    border-color: #B72327;
+  }
+
+  .btn-ghost {
+    background: transparent;
+    color: #141413;
+    border: 1px solid transparent;
+    min-width: 0;
+    padding-inline: 0;
+    height: auto;
+  }
+  .btn-ghost:hover {
+    color: #FD363B;
+  }
+
+  /* Card — quiet container with hairline rule */
+  .card {
+    background: #faf9f5;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    padding: 1.5rem;
+    transition: border-color 200ms ease, transform 200ms ease;
+  }
+  .card-hover:hover {
+    border-color: #141413;
+  }
+
+  /* Eyebrow — small label above sections */
+  .eyebrow {
+    font-family: var(--font-sans), system-ui, sans-serif;
+    font-size: 0.8125rem;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: #6b6b65;
+  }
+
+  .eyebrow-signal {
+    color: #FD363B;
+  }
+
+  /* Editorial body — serif copy block */
+  .copy {
+    font-family: var(--font-serif), Georgia, serif;
+    font-size: 1.0625rem;
+    line-height: 1.65;
+    color: #141413;
+  }
+
+  .copy-lg {
+    font-family: var(--font-serif), Georgia, serif;
+    font-size: 1.25rem;
+    line-height: 1.5;
+    color: #141413;
+  }
+
+  .copy p + p {
+    margin-top: 1em;
+  }
+
+  /* Nav link */
+  .navlink {
+    font-family: var(--font-sans), system-ui, sans-serif;
+    font-size: 0.9375rem;
+    font-weight: 500;
+    color: #141413;
+    transition: color 200ms ease;
+  }
+  .navlink:hover {
+    color: #FD363B;
+  }
+
+  /* Hairline rule */
+  .rule {
+    height: 1px;
+    background: #e5e7eb;
+  }
+
+  /* Signal underline accent — for hero word */
+  .signal-underline {
+    position: relative;
+    display: inline-block;
+  }
+  .signal-underline::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -0.06em;
+    height: 0.08em;
+    background: #FD363B;
+    border-radius: 2px;
+  }
+}
+
+/* ─── Utilities ─── */
+
+@layer utilities {
+  .balance {
+    text-wrap: balance;
+  }
+  .pretty {
+    text-wrap: pretty;
+  }
+  .grain {
+    position: relative;
+    isolation: isolate;
+  }
+  .grain::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    opacity: 0.025;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    background-size: 256px 256px;
+  }
+}
+
+/* ─── Keyframes ─── */
+
+@keyframes fade-up {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Subtle premium shine sweep — primary CTAs.
+   Per Dan Toruno brand direction: replace floating motion with a
+   restrained shine every few seconds. */
+@keyframes shine-sweep {
+  0%, 70%, 100% {
+    transform: translateX(-120%) skewX(-18deg);
+    opacity: 0;
+  }
+  78% {
+    opacity: 0.55;
+  }
+  92% {
+    transform: translateX(220%) skewX(-18deg);
+    opacity: 0;
+  }
+}
+
+.shine-btn {
+  position: relative;
+  isolation: isolate;
+  border-radius: 4px;
+}
+
+.shine-btn::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.shine-btn::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 35%;
+  height: 100%;
+  background: linear-gradient(
+    100deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.0) 30%,
+    rgba(255, 255, 255, 0.45) 50%,
+    rgba(255, 255, 255, 0.0) 70%,
+    transparent 100%
+  );
+  transform: translateX(-120%) skewX(-18deg);
+  animation: shine-sweep 6.5s ease-in-out infinite;
+  animation-delay: 1.2s;
+  border-radius: inherit;
+  pointer-events: none;
+  z-index: 2;
+  mix-blend-mode: overlay;
+}
+
+.shine-btn > * {
+  position: relative;
+  z-index: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .shine-btn::after {
+    animation: none;
+    display: none;
+  }
+}
+
+@media (pointer: coarse) {
+  .shine-btn::after {
+    animation-duration: 9s;
+  }
+}
