@@ -50,7 +50,7 @@ export default function AboutPage() {
 
           <div className="md:max-w-md md:justify-self-end">
             <Portrait
-              src="/sam-headshot.jpg"
+              src="/sam-about.jpg"
               alt="Sam Elsner — founder of Resonance, two-time NCAA national champion in the discus."
               ratio="4/5"
               eyebrow="Sam Elsner"

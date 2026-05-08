@@ -9,7 +9,6 @@ import { Counter } from "@/components/motion/Counter";
 import { ShineButton } from "@/components/motion/ShineButton";
 import { GridBg } from "@/components/motion/GridBg";
 import { MarqueeRow } from "@/components/motion/MarqueeRow";
-import { Portrait } from "@/components/motion/Portrait";
 
 export default function HomePage() {
   return (
@@ -17,8 +16,8 @@ export default function HomePage() {
       {/* ── Hero ── */}
       <section className="relative overflow-hidden border-b border-rule">
         <GridBg variant="dots" />
-        <Container className="relative grid items-end gap-12 py-20 md:grid-cols-[1.5fr_1fr] md:gap-16 md:py-28 lg:gap-20">
-          <div>
+        <Container className="relative py-20 md:py-28">
+          <div className="max-w-3xl">
             <Reveal as="div" duration={0.55}>
               <div className="eyebrow eyebrow-signal mb-6">
                 Resonance · by Sam Elsner
@@ -53,17 +52,6 @@ export default function HomePage() {
             </Reveal>
           </div>
 
-          <div className="md:max-w-sm md:justify-self-end">
-            <Portrait
-              src="/sam-headshot.jpg"
-              alt="Sam Elsner — founder of Resonance, two-time NCAA national champion in the discus."
-              ratio="4/5"
-              eyebrow="Sam Elsner"
-              caption="Founder · Coach"
-              index="N° 01"
-              priority
-            />
-          </div>
         </Container>
       </section>
 
