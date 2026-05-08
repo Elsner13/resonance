@@ -290,35 +290,46 @@ body, header, section, footer, .card, .btn, .navlink, .rule {
     border-color 260ms ease;
 }
 
+/* During the radial View Transition, the browser is animating a screenshot of
+   the page. Suppress the underlying token transitions so the reveal does not
+   double-animate and stutter. */
+html.theme-transitioning body,
+html.theme-transitioning header,
+html.theme-transitioning section,
+html.theme-transitioning footer,
+html.theme-transitioning .card,
+html.theme-transitioning .btn,
+html.theme-transitioning .navlink,
+html.theme-transitioning .rule {
+  transition: none !important;
+}
+
 /* Dan Toruno radial reveal: dark/light mode expands from toggle button. */
 ::view-transition-old(root),
 ::view-transition-new(root) {
-  animation-duration: 520ms;
-  animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+  animation: none;
   mix-blend-mode: normal;
 }
 
+::view-transition-group(root) {
+  animation-duration: 820ms;
+  animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
 ::view-transition-old(root) {
-  animation-name: none;
+  z-index: 0;
 }
 
 ::view-transition-new(root) {
-  animation-name: theme-radial-reveal;
-}
-
-@keyframes theme-radial-reveal {
-  from {
-    clip-path: circle(0 at var(--theme-x) var(--theme-y));
-  }
-  to {
-    clip-path: circle(150vmax at var(--theme-x) var(--theme-y));
-  }
+  z-index: 1;
+  will-change: clip-path;
 }
 
 @media (prefers-reduced-motion: reduce) {
   ::view-transition-old(root),
-  ::view-transition-new(root) {
-    animation: none;
+  ::view-transition-new(root),
+  ::view-transition-group(root) {
+    animation: none !important;
   }
 }
 
