@@ -23,10 +23,13 @@ export function GridBg({
   const y = useTransform(scrollYProgress, [0, 1], [0, -80]);
   const opacity = useTransform(scrollYProgress, [0, 0.6, 1], [1, 1, 0]);
 
+  // `--grid-dot` is defined in globals.css per-theme so the dots stay
+  // legible against both light and dark page backgrounds.
+  const dotColor = "var(--grid-dot, rgba(20,20,19,0.10))";
   const bg =
     variant === "dots"
-      ? "radial-gradient(rgba(20,20,19,0.10) 1px, transparent 1px)"
-      : "linear-gradient(rgba(20,20,19,0.06) 1px, transparent 1px), linear-gradient(90deg, rgba(20,20,19,0.06) 1px, transparent 1px)";
+      ? `radial-gradient(${dotColor} 1px, transparent 1px)`
+      : `linear-gradient(${dotColor} 1px, transparent 1px), linear-gradient(90deg, ${dotColor} 1px, transparent 1px)`;
 
   return (
     <div

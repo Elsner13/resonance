@@ -5,10 +5,10 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        ink: "#141413",
-        bone: "#faf9f5",
-        rule: "#e5e7eb",
-        muted: "#6b6b65",
+        ink: "var(--token-ink)",
+        bone: "var(--token-bone)",
+        rule: "var(--token-rule)",
+        muted: "var(--token-muted)",
         signal: "#FD363B",
         "signal-ink": "#B72327",
       },

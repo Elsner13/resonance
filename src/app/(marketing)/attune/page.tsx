@@ -1,0 +1,192 @@
+import type { Metadata } from "next";
+import { Container } from "@/components/site/Container";
+import { TallyEmbed } from "@/components/site/TallyEmbed";
+import { Reveal, StaggerGroup, StaggerItem } from "@/components/motion/Reveal";
+import { HeroHeadline } from "@/components/motion/HeroHeadline";
+import { SignalUnderline } from "@/components/motion/SignalUnderline";
+
+export const metadata: Metadata = {
+  title: "Attune",
+  description:
+    "Attune — ongoing 1-on-1 mentorship with Sam Elsner. For creators ready to become antifragile. Application only.",
+};
+
+// Tally form ID for the Attune 1-on-1 mentorship application — https://tally.so/r/ODdylp
+const TALLY_FORM_ID = "ODdylp";
+
+const INSIDE = [
+  {
+    title: "Weekly 60-minute calls",
+    body: "No fluff, all signal. Alignment check, challenge deployment, frequency tuning.",
+  },
+  {
+    title: "Daily DM access",
+    body: "Signal loss is real. Reach me when you need a recalibration.",
+  },
+  {
+    title: "The Frequency Protocol",
+    body: "15 minutes per day. This does the heavy lifting so you don't have to.",
+  },
+  {
+    title: "Custom challenges",
+    body: "Deployed based on your actual bottlenecks, not a curriculum.",
+  },
+  {
+    title: "Ecological alignment tracking",
+    body: "Your energy mapped to natural cycles. Stop forcing output on empty days.",
+  },
+  {
+    title: "Astro-numerology integration",
+    body: "Immersive personal alignment. Frequency data, not woo.",
+  },
+];
+
+export default function AttunePage() {
+  return (
+    <>
+      {/* ── Hero ── */}
+      <section className="flex min-h-[70vh] items-center border-b border-rule">
+        <Container>
+          <div className="mx-auto max-w-3xl text-center">
+            <Reveal>
+              <div className="eyebrow eyebrow-signal mb-6">
+                Ongoing · 1-on-1 · Application only
+              </div>
+            </Reveal>
+            <HeroHeadline className="balance">
+              <SignalUnderline delay={0.75}>Attune</SignalUnderline>.
+            </HeroHeadline>
+            <Reveal
+              as="p"
+              delay={0.5}
+              className="copy-lg mt-8 pretty mx-auto max-w-2xl text-ink/85"
+            >
+              Ongoing 1-on-1 mentorship for creators ready to become
+              antifragile.
+            </Reveal>
+          </div>
+        </Container>
+      </section>
+
+      {/* ── The Pitch ── */}
+      <section className="section">
+        <Container>
+          <div className="mx-auto max-w-[720px]">
+            <Reveal>
+              <div className="eyebrow eyebrow-signal mb-5">The Truth</div>
+              <h2 className="balance">
+                You don&apos;t need another funnel. You need a{" "}
+                <span className="text-signal">frequency</span> that funnels
+                can&apos;t break.
+              </h2>
+            </Reveal>
+            <Reveal delay={0.15} className="copy mt-8 space-y-5 text-ink/90">
+              <p>
+                I see you. You&apos;ve built the thing. You&apos;ve got the
+                offer, the audience, the proof of concept. But you&apos;re
+                running on fumes.
+              </p>
+              <p>
+                Every new client feels like a debt instead of a win.
+                You&apos;re managing systems that were supposed to manage
+                themselves. And every &ldquo;growth hack&rdquo; you try adds
+                more noise to a signal that was already weak.
+              </p>
+              <p>
+                The creator economy rewards signal clarity. Not tactics. Not
+                hacks. Signal.
+              </p>
+              <p>
+                Most mentors sell you their playbook. I don&apos;t have a
+                playbook. I have a tuning fork.
+              </p>
+            </Reveal>
+          </div>
+        </Container>
+      </section>
+
+      {/* ── What's Inside ── */}
+      <section className="section border-t border-rule">
+        <Container>
+          <Reveal className="mx-auto max-w-[720px]">
+            <div className="eyebrow eyebrow-signal mb-5">Attune</div>
+            <h2 className="balance">What&apos;s inside.</h2>
+            <p className="copy-lg mt-5 text-ink/75 pretty">
+              Six instruments. One nervous system. Everything tuned to you.
+            </p>
+          </Reveal>
+
+          <StaggerGroup
+            className="mt-14 grid gap-6 sm:grid-cols-2 md:gap-8"
+            stagger={0.08}
+          >
+            {INSIDE.map((item, i) => (
+              <StaggerItem key={item.title}>
+                <article className="card card-hover relative flex h-full flex-col p-7 md:p-8">
+                  <div className="font-sans text-3xl font-bold tracking-tightest text-signal md:text-4xl">
+                    {String(i + 1).padStart(2, "0")}
+                  </div>
+                  <h3 className="mt-4 font-sans text-xl font-semibold leading-[1.2] tracking-tightest text-ink md:text-2xl balance">
+                    {item.title}
+                  </h3>
+                  <p className="copy mt-3 text-ink/85 pretty">{item.body}</p>
+                </article>
+              </StaggerItem>
+            ))}
+          </StaggerGroup>
+        </Container>
+      </section>
+
+      {/* ── Investment (quiet note) ── */}
+      <section className="section-tight border-t border-rule">
+        <Container>
+          <div className="mx-auto max-w-[720px] text-center">
+            <Reveal>
+              <div className="eyebrow mb-4">Investment</div>
+              <p className="font-sans text-2xl md:text-3xl font-semibold tracking-tightest text-ink">
+                Application only
+              </p>
+              <p className="copy mt-4 text-muted pretty">
+                Monthly and yearly options available. Pricing shared after
+                application review. Payment plans available for qualified
+                applicants.
+              </p>
+            </Reveal>
+          </div>
+        </Container>
+      </section>
+
+      {/* ── Application (dark — flows into form) ── */}
+      <section
+        className="section text-bone border-t border-signal"
+        style={{ background: "#0c1117" }}
+      >
+        <Container>
+          <div className="mx-auto max-w-[720px]">
+            <Reveal className="text-center">
+              <div className="eyebrow eyebrow-signal mb-5">Apply</div>
+              <h2 className="text-bone balance">Serious inquiries only.</h2>
+              <p className="copy-lg mt-6 text-bone/75 pretty">
+                Fill out the form below. I read every application personally.
+              </p>
+            </Reveal>
+
+            <Reveal delay={0.2} className="mt-12">
+              <TallyEmbed
+                formId={TALLY_FORM_ID}
+                title="Attune Mentorship Application"
+              />
+            </Reveal>
+
+            <Reveal delay={0.3}>
+              <p className="mt-10 text-center font-sans text-sm text-bone/60">
+                Applications reviewed within 48 hours. If it&apos;s a fit,
+                I&apos;ll send a link to book a 15-minute confirmation call.
+              </p>
+            </Reveal>
+          </div>
+        </Container>
+      </section>
+    </>
+  );
+}

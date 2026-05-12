@@ -1,15 +1,23 @@
+import Link from "next/link";
 import { Container } from "@/components/site/Container";
-import { Section, SectionHeader } from "@/components/site/Section";
-import { OfferCard } from "@/components/site/OfferCard";
 import { CTA } from "@/components/site/CTA";
-import { Reveal, StaggerGroup, StaggerItem } from "@/components/motion/Reveal";
+import { GridBg } from "@/components/motion/GridBg";
 import { HeroHeadline } from "@/components/motion/HeroHeadline";
 import { SignalUnderline } from "@/components/motion/SignalUnderline";
-import { Counter } from "@/components/motion/Counter";
+import { Reveal, StaggerGroup, StaggerItem } from "@/components/motion/Reveal";
 import { ShineButton } from "@/components/motion/ShineButton";
-import { GridBg } from "@/components/motion/GridBg";
 import { MarqueeRow } from "@/components/motion/MarqueeRow";
-import { Portrait } from "@/components/motion/Portrait";
+
+const MARQUEE = [
+  "Frequency",
+  "Resonance",
+  "Antifragile",
+  "Sovereign",
+  "Excavation",
+  "Foundations",
+  "Mastery",
+  "Signal",
+];
 
 export default function HomePage() {
   return (
@@ -17,248 +25,341 @@ export default function HomePage() {
       {/* ── Hero ── */}
       <section className="relative overflow-hidden border-b border-rule">
         <GridBg variant="dots" />
-        <Container className="relative grid items-end gap-12 py-20 md:grid-cols-[1.5fr_1fr] md:gap-16 md:py-28 lg:gap-20">
-          <div>
-            <Reveal as="div" duration={0.55}>
-              <div className="eyebrow eyebrow-signal mb-6">
-                Resonance · by Sam Elsner
-              </div>
-            </Reveal>
+        <Container className="relative py-24 md:py-32">
+          <div className="mx-auto max-w-3xl text-center">
             <HeroHeadline className="balance">
-              Perform when it{" "}
-              <SignalUnderline delay={0.85}>counts</SignalUnderline>.
+              Cut the noise. Find your frequency.{" "}
+              <SignalUnderline delay={0.85}>Become antifragile.</SignalUnderline>
             </HeroHeadline>
             <Reveal
               as="p"
               delay={0.5}
               duration={0.7}
-              className="copy-lg mt-7 max-w-2xl pretty text-ink/85"
+              className="copy-lg mt-8 mx-auto max-w-2xl pretty text-ink/85"
             >
-              A school for athletes and coaches who refuse to be average.
-              Private 1-on-1 mentorship, live coach cohorts, and the Resonance
-              newsletter — built around the way humans actually learn.
+              The Resonance Method™ — an ecological alignment protocol for
+              creators who are done optimizing and ready to resonate.
             </Reveal>
             <Reveal
               delay={0.7}
-              className="mt-8 flex flex-wrap items-center gap-3"
+              className="mt-10 flex flex-col items-center gap-5"
             >
               <ShineButton>
-                <CTA href="/mentorship" variant="primary">
-                  Apply for mentorship
+                <CTA href="/cohort" variant="primary">
+                  Apply for the Cohort
                 </CTA>
               </ShineButton>
-              <CTA href="/cohort" variant="secondary">
-                See the coach cohort
-              </CTA>
+              <Link href="/attune" className="text-link font-sans text-base">
+                Or apply for 1-on-1 mentorship
+              </Link>
             </Reveal>
-          </div>
-
-          <div className="md:max-w-sm md:justify-self-end">
-            <Portrait
-              src="/sam-headshot.jpg"
-              alt="Sam Elsner — founder of Resonance, two-time NCAA national champion in the discus."
-              ratio="4/5"
-              eyebrow="Sam Elsner"
-              caption="Founder · Coach"
-              index="N° 01"
-              priority
-            />
           </div>
         </Container>
       </section>
 
-      {/* ── Marquee strip ── */}
+      {/* ── Marquee credibility band ── */}
       <div className="border-b border-rule bg-bone py-6">
-        <MarqueeRow
-          speed={70}
-          items={[
-            "Performance",
-            "Consistency",
-            "Coachability",
-            "Game-Ready",
-            "Ecological Lens",
-            "Forged",
-            "Resonance",
-          ]}
-          itemClassName="text-ink/70"
-        />
+        <MarqueeRow speed={70} items={MARQUEE} itemClassName="text-ink/70" />
       </div>
 
-      {/* ── Programs grid ── */}
-      <Section>
-        <Reveal>
-          <SectionHeader
-            eyebrow="Programs & Writing"
-            title={<>Three rooms. One lens.</>}
-            lede="Each is a different intensity of the same work — becoming the kind of athlete or coach the moment respects."
-            layout="split"
-          />
-        </Reveal>
+      {/* ── The Gap ── */}
+      <section className="section">
+        <Container>
+          <div className="mx-auto max-w-[720px]">
+            <Reveal>
+              <div className="eyebrow eyebrow-signal mb-5">The Gap</div>
+              <h2 className="balance">
+                You don&apos;t have a productivity problem. You have a{" "}
+                <span className="text-signal">frequency</span> problem.
+              </h2>
+            </Reveal>
+            <Reveal delay={0.1} className="copy mt-8 space-y-5 text-ink/90">
+              <p>
+                You&apos;ve built the funnel. Bought the CRM. Hired the VA.
+                Configured the agent. And yet — you&apos;re drowning in tools
+                that promised freedom and delivered noise.
+              </p>
+              <p>
+                The old identity says: &ldquo;I need more systems before I can
+                create.&rdquo; The new identity knows: &ldquo;I am the system.
+                Everything else is just amplification.&rdquo;
+              </p>
+              <p>
+                I was you. Lost in the setup. Building cathedrals before
+                laying bricks. Then I stopped optimizing and started
+                resonating. Now I help others do the same.
+              </p>
+            </Reveal>
 
-        <div className="mt-12 grid gap-6 md:gap-8">
-          <Reveal>
-            <OfferCard
-              layout="feature"
-              eyebrow="Flagship · 1-on-1 coaching"
-              status="Applications open"
-              signalAccent
-              title="Resonance Mentorship"
-              description={
-                <>
-                  <p>
-                    My private 1-on-1 coaching service for serious athletes who
-                    want to become more consistent, more coachable, and more
-                    game-ready — so they earn more trust, more minutes, and
-                    better opportunities.
-                  </p>
-                  <p>
-                    Weekly coaching, 24/7 access, film review, and a custom
-                    Athlete Operating System built around your sport, body, and
-                    schedule. Backed by a 90-day Game-Ready Guarantee.
-                  </p>
-                </>
-              }
-              href="/mentorship"
-              cta="Apply for a spot"
-              meta="12 athletes · Next intake opens May 18, 2026"
-            />
-          </Reveal>
+          </div>
+        </Container>
+      </section>
 
-          <StaggerGroup className="grid gap-6 md:grid-cols-2 md:gap-8">
-            <StaggerItem>
-              <OfferCard
-                eyebrow="8 weeks · Live"
-                status="5 spots"
-                title="Resonance Cohort"
-                description={
-                  <p>
-                    An 8-week live cohort for coaches who want to lead better
-                    under pressure. Build your pressure-response system,
-                    coaching philosophy upgrade, and team adversity playbook.
-                  </p>
-                }
-                href="/cohort"
-                cta="See the cohort"
-                meta="First cohort · June 15, 2026"
-              />
+      {/* ── The Method (dark inverted) ── */}
+      <section className="section bg-ink text-bone">
+        <Container>
+          <div className="grid gap-12 md:grid-cols-[1fr_1.4fr] md:gap-20">
+            <Reveal>
+              <div className="eyebrow text-bone/60 mb-5">The Method</div>
+              <h2 className="text-bone balance">
+                The Resonance Method™
+              </h2>
+            </Reveal>
+            <Reveal delay={0.15} className="copy-lg pretty text-bone/80">
+              <p>
+                We don&apos;t add more to your plate. We tune what&apos;s
+                already there.
+              </p>
+            </Reveal>
+          </div>
+
+          <StaggerGroup
+            className="mt-16 grid gap-px overflow-hidden border border-bone/15 bg-bone/15 md:grid-cols-3"
+            stagger={0.12}
+          >
+            <StaggerItem className="bg-ink p-8 md:p-10">
+              <div className="font-sans text-sm uppercase tracking-[0.18em] text-signal mb-4">
+                Phase 1
+              </div>
+              <h3 className="text-bone">Excavation</h3>
+              <p className="copy mt-4 text-bone/75 pretty">
+                Cut the noise. Audit every system, belief, and tool that is
+                out of alignment.
+              </p>
             </StaggerItem>
-
-            <StaggerItem>
-              <OfferCard
-                eyebrow="Free · Weekly"
-                title="The Resonance Newsletter"
-                description={
-                  <p>
-                    A weekly letter on athletic skill, performance, and the
-                    ecological lens. Long-form essays for athletes, coaches,
-                    and parents who want a better frame than motivational
-                    coaching.
-                  </p>
-                }
-                href="https://samelsner.substack.com/"
-                cta="Read the latest"
-                meta="Every Friday morning · Free"
-              />
+            <StaggerItem className="bg-ink p-8 md:p-10">
+              <div className="font-sans text-sm uppercase tracking-[0.18em] text-signal mb-4">
+                Phase 2
+              </div>
+              <h3 className="text-bone">Foundations</h3>
+              <p className="copy mt-4 text-bone/75 pretty">
+                Daily Frequency Protocol. 15 minutes each morning.
+                Antifragile principles become muscle memory.
+              </p>
+            </StaggerItem>
+            <StaggerItem className="bg-ink p-8 md:p-10">
+              <div className="font-sans text-sm uppercase tracking-[0.18em] text-signal mb-4">
+                Phase 3
+              </div>
+              <h3 className="text-bone">Mastery</h3>
+              <p className="copy mt-4 text-bone/75 pretty">
+                Broadcast from alignment. Launch. Create. Fill your cohort.
+                You are no longer seeking signal — you are the signal.
+              </p>
             </StaggerItem>
           </StaggerGroup>
 
-          <Reveal>
-            <OfferCard
-              eyebrow="About"
-              title="The lens behind Resonance"
-              description={
-                <p>
-                  Why athletes don’t lose opportunities to talent — they lose
-                  them to inconsistency, scattered preparation, and a misread
-                  of what the game is asking. The story behind the work, and
-                  how I’ll coach you.
+          <Reveal delay={0.4}>
+            <p className="mt-10 font-sans text-sm text-bone/60">
+              Astrology and numerology woven in as alignment tools, not fluff.
+            </p>
+          </Reveal>
+        </Container>
+      </section>
+
+      {/* ── Proof ── */}
+      <section className="section border-t border-rule">
+        <Container>
+          <div className="mx-auto max-w-[720px]">
+            <Reveal>
+              <div className="eyebrow mb-5">Proof</div>
+              <h2 className="balance">From setup to signal.</h2>
+            </Reveal>
+            <Reveal delay={0.1}>
+              <blockquote className="mt-10">
+                <p className="font-serif text-2xl italic leading-snug text-ink balance">
+                  &ldquo;I went from drowning in setup to launching my cohort
+                  in 90 days. The Resonance Method forced me to trust my own
+                  signal before amplifying it.&rdquo;
                 </p>
-              }
-              href="/about"
-              cta="Read about Sam"
-            />
-          </Reveal>
-        </div>
-      </Section>
+                <footer className="mt-6 font-sans text-sm text-muted">
+                  — Sam Elsner, Creator of The Resonance Method
+                </footer>
+              </blockquote>
+            </Reveal>
+          </div>
+        </Container>
+      </section>
 
-      {/* ── Inverted philosophy strip ── */}
-      <Section inverted>
-        <div className="grid gap-12 md:grid-cols-[1fr_1.4fr] md:gap-20">
+      {/* ── Three rooms (programs) ── */}
+      <section className="section border-t border-rule">
+        <Container>
           <Reveal>
-            <div className="eyebrow text-bone/60 mb-5">The lens</div>
-            <h2 className="text-bone balance">
-              Talent gets you noticed. Consistency gets you trusted.
-            </h2>
+            <div className="grid gap-8 md:grid-cols-[1.1fr_1fr] md:gap-16">
+              <div>
+                <div className="eyebrow mb-5">Three rooms. One frequency.</div>
+                <h2 className="balance">
+                  Pick your container. The work is the same.
+                </h2>
+              </div>
+              <div className="copy-lg pretty self-end text-ink/85">
+                Each is a different intensity of the same protocol — becoming
+                the kind of creator the moment respects.
+              </div>
+            </div>
           </Reveal>
-          <Reveal delay={0.15} className="copy-lg pretty text-bone/80">
-            <p>
-              Most athletes don’t lose opportunities because they lack talent.
-              They lose them because their performance is inconsistent, their
-              preparation is scattered, or they don’t fully understand what the
-              game is asking from them.
-            </p>
-            <p className="mt-5">
-              More training isn’t always the answer. Better training is.
-              Resonance is built around how humans actually learn — through
-              perception, environment, and reps that match the real demands of
-              the game.
-            </p>
-          </Reveal>
-        </div>
 
-        <StaggerGroup
-          className="mt-16 grid gap-px overflow-hidden rounded-lg border border-bone/15 bg-bone/15 md:grid-cols-3"
-          stagger={0.12}
-        >
-          <StaggerItem className="bg-ink p-7 md:p-8">
-            <div className="font-sans text-3xl font-semibold tracking-tightest text-bone md:text-4xl">
-              <Counter value={5000} suffix="+" duration={2.2} />
-            </div>
-            <div className="copy mt-3 pretty text-bone/70">
-              Athletes coached, youth level through NFL and NHL.
-            </div>
-          </StaggerItem>
-          <StaggerItem className="bg-ink p-7 md:p-8">
-            <div className="font-sans text-3xl font-semibold tracking-tightest text-bone md:text-4xl">
-              <Counter value={8} suffix=" yrs" duration={1.8} />
-            </div>
-            <div className="copy mt-3 pretty text-bone/70">
-              Coaching across performance, mentality, recovery, and film.
-            </div>
-          </StaggerItem>
-          <StaggerItem className="bg-ink p-7 md:p-8">
-            <div className="font-sans text-3xl font-semibold tracking-tightest text-bone md:text-4xl">
-              <Counter value={2} prefix="" suffix="× NCAA" duration={1.5} />
-            </div>
-            <div className="copy mt-3 pretty text-bone/70">
-              National champion in the discus. Six-time All-American.
-            </div>
-          </StaggerItem>
-        </StaggerGroup>
-      </Section>
+          <div className="mt-12 grid gap-6 md:gap-8">
+            <Reveal>
+              <Link href="/cohort" className="group block">
+                <article className="card card-hover relative grid gap-8 p-8 md:grid-cols-[1.4fr_1fr] md:gap-12 md:p-12">
+                  <div>
+                    <div className="eyebrow eyebrow-signal mb-5">
+                      90 days · Live
+                      <span className="ml-3 text-muted">— 5 spots</span>
+                    </div>
+                    <h3 className="text-3xl font-semibold leading-[1.1] tracking-tightest md:text-4xl balance">
+                      The Resonance Cohort
+                    </h3>
+                    <div className="copy mt-5 max-w-xl pretty text-ink/85">
+                      <p>
+                        90 days. 5 creators. Starting June 15. Weekly group
+                        calls, Daily Frequency Protocol, astro-numerology
+                        timing, and a private chat for daily signal checks.
+                      </p>
+                    </div>
+                    <p className="mt-6 font-sans text-sm text-muted">
+                      Application only · Closes June 10
+                    </p>
+                  </div>
+                  <div className="flex flex-col items-start justify-end md:items-end md:text-right">
+                    <span className="btn btn-primary group-hover:opacity-90">
+                      Apply for the Cohort
+                      <svg
+                        width="14"
+                        height="14"
+                        viewBox="0 0 14 14"
+                        fill="none"
+                        aria-hidden
+                      >
+                        <path
+                          d="M3 7h8m0 0L7 3m4 4l-4 4"
+                          stroke="currentColor"
+                          strokeWidth="1.5"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        />
+                      </svg>
+                    </span>
+                  </div>
+                </article>
+              </Link>
+            </Reveal>
+
+            <StaggerGroup className="grid gap-6 md:grid-cols-2 md:gap-8">
+              <StaggerItem>
+                <Link href="/attune" className="group block h-full">
+                  <article className="card card-hover relative flex h-full flex-col p-7 md:p-8">
+                    <div className="eyebrow mb-4">
+                      Ongoing · 1-on-1
+                      <span className="ml-2 text-muted">— Application only</span>
+                    </div>
+                    <h3 className="font-sans text-xl font-semibold leading-[1.15] tracking-tightest text-ink md:text-2xl balance">
+                      Attune
+                    </h3>
+                    <div className="copy mt-4 grow pretty text-ink/85">
+                      <p>
+                        Ongoing 1-on-1 mentorship for creators ready to become
+                        antifragile. Weekly calls, daily DM access, ecological
+                        alignment. A container, not a course.
+                      </p>
+                    </div>
+                    <p className="mt-5 font-sans text-sm text-muted">
+                      Monthly or yearly · Application only
+                    </p>
+                    <span className="mt-6 inline-flex items-center gap-1.5 font-sans text-sm font-medium text-ink transition-colors group-hover:text-signal">
+                      Apply for Attune
+                      <svg
+                        width="14"
+                        height="14"
+                        viewBox="0 0 14 14"
+                        fill="none"
+                        aria-hidden
+                      >
+                        <path
+                          d="M3 7h8m0 0L7 3m4 4l-4 4"
+                          stroke="currentColor"
+                          strokeWidth="1.5"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        />
+                      </svg>
+                    </span>
+                  </article>
+                </Link>
+              </StaggerItem>
+
+              <StaggerItem>
+                <Link href="/resonance" className="group block h-full">
+                  <article className="card card-hover relative flex h-full flex-col p-7 md:p-8">
+                    <div className="eyebrow mb-4">Free · Weekly</div>
+                    <h3 className="font-sans text-xl font-semibold leading-[1.15] tracking-tightest text-ink md:text-2xl balance">
+                      Resonance
+                    </h3>
+                    <div className="copy mt-4 grow pretty text-ink/85">
+                      <p>
+                        The broadcast. One post per week. Whatever frequency
+                        I&apos;m holding — what&apos;s real, what&apos;s
+                        aligned, and what will help you cut through your own
+                        noise.
+                      </p>
+                    </div>
+                    <p className="mt-5 font-sans text-sm text-muted">
+                      Every week · Free
+                    </p>
+                    <span className="mt-6 inline-flex items-center gap-1.5 font-sans text-sm font-medium text-ink transition-colors group-hover:text-signal">
+                      Read the latest
+                      <svg
+                        width="14"
+                        height="14"
+                        viewBox="0 0 14 14"
+                        fill="none"
+                        aria-hidden
+                      >
+                        <path
+                          d="M3 7h8m0 0L7 3m4 4l-4 4"
+                          stroke="currentColor"
+                          strokeWidth="1.5"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        />
+                      </svg>
+                    </span>
+                  </article>
+                </Link>
+              </StaggerItem>
+            </StaggerGroup>
+          </div>
+        </Container>
+      </section>
 
       {/* ── Final CTA ── */}
-      <Section divider>
-        <div className="grid items-end gap-8 md:grid-cols-[1.5fr_1fr] md:gap-16">
-          <Reveal>
-            <div className="eyebrow eyebrow-signal mb-5">Start here</div>
-            <h2 className="balance">
-              The opportunity is already in front of you. The question is
-              whether you’re ready for it.
-            </h2>
-          </Reveal>
-          <Reveal delay={0.15} className="flex flex-wrap gap-3 md:justify-end">
-            <ShineButton>
-              <CTA href="/mentorship" variant="primary">
-                Apply for mentorship
+      <section className="section border-t border-rule">
+        <Container>
+          <div className="grid items-end gap-8 md:grid-cols-[1.5fr_1fr] md:gap-16">
+            <Reveal>
+              <div className="eyebrow eyebrow-signal mb-5">Start here</div>
+              <h2 className="balance">
+                The frequency is already in you. The question is whether
+                you&apos;re ready to broadcast it.
+              </h2>
+            </Reveal>
+            <Reveal
+              delay={0.15}
+              className="flex flex-wrap gap-3 md:justify-end"
+            >
+              <ShineButton>
+                <CTA href="/cohort" variant="primary">
+                  Apply for the Cohort
+                </CTA>
+              </ShineButton>
+              <CTA href="/attune" variant="secondary">
+                Apply for Attune
               </CTA>
-            </ShineButton>
-            <CTA href="https://samelsner.substack.com/" variant="secondary">
-              Read the newsletter
-            </CTA>
-          </Reveal>
-        </div>
-      </Section>
+            </Reveal>
+          </div>
+        </Container>
+      </section>
     </>
   );
 }

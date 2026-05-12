@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono, Source_Serif_4 } from "next/font/google";
+import Script from "next/script";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -19,33 +20,33 @@ const sourceSerif = Source_Serif_4({
 });
 
 const SITE = {
-  name: "Resonance by Sam Elsner",
-  url: "https://resonance.coach",
+  name: "Sam Elsner",
+  url: "https://thesamelsner.com",
   description:
-    "A school for athletes and coaches who want to perform when it counts. Mentorship, cohorts, and the Resonance newsletter from Sam Elsner.",
+    "Cut the noise. Find your frequency. Become antifragile. The Resonance Method — an ecological alignment protocol for creators who are done optimizing and ready to resonate.",
 };
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE.url),
   title: {
     default: SITE.name,
-    template: "%s | Resonance",
+    template: "%s — Sam Elsner",
   },
   description: SITE.description,
   keywords: [
     "Sam Elsner",
-    "Resonance",
-    "Athlete mentorship",
-    "Coaching cohort",
-    "Sport performance",
-    "Ecological dynamics",
-    "Skill acquisition",
+    "Resonance Method",
+    "Attune",
+    "Creator mentorship",
+    "Antifragile",
+    "Frequency",
+    "Ecological alignment",
   ],
   openGraph: {
     title: SITE.name,
     description: SITE.description,
     url: SITE.url,
-    siteName: "Resonance",
+    siteName: "Sam Elsner",
     locale: "en_US",
     type: "website",
   },
@@ -59,16 +60,31 @@ export const metadata: Metadata = {
   },
 };
 
+// Static FOUC guard. Sets `dark` on <html> before hydration so dark-mode
+// users don't see a flash of light theme. Reads localStorage first,
+// falls back to system preference.
+const FOUC_GUARD = [
+  "(function(){try{",
+  "var s=localStorage.getItem('sam-theme');",
+  "var p=window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';",
+  "var t=s||p;",
+  "if(t==='dark')document.documentElement.classList.add('dark');",
+  "}catch(e){}})();",
+].join("");
+
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body
         className={`${geistSans.variable} ${geistMono.variable} ${sourceSerif.variable}`}
       >
+        <Script id="theme-fouc-guard" strategy="beforeInteractive">
+          {FOUC_GUARD}
+        </Script>
         {children}
       </body>
     </html>

@@ -10,10 +10,10 @@
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --color-ink: #141413;
-  --color-bone: #faf9f5;
-  --color-rule: #e5e7eb;
-  --color-muted: #6b6b65;
+  --color-ink: var(--token-ink);
+  --color-bone: var(--token-bone);
+  --color-rule: var(--token-rule);
+  --color-muted: var(--token-muted);
   --color-signal: #FD363B;
   --color-signal-ink: #B72327;
 
@@ -22,16 +22,35 @@
   --font-mono: var(--font-mono);
 }
 
+/* Light theme (default) */
 :root {
-  --background: #faf9f5;
-  --foreground: #141413;
+  --token-ink: #141413;
+  --token-bone: #faf9f5;
+  --token-rule: #e5e7eb;
+  --token-muted: #6b6b65;
+  --background: var(--token-bone);
+  --foreground: var(--token-ink);
+  --grid-dot: rgba(20, 20, 19, 0.10);
+  color-scheme: light;
+}
+
+/* Dark theme */
+.dark {
+  --token-ink: #faf9f5;
+  --token-bone: #0c1117;
+  --token-rule: #1f242c;
+  --token-muted: #8a8a83;
+  --background: var(--token-bone);
+  --foreground: var(--token-ink);
+  --grid-dot: rgba(255, 255, 255, 0.07);
+  color-scheme: dark;
 }
 
 /* ─── Base ─── */
 
 @layer base {
   * {
-    border-color: #e5e7eb;
+    border-color: var(--token-rule);
   }
 
   html {
@@ -50,8 +69,8 @@
   }
 
   ::selection {
-    background: #141413;
-    color: #faf9f5;
+    background: var(--token-ink);
+    color: var(--token-bone);
   }
 
   /* Editorial type defaults */
@@ -59,7 +78,7 @@
     font-family: var(--font-sans), system-ui, sans-serif;
     font-weight: 600;
     letter-spacing: -0.02em;
-    color: #141413;
+    color: var(--token-ink);
   }
 
   h1 {
@@ -80,7 +99,7 @@
   }
 
   p {
-    color: #141413;
+    color: var(--token-ink);
   }
 
   a {
@@ -90,11 +109,11 @@
 
   hr {
     border: 0;
-    border-top: 1px solid #e5e7eb;
+    border-top: 1px solid var(--token-rule);
   }
 
   ::placeholder {
-    color: #6b6b65;
+    color: var(--token-muted);
   }
 }
 
@@ -118,50 +137,50 @@
     padding-block: clamp(3rem, 6vw, 5rem);
   }
 
-  /* Buttons — Anthropic style, square, restrained */
+  /* Buttons — square (0 radius), editorial, signal-red primary */
   .btn {
     display: inline-flex;
     align-items: center;
     justify-content: center;
     gap: 0.5rem;
-    height: 44px;
-    min-width: 132px;
-    padding-inline: 1.125rem;
-    border-radius: 4px;
+    min-height: 52px;
+    min-width: 140px;
+    padding: 1rem 2rem;
+    border-radius: 0;
     font-family: var(--font-sans), system-ui, sans-serif;
-    font-size: 0.9375rem;
-    font-weight: 500;
+    font-size: 1rem;
+    font-weight: 600;
     letter-spacing: -0.005em;
     line-height: 1;
-    transition: background-color 200ms ease, color 200ms ease, border-color 200ms ease, transform 200ms ease;
+    transition: background-color 200ms ease, color 200ms ease, border-color 200ms ease, opacity 200ms ease;
     cursor: pointer;
     user-select: none;
     white-space: nowrap;
   }
 
+  /* Primary = signal red, per the new spec. */
   .btn-primary {
-    background: #141413;
-    color: #faf9f5;
-    border: 1px solid #141413;
+    background: #FD363B;
+    color: #ffffff;
+    border: 1px solid #FD363B;
   }
   .btn-primary:hover {
-    background: #2a2a28;
-    border-color: #2a2a28;
+    opacity: 0.9;
   }
 
   .btn-secondary {
     background: transparent;
-    color: #141413;
-    border: 1px solid #141413;
+    color: var(--token-ink);
+    border: 1px solid var(--token-ink);
   }
   .btn-secondary:hover {
-    background: #141413;
-    color: #faf9f5;
+    background: var(--token-ink);
+    color: var(--token-bone);
   }
 
   .btn-signal {
     background: #FD363B;
-    color: #faf9f5;
+    color: #ffffff;
     border: 1px solid #FD363B;
   }
   .btn-signal:hover {
@@ -171,26 +190,39 @@
 
   .btn-ghost {
     background: transparent;
-    color: #141413;
+    color: var(--token-ink);
     border: 1px solid transparent;
     min-width: 0;
     padding-inline: 0;
+    min-height: 0;
     height: auto;
   }
   .btn-ghost:hover {
     color: #FD363B;
   }
 
+  /* Editorial text link */
+  .text-link {
+    color: var(--token-ink);
+    text-decoration: underline;
+    text-underline-offset: 4px;
+    text-decoration-thickness: 1px;
+    transition: color 200ms ease;
+  }
+  .text-link:hover {
+    color: #FD363B;
+  }
+
   /* Card — quiet container with hairline rule */
   .card {
-    background: #faf9f5;
-    border: 1px solid #e5e7eb;
+    background: var(--token-bone);
+    border: 1px solid var(--token-rule);
     border-radius: 8px;
     padding: 1.5rem;
     transition: border-color 200ms ease, transform 200ms ease;
   }
   .card-hover:hover {
-    border-color: #141413;
+    border-color: var(--token-ink);
   }
 
   /* Eyebrow — small label above sections */
@@ -200,7 +232,7 @@
     font-weight: 500;
     letter-spacing: 0.06em;
     text-transform: uppercase;
-    color: #6b6b65;
+    color: var(--token-muted);
   }
 
   .eyebrow-signal {
@@ -212,14 +244,14 @@
     font-family: var(--font-serif), Georgia, serif;
     font-size: 1.0625rem;
     line-height: 1.65;
-    color: #141413;
+    color: var(--token-ink);
   }
 
   .copy-lg {
     font-family: var(--font-serif), Georgia, serif;
     font-size: 1.25rem;
     line-height: 1.5;
-    color: #141413;
+    color: var(--token-ink);
   }
 
   .copy p + p {
@@ -231,7 +263,7 @@
     font-family: var(--font-sans), system-ui, sans-serif;
     font-size: 0.9375rem;
     font-weight: 500;
-    color: #141413;
+    color: var(--token-ink);
     transition: color 200ms ease;
   }
   .navlink:hover {
@@ -241,7 +273,7 @@
   /* Hairline rule */
   .rule {
     height: 1px;
-    background: #e5e7eb;
+    background: var(--token-rule);
   }
 
   /* Signal underline accent — for hero word */
@@ -367,3 +399,37 @@
     animation-duration: 9s;
   }
 }
+
+/* ─── View Transitions — smooth radial theme swap ─── */
+/*
+ * When the theme toggles, the new theme paints from a circular reveal
+ * centered on the click point. Chrome/Edge/Safari support this natively;
+ * Firefox falls back to an instant swap (still respects user choice).
+ */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+
+::view-transition-old(root) {
+  z-index: 1;
+}
+
+::view-transition-new(root) {
+  z-index: 2;
+}
+
+.dark::view-transition-old(root) {
+  z-index: 2;
+}
+
+.dark::view-transition-new(root) {
+  z-index: 1;
+}
+
+/* All color/background transitions respect prefers-reduced-motion via the JS. */
+html {
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+

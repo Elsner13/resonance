@@ -10,9 +10,11 @@ import { useEffect } from "react";
  */
 export function TallyEmbed({
   formId,
+  title = "Application",
   className,
 }: {
   formId: string;
+  title?: string;
   className?: string;
 }) {
   useEffect(() => {
@@ -39,13 +41,13 @@ export function TallyEmbed({
 
   return (
     <iframe
-      data-tally-src={`https://tally.so/embed/${formId}?alignLeft=1&hideTitle=1&transparentBackground=1&dynamicHeight=1`}
+      data-tally-src={`https://tally.so/embed/${formId}?alignLeft=1&hideTitle=1&dynamicHeight=1`}
       loading="lazy"
       width="100%"
-      height="500"
-      title="Resonance Mentorship Application"
+      height="700"
+      title={title}
       className={className}
-      style={{ border: "none" }}
+      style={{ border: "none", display: "block" }}
     />
   );
 }
