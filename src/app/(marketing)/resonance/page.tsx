@@ -10,9 +10,9 @@ import { LatestPostsMarquee } from "@/components/site/LatestPostsMarquee";
 import { getLatestPosts } from "@/lib/substack";
 
 export const metadata: Metadata = {
-  title: "Resonance — The Newsletter",
+  title: "Resonance · The Newsletter",
   description:
-    "Resonance — the broadcast. One post per week. Whatever frequency Sam Elsner is holding.",
+    "Resonance. The broadcast. One post per week. Whatever frequency Sam Elsner is holding.",
 };
 
 // Revalidate this page hourly so latest posts stay fresh.
@@ -40,9 +40,10 @@ export default async function ResonancePage() {
               delay={0.5}
               className="copy-lg mt-8 pretty mx-auto max-w-2xl text-ink/85"
             >
-              One post per week. Whatever frequency I&apos;m holding —
-              what&apos;s real, what&apos;s aligned, and what will help you
-              cut through your own noise.
+              One post per week. No publishing calendar. No content
+              strategy. Whatever frequency I&apos;m holding when I sit
+              down to write. What&apos;s real. What&apos;s aligned. What
+              will cut through your own noise.
             </Reveal>
           </div>
         </Container>
@@ -91,8 +92,9 @@ export default async function ResonancePage() {
                 Get the next signal in your inbox.
               </h2>
               <p className="copy-lg mt-6 text-bone/75 pretty">
-                Free. One email a week. No funnel tricks. Unsubscribe whenever
-                the frequency isn&apos;t yours.
+                Free. One email a week. No sequences. No upsells. No
+                tricks. When the frequency stops being yours, you
+                unsubscribe.
               </p>
             </Reveal>
 

@@ -17,23 +17,23 @@ const TALLY_FORM_ID = "BzAgvK";
 const INSIDE = [
   {
     title: "One 90-minute group call per week",
-    body: "Real alignment work, not slide decks.",
+    body: "90 minutes. Once a week. No slide decks. No frameworks rehashed from threads you've already read. Alignment work in real time. The 5 of you, plus me, plus what's actually in the room.",
   },
   {
     title: "Daily Frequency Protocol",
-    body: "15 minutes per day, delivered to your phone. The discipline that does the heavy lifting.",
+    body: "15 minutes a day. Delivered to your phone before you open the app store. The protocol does the heavy lifting. You do the showing up.",
   },
   {
     title: "Weekly challenges",
-    body: "Based on group energy and ecological cycles, not a rigid curriculum.",
+    body: "Each week, a challenge. Calibrated to where the group is, not what week of the curriculum it is. There is no curriculum. There is a room, and the room responds.",
   },
   {
     title: "Astro-numerology integration",
-    body: "Used as frequency data and alignment timing, not fluff.",
+    body: "Astrology and numerology used the way they were used originally. As frequency data. As alignment timing. Not as content. Not as woo. As instruments.",
   },
   {
     title: "Private group chat",
-    body: "WhatsApp or Telegram for daily signal checks with the cohort.",
+    body: "WhatsApp or Telegram. The 5 of you check signal with each other every day. No moderators. No coaches in the chat. The cohort runs itself.",
   },
 ];
 
@@ -46,7 +46,7 @@ export default function CohortPage() {
           <div className="mx-auto max-w-3xl text-center">
             <Reveal>
               <div className="eyebrow eyebrow-signal mb-6">
-                90 days · 5 creators · Starts June 15
+                12 Weeks · 5 Creators · Starts June 15
               </div>
             </Reveal>
             <HeroHeadline className="balance">
@@ -57,8 +57,9 @@ export default function CohortPage() {
               delay={0.5}
               className="copy-lg mt-8 pretty mx-auto max-w-2xl text-ink/85"
             >
-              An ecological alignment protocol for 5 creators ready to find
-              their frequency and broadcast from it.
+              12 weeks. 5 creators. We don&apos;t add to your stack. We
+              strip the noise, calibrate the receiver, and turn you into
+              the signal.
             </Reveal>
           </div>
         </Container>
@@ -71,7 +72,8 @@ export default function CohortPage() {
             <div className="eyebrow eyebrow-signal mb-5">The Cohort</div>
             <h2 className="balance">What&apos;s inside.</h2>
             <p className="copy-lg mt-5 text-ink/75 pretty">
-              Five pieces working together. None of them are filler.
+              Five pieces. None of them filler. Each calibrated to
+              perturb a different attractor in your operating system.
             </p>
           </Reveal>
 
@@ -146,7 +148,10 @@ export default function CohortPage() {
                 5 spots. Applications close June 10.
               </h2>
               <p className="copy-lg mt-6 text-bone/75 pretty">
-                Fill out the form below. I read every application personally.
+                Fill out the form below. I read every application
+                personally. If you make the cut, you&apos;ll hear from
+                me in 24 hours. If you don&apos;t, you&apos;ll still
+                hear from me in 24 hours.
               </p>
             </Reveal>
 

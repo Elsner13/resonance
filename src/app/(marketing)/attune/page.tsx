@@ -8,7 +8,7 @@ import { SignalUnderline } from "@/components/motion/SignalUnderline";
 export const metadata: Metadata = {
   title: "Attune",
   description:
-    "Attune — ongoing 1-on-1 mentorship with Sam Elsner. For creators ready to become antifragile. Application only.",
+    "Attune. Ongoing 1-on-1 mentorship with Sam Elsner. For creators ready to become antifragile. Application only.",
 };
 
 // Tally form ID for the Attune 1-on-1 mentorship application — https://tally.so/r/ODdylp
@@ -17,27 +17,27 @@ const TALLY_FORM_ID = "ODdylp";
 const INSIDE = [
   {
     title: "Weekly 60-minute calls",
-    body: "No fluff, all signal. Alignment check, challenge deployment, frequency tuning.",
+    body: "60 minutes. Once a week. No fluff. Three phases: alignment check, challenge deployment, frequency tuning. We don't review your task list. We tune your operator.",
   },
   {
     title: "Daily DM access",
-    body: "Signal loss is real. Reach me when you need a recalibration.",
+    body: "Telegram or iMessage. Signal loss is real. When you feel yourself drift, you reach me. We recalibrate in real time. Not in two weeks at the next call.",
   },
   {
     title: "The Frequency Protocol",
-    body: "15 minutes per day. This does the heavy lifting so you don't have to.",
+    body: "15 minutes a day. The same protocol I run myself. The same one the cohort runs. It does the heavy lifting. You do the showing up.",
   },
   {
     title: "Custom challenges",
-    body: "Deployed based on your actual bottlenecks, not a curriculum.",
+    body: "Deployed when you need them. Not when a curriculum says. The bottleneck reveals itself first. Then I deploy the challenge that breaks it.",
   },
   {
     title: "Ecological alignment tracking",
-    body: "Your energy mapped to natural cycles. Stop forcing output on empty days.",
+    body: "Your energy mapped to natural cycles. Lunar. Astrological. Numerological. You stop forcing output on empty days. You start riding the days that are actually yours.",
   },
   {
     title: "Astro-numerology integration",
-    body: "Immersive personal alignment. Frequency data, not woo.",
+    body: "Astrology and numerology integrated fully. Frequency data, not woo. The day you book a launch matters. The week you record matters. The mentorship knows your charts and runs to them.",
   },
 ];
 
@@ -61,8 +61,9 @@ export default function AttunePage() {
               delay={0.5}
               className="copy-lg mt-8 pretty mx-auto max-w-2xl text-ink/85"
             >
-              Ongoing 1-on-1 mentorship for creators ready to become
-              antifragile.
+              Ongoing 1-on-1 mentorship for creators done playing the
+              funnel game and ready to broadcast from frequency.
+              Antifragile by design, not by accident.
             </Reveal>
           </div>
         </Container>
@@ -93,8 +94,9 @@ export default function AttunePage() {
                 more noise to a signal that was already weak.
               </p>
               <p>
-                The creator economy rewards signal clarity. Not tactics. Not
-                hacks. Signal.
+                The creator economy is not the funnel economy anymore.
+                It is the frequency economy. Signal clarity is the only
+                moat that compounds. Not tactics. Not hacks. Signal.
               </p>
               <p>
                 Most mentors sell you their playbook. I don&apos;t have a
@@ -112,7 +114,9 @@ export default function AttunePage() {
             <div className="eyebrow eyebrow-signal mb-5">Attune</div>
             <h2 className="balance">What&apos;s inside.</h2>
             <p className="copy-lg mt-5 text-ink/75 pretty">
-              Six instruments. One nervous system. Everything tuned to you.
+              Six instruments. One nervous system. Everything tuned to
+              you, not to a curriculum someone else built for someone
+              else.
             </p>
           </Reveal>
 

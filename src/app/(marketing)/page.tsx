@@ -37,8 +37,9 @@ export default function HomePage() {
               duration={0.7}
               className="copy-lg mt-8 mx-auto max-w-2xl pretty text-ink/85"
             >
-              The Resonance Method™ — an ecological alignment protocol for
-              creators who are done optimizing and ready to resonate.
+              The Resonance Method™. Not another framework. Not another
+              funnel. Not another stack of tactics. A protocol for creators
+              ready to broadcast from alignment.
             </Reveal>
             <Reveal
               delay={0.7}
@@ -76,18 +77,24 @@ export default function HomePage() {
             <Reveal delay={0.1} className="copy mt-8 space-y-5 text-ink/90">
               <p>
                 You&apos;ve built the funnel. Bought the CRM. Hired the VA.
-                Configured the agent. And yet — you&apos;re drowning in tools
-                that promised freedom and delivered noise.
+                Configured the agent. Every quarter you stack one more tool
+                that promised freedom and delivered noise. The stack is not
+                the problem. The stack is the symptom.
               </p>
               <p>
-                The old identity says: &ldquo;I need more systems before I can
-                create.&rdquo; The new identity knows: &ldquo;I am the system.
-                Everything else is just amplification.&rdquo;
+                The old identity says: &ldquo;I need more systems before I
+                can create.&rdquo; The new identity knows it&apos;s the
+                opposite. You are the system. Everything else is just
+                amplification.
               </p>
               <p>
-                I was you. Lost in the setup. Building cathedrals before
-                laying bricks. Then I stopped optimizing and started
-                resonating. Now I help others do the same.
+                I was you. I had a stack so impressive I forgot I
+                hadn&apos;t shipped in three months. I had discipline. I had
+                tactics. I had every tool the smart accounts said to buy.
+                None of it was the bottleneck. The frequency I was
+                broadcasting from was. So I stopped optimizing the machine
+                and started tuning the signal. Now I run that protocol on
+                the creators who hire me to do the same.
               </p>
             </Reveal>
 
@@ -107,8 +114,8 @@ export default function HomePage() {
             </Reveal>
             <Reveal delay={0.15} className="copy-lg pretty text-bone/80">
               <p>
-                We don&apos;t add more to your plate. We tune what&apos;s
-                already there.
+                The protocol is not addition. It is subtraction. It is
+                calibration. It is broadcast.
               </p>
             </Reveal>
           </div>
@@ -123,28 +130,30 @@ export default function HomePage() {
               </div>
               <h3 className="text-bone">Excavation</h3>
               <p className="copy mt-4 text-bone/75 pretty">
-                Cut the noise. Audit every system, belief, and tool that is
-                out of alignment.
+                Cut the noise. Every tool you don&apos;t need. Every belief
+                that isn&apos;t yours. Every system you&apos;ve outgrown.
+                Audit them all. Bury them all.
               </p>
             </StaggerItem>
             <StaggerItem className="bg-ink p-8 md:p-10">
               <div className="font-sans text-sm uppercase tracking-[0.18em] text-signal mb-4">
                 Phase 2
               </div>
-              <h3 className="text-bone">Foundations</h3>
+              <h3 className="text-bone">Calibration</h3>
               <p className="copy mt-4 text-bone/75 pretty">
-                Daily Frequency Protocol. 15 minutes each morning.
-                Antifragile principles become muscle memory.
+                15 minutes a day. Not for productivity. For frequency. Run
+                the Daily Frequency Protocol until antifragile is not a
+                concept but a baseline.
               </p>
             </StaggerItem>
             <StaggerItem className="bg-ink p-8 md:p-10">
               <div className="font-sans text-sm uppercase tracking-[0.18em] text-signal mb-4">
                 Phase 3
               </div>
-              <h3 className="text-bone">Mastery</h3>
+              <h3 className="text-bone">Broadcast</h3>
               <p className="copy mt-4 text-bone/75 pretty">
-                Broadcast from alignment. Launch. Create. Fill your cohort.
-                You are no longer seeking signal — you are the signal.
+                Launch. Create. Fill the room. You are not chasing signal
+                anymore. You are the signal.
               </p>
             </StaggerItem>
           </StaggerGroup>
@@ -168,12 +177,13 @@ export default function HomePage() {
             <Reveal delay={0.1}>
               <blockquote className="mt-10">
                 <p className="font-serif text-2xl italic leading-snug text-ink balance">
-                  &ldquo;I went from drowning in setup to launching my cohort
-                  in 90 days. The Resonance Method forced me to trust my own
-                  signal before amplifying it.&rdquo;
+                  &ldquo;I spent two years trying to out-work my environment.
+                  Tools. Tactics. Discipline. None of it was the bottleneck.
+                  The frequency I was broadcasting was. The Resonance Method
+                  is what I built to fix it.&rdquo;
                 </p>
                 <footer className="mt-6 font-sans text-sm text-muted">
-                  — Sam Elsner, Creator of The Resonance Method
+                  Sam Elsner, Resonance #001
                 </footer>
               </blockquote>
             </Reveal>
@@ -193,8 +203,8 @@ export default function HomePage() {
                 </h2>
               </div>
               <div className="copy-lg pretty self-end text-ink/85">
-                Each is a different intensity of the same protocol — becoming
-                the kind of creator the moment respects.
+                Each is a different intensity of the same protocol.
+                Becoming the kind of creator the moment respects.
               </div>
             </div>
           </Reveal>
@@ -205,17 +215,19 @@ export default function HomePage() {
                 <article className="card card-hover relative grid gap-8 p-8 md:grid-cols-[1.4fr_1fr] md:gap-12 md:p-12">
                   <div>
                     <div className="eyebrow eyebrow-signal mb-5">
-                      90 days · Live
-                      <span className="ml-3 text-muted">— 5 spots</span>
+                      12 Weeks · Live
+                      <span className="ml-3 text-muted">· 5 Spots</span>
                     </div>
                     <h3 className="text-3xl font-semibold leading-[1.1] tracking-tightest md:text-4xl balance">
                       The Resonance Cohort
                     </h3>
                     <div className="copy mt-5 max-w-xl pretty text-ink/85">
                       <p>
-                        90 days. 5 creators. Starting June 15. Weekly group
-                        calls, Daily Frequency Protocol, astro-numerology
-                        timing, and a private chat for daily signal checks.
+                        12 weeks. 5 creators. Starting June 15. Weekly
+                        group calls. A Daily Frequency Protocol you run
+                        every morning. Astro-numerology as alignment
+                        timing. You leave the cohort resonant or you
+                        leave it expelled. There is no third option.
                       </p>
                     </div>
                     <p className="mt-6 font-sans text-sm text-muted">
@@ -252,16 +264,18 @@ export default function HomePage() {
                   <article className="card card-hover relative flex h-full flex-col p-7 md:p-8">
                     <div className="eyebrow mb-4">
                       Ongoing · 1-on-1
-                      <span className="ml-2 text-muted">— Application only</span>
+                      <span className="ml-2 text-muted">· Application only</span>
                     </div>
                     <h3 className="font-sans text-xl font-semibold leading-[1.15] tracking-tightest text-ink md:text-2xl balance">
                       Attune
                     </h3>
                     <div className="copy mt-4 grow pretty text-ink/85">
                       <p>
-                        Ongoing 1-on-1 mentorship for creators ready to become
-                        antifragile. Weekly calls, daily DM access, ecological
-                        alignment. A container, not a course.
+                        Ongoing 1-on-1 mentorship for creators ready to
+                        become antifragile. Weekly calls. Daily DM
+                        access. Custom challenges deployed against your
+                        actual bottlenecks, not a curriculum. A
+                        container, not a course.
                       </p>
                     </div>
                     <p className="mt-5 font-sans text-sm text-muted">
@@ -298,10 +312,11 @@ export default function HomePage() {
                     </h3>
                     <div className="copy mt-4 grow pretty text-ink/85">
                       <p>
-                        The broadcast. One post per week. Whatever frequency
-                        I&apos;m holding — what&apos;s real, what&apos;s
-                        aligned, and what will help you cut through your own
-                        noise.
+                        The broadcast. One post per week. No publishing
+                        calendar. No content strategy. Whatever frequency
+                        I&apos;m holding when I sit down to write.
+                        What&apos;s real. What&apos;s aligned. What will
+                        cut through your own noise.
                       </p>
                     </div>
                     <p className="mt-5 font-sans text-sm text-muted">
