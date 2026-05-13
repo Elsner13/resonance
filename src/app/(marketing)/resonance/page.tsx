@@ -81,7 +81,7 @@ export default async function ResonancePage() {
 
       {/* ── Subscribe (dark destination) ── */}
       <section
-        className="section text-bone border-t border-signal"
+        className="section dark-locked border-t border-signal"
         style={{ background: "#0c1117" }}
       >
         <Container>

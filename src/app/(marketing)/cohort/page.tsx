@@ -117,55 +117,62 @@ export default function CohortPage() {
         </Container>
       </section>
 
-      {/* ── Investment (quiet note) ── */}
-      <section className="section-tight border-t border-rule">
-        <Container>
-          <div className="mx-auto max-w-[720px] text-center">
-            <Reveal>
-              <div className="eyebrow mb-4">Investment</div>
-              <p className="font-sans text-2xl md:text-3xl font-semibold tracking-tightest text-ink">
-                Application only
-              </p>
-              <p className="copy mt-4 text-muted pretty">
-                Pricing shared after application review. Payment plans
-                available for qualified applicants.
-              </p>
-            </Reveal>
-          </div>
-        </Container>
-      </section>
-
-      {/* ── Application (dark — flows into form) ── */}
+      {/* ── Application (single dark section — Investment + Apply merged) ── */}
       <section
-        className="section text-bone border-t border-signal"
+        className="section dark-locked border-t border-rule"
         style={{ background: "#0c1117" }}
       >
         <Container>
           <div className="mx-auto max-w-[720px]">
             <Reveal className="text-center">
-              <div className="eyebrow eyebrow-signal mb-5">Apply</div>
+              <div className="eyebrow eyebrow-signal mb-5">
+                Apply for the Cohort
+              </div>
               <h2 className="text-bone balance">
-                5 spots. Applications close June 10.
+                5 spots. Closes June 10.
               </h2>
-              <p className="copy-lg mt-6 text-bone/75 pretty">
-                Fill out the form below. I read every application
-                personally. If you make the cut, you&apos;ll hear from
-                me in 24 hours. If you don&apos;t, you&apos;ll still
-                hear from me in 24 hours.
+              <p className="copy-lg mt-6 text-bone/85 pretty">
+                Applications reviewed within 24 hours. If you&apos;re a
+                fit, you&apos;re in. If you&apos;re not, you&apos;ll hear
+                back anyway.
               </p>
             </Reveal>
 
-            <Reveal delay={0.2} className="mt-12">
+            <Reveal
+              delay={0.15}
+              className="mt-10 mx-auto max-w-[560px] grid gap-6 sm:grid-cols-2 text-left"
+            >
+              <div className="border-t border-bone/15 pt-5">
+                <div className="font-sans text-xs font-semibold uppercase tracking-[0.18em] text-signal mb-2">
+                  For
+                </div>
+                <p className="copy text-bone/90 pretty">
+                  Creators ready to trade the funnel for a frequency, and
+                  committed to 15 minutes a day for 12 weeks.
+                </p>
+              </div>
+              <div className="border-t border-bone/15 pt-5">
+                <div className="font-sans text-xs font-semibold uppercase tracking-[0.18em] text-bone/40 mb-2">
+                  Not for
+                </div>
+                <p className="copy text-bone/90 pretty">
+                  Anyone looking to lurk in a Slack and call it
+                  transformation.
+                </p>
+              </div>
+            </Reveal>
+
+            <Reveal delay={0.25} className="mt-12">
               <TallyEmbed
                 formId={TALLY_FORM_ID}
                 title="Resonance Cohort Application"
               />
             </Reveal>
 
-            <Reveal delay={0.3}>
-              <p className="mt-10 text-center font-sans text-sm text-bone/60">
-                I&apos;ll confirm your spot within 24 hours of receiving your
-                application.
+            <Reveal delay={0.35}>
+              <p className="mt-8 text-center font-sans text-sm text-bone/65">
+                Pricing shared after application review. Payment plans
+                available for qualified applicants.
               </p>
             </Reveal>
           </div>

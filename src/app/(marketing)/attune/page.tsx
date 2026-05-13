@@ -141,51 +141,78 @@ export default function AttunePage() {
         </Container>
       </section>
 
-      {/* ── Investment (quiet note) ── */}
-      <section className="section-tight border-t border-rule">
-        <Container>
-          <div className="mx-auto max-w-[720px] text-center">
-            <Reveal>
-              <div className="eyebrow mb-4">Investment</div>
-              <p className="font-sans text-2xl md:text-3xl font-semibold tracking-tightest text-ink">
-                Application only
-              </p>
-              <p className="copy mt-4 text-muted pretty">
-                Monthly and yearly options available. Pricing shared after
-                application review. Payment plans available for qualified
-                applicants.
-              </p>
-            </Reveal>
-          </div>
-        </Container>
-      </section>
-
-      {/* ── Application (dark — flows into form) ── */}
+      {/* ── Application (single dark section — Investment + Apply merged) ── */}
       <section
-        className="section text-bone border-t border-signal"
+        className="section dark-locked border-t border-rule"
         style={{ background: "#0c1117" }}
       >
         <Container>
           <div className="mx-auto max-w-[720px]">
             <Reveal className="text-center">
-              <div className="eyebrow eyebrow-signal mb-5">Apply</div>
-              <h2 className="text-bone balance">Serious inquiries only.</h2>
-              <p className="copy-lg mt-6 text-bone/75 pretty">
-                Fill out the form below. I read every application personally.
+              {/* OG Attune mark — slashed null */}
+              <svg
+                aria-hidden="true"
+                width="56"
+                height="56"
+                viewBox="0 0 64 64"
+                className="mx-auto mb-8 text-signal"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2.5"
+                strokeLinecap="round"
+              >
+                <circle cx="32" cy="32" r="24" />
+                <line x1="14" y1="50" x2="50" y2="14" />
+              </svg>
+
+              <div className="eyebrow eyebrow-signal mb-5">
+                Apply for Attune
+              </div>
+              <h2 className="text-bone balance">
+                12 spots open. Application only.
+              </h2>
+              <p className="copy-lg mt-6 text-bone/85 pretty">
+                Applications reviewed within 48 hours. If you&apos;re a fit,
+                you&apos;ll book a 15-minute Calibration Call with me before
+                either of us commits.
               </p>
             </Reveal>
 
-            <Reveal delay={0.2} className="mt-12">
+            <Reveal
+              delay={0.15}
+              className="mt-10 mx-auto max-w-[560px] grid gap-6 sm:grid-cols-2 text-left"
+            >
+              <div className="border-t border-bone/15 pt-5">
+                <div className="font-sans text-xs font-semibold uppercase tracking-[0.18em] text-signal mb-2">
+                  For
+                </div>
+                <p className="copy text-bone/90 pretty">
+                  Creators done playing the funnel game and ready to
+                  broadcast from frequency.
+                </p>
+              </div>
+              <div className="border-t border-bone/15 pt-5">
+                <div className="font-sans text-xs font-semibold uppercase tracking-[0.18em] text-bone/40 mb-2">
+                  Not for
+                </div>
+                <p className="copy text-bone/90 pretty">
+                  Anyone looking for a course, a template, or a 7-figure
+                  shortcut.
+                </p>
+              </div>
+            </Reveal>
+
+            <Reveal delay={0.25} className="mt-12">
               <TallyEmbed
                 formId={TALLY_FORM_ID}
                 title="Attune Mentorship Application"
               />
             </Reveal>
 
-            <Reveal delay={0.3}>
-              <p className="mt-10 text-center font-sans text-sm text-bone/60">
-                Applications reviewed within 48 hours. If it&apos;s a fit,
-                I&apos;ll send a link to book a 15-minute confirmation call.
+            <Reveal delay={0.35}>
+              <p className="mt-8 text-center font-sans text-sm text-bone/65">
+                Monthly and yearly options available. Pricing shared after
+                application review.
               </p>
             </Reveal>
           </div>

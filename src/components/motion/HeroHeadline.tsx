@@ -54,7 +54,7 @@ export function HeroHeadline({
               transition: { duration: 0.7, ease: [0.16, 1, 0.3, 1] },
             },
           }}
-          className="inline-block whitespace-pre"
+          className="inline-block whitespace-pre-wrap"
         >
           {tok}
         </motion.span>
