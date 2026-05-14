@@ -462,3 +462,286 @@ html {
   transition: background-color 0.3s ease, color 0.3s ease;
 }
 
+/* ─── /apply scoped styles ──────────────────────────────────────
+ * The /apply page uses a brand-within-brand (Void / Onyx / Cosmic
+ * Crimson). All styles below are scoped to [data-apply-scope] so they
+ * never leak into the rest of the site. Tokens come from CSS vars set
+ * on the layout wrapper. Fonts come from root-layout-registered
+ * variables: --font-fraunces and --font-dm-sans.
+ * ────────────────────────────────────────────────────────────── */
+
+[data-apply-scope] *,
+[data-apply-scope] *::before,
+[data-apply-scope] *::after {
+  border-color: var(--slate);
+}
+
+[data-apply-scope] .sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+[data-apply-scope] .apply-shell {
+  width: 100%;
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 24px 20px 96px;
+}
+
+@media (min-width: 768px) {
+  [data-apply-scope] .apply-shell {
+    padding: 32px 32px 128px;
+  }
+}
+
+[data-apply-scope] .apply-top-row {
+  display: flex;
+  justify-content: flex-start;
+  margin-bottom: 56px;
+}
+
+[data-apply-scope] .apply-back-link {
+  font-family: var(--font-dm-sans), system-ui, sans-serif;
+  font-size: 13px;
+  color: var(--ash);
+  letter-spacing: -0.005em;
+  transition: color 200ms ease;
+  text-decoration: none;
+}
+
+[data-apply-scope] .apply-back-link:hover {
+  color: var(--bone);
+}
+
+[data-apply-scope] .apply-header {
+  text-align: center;
+  margin-bottom: 64px;
+}
+
+@media (min-width: 768px) {
+  [data-apply-scope] .apply-header {
+    margin-bottom: 80px;
+  }
+}
+
+[data-apply-scope] .apply-h1 {
+  font-family: var(--font-fraunces), Georgia, serif;
+  font-style: italic;
+  font-weight: 600;
+  font-size: clamp(2.25rem, 7vw, 3.75rem);
+  line-height: 1.08;
+  letter-spacing: -0.02em;
+  color: var(--bone);
+  margin: 0;
+  text-wrap: balance;
+}
+
+[data-apply-scope] .apply-h2 {
+  font-family: var(--font-fraunces), Georgia, serif;
+  font-style: italic;
+  font-weight: 600;
+  font-size: clamp(1.625rem, 4vw, 2.25rem);
+  line-height: 1.15;
+  letter-spacing: -0.015em;
+  color: var(--bone);
+  margin: 0;
+  text-wrap: balance;
+}
+
+[data-apply-scope] .apply-lede {
+  font-family: var(--font-dm-sans), system-ui, sans-serif;
+  font-size: clamp(15px, 2vw, 17px);
+  line-height: 1.6;
+  color: var(--bone);
+  opacity: 0.85;
+  margin: 20px auto 0;
+  max-width: 540px;
+  text-wrap: pretty;
+}
+
+[data-apply-scope] .apply-eyebrow {
+  font-family: var(--font-dm-sans), system-ui, sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ash);
+  margin: 0 0 16px;
+}
+
+[data-apply-scope] .apply-eyebrow-crimson {
+  color: var(--crimson);
+}
+
+[data-apply-scope] .apply-step {
+  font-family: var(--font-dm-sans), system-ui, sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ash);
+  margin: 0 0 16px;
+}
+
+[data-apply-scope] .apply-section {
+  margin-bottom: 64px;
+}
+
+@media (min-width: 768px) {
+  [data-apply-scope] .apply-section {
+    margin-bottom: 88px;
+  }
+}
+
+[data-apply-scope] .apply-locked-summary {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-dm-sans), system-ui, sans-serif;
+  font-size: 14px;
+  color: var(--bone);
+  background: var(--onyx);
+  border-top: 1px solid var(--slate);
+  border-bottom: 1px solid var(--slate);
+  padding: 16px 24px;
+  margin: 24px 0 56px;
+  text-align: center;
+}
+
+[data-apply-scope] .apply-form-reveal {
+  animation: apply-reveal 320ms cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@keyframes apply-reveal {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-apply-scope] .apply-form-reveal {
+    animation: none;
+  }
+}
+
+[data-apply-scope] .apply-label {
+  display: block;
+  font-family: var(--font-dm-sans), system-ui, sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--bone);
+  margin: 0 0 8px;
+}
+
+[data-apply-scope] .apply-label-req {
+  color: var(--crimson);
+  margin-left: 2px;
+}
+
+[data-apply-scope] .apply-label-opt {
+  color: var(--ash);
+  font-weight: 400;
+}
+
+[data-apply-scope] .apply-input,
+[data-apply-scope] .apply-textarea {
+  width: 100%;
+  font-family: var(--font-dm-sans), system-ui, sans-serif;
+  font-size: 16px;
+  color: var(--bone);
+  background: var(--onyx);
+  border: 1px solid var(--slate);
+  border-radius: 0;
+  padding: 14px 16px;
+  min-height: 48px;
+  outline: none;
+  transition: border-color 180ms ease;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+[data-apply-scope] .apply-textarea {
+  resize: vertical;
+  min-height: 120px;
+  line-height: 1.5;
+}
+
+[data-apply-scope] .apply-input:focus-visible,
+[data-apply-scope] .apply-textarea:focus-visible {
+  border-color: var(--crimson);
+  box-shadow: 0 0 0 2px rgba(178, 34, 34, 0.35);
+}
+
+[data-apply-scope] .apply-input::placeholder,
+[data-apply-scope] .apply-textarea::placeholder {
+  color: var(--ash);
+}
+
+[data-apply-scope] .apply-count {
+  font-family: var(--font-dm-sans), system-ui, sans-serif;
+  font-size: 12px;
+  color: var(--ash);
+  margin: 6px 0 0;
+}
+
+[data-apply-scope] .apply-count-ok {
+  color: var(--crimson);
+}
+
+[data-apply-scope] .apply-error {
+  font-family: var(--font-dm-sans), system-ui, sans-serif;
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--bone);
+  background: rgba(178, 34, 34, 0.12);
+  border-left: 2px solid var(--crimson);
+  padding: 12px 16px;
+}
+
+[data-apply-scope] .apply-submit {
+  font-family: var(--font-fraunces), Georgia, serif;
+  font-style: italic;
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--bone);
+  background: var(--crimson);
+  border: 1px solid var(--crimson);
+  border-radius: 0;
+  padding: 18px 36px;
+  min-height: 56px;
+  cursor: pointer;
+  letter-spacing: -0.005em;
+  transition: background-color 180ms ease, border-color 180ms ease,
+    transform 180ms ease;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+[data-apply-scope] .apply-submit:hover:not(:disabled) {
+  background: var(--ember);
+  border-color: var(--ember);
+}
+
+[data-apply-scope] .apply-submit:focus-visible {
+  outline: 2px solid var(--crimson);
+  outline-offset: 3px;
+}
+
+[data-apply-scope] .apply-submit:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+}
+
+
