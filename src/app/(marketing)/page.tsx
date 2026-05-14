@@ -46,11 +46,14 @@ export default function HomePage() {
               className="mt-10 flex flex-col items-center gap-5"
             >
               <ShineButton>
-                <CTA href="/cohort" variant="primary">
+                <CTA href="/apply/cohort" variant="primary">
                   Apply for the Cohort
                 </CTA>
               </ShineButton>
-              <Link href="/attune" className="text-link font-sans text-base">
+              <Link
+                href="/apply/mentorship"
+                className="text-link font-sans text-base"
+              >
                 Or apply for 1-on-1 mentorship
               </Link>
             </Reveal>
@@ -211,7 +214,7 @@ export default function HomePage() {
 
           <div className="mt-12 grid gap-6 md:gap-8">
             <Reveal>
-              <Link href="/cohort" className="group block">
+              <Link href="/apply/cohort" className="group block">
                 <article className="card card-hover relative grid gap-8 p-8 md:grid-cols-[1.4fr_1fr] md:gap-12 md:p-12">
                   <div>
                     <div className="eyebrow eyebrow-signal mb-5">
@@ -260,7 +263,10 @@ export default function HomePage() {
 
             <StaggerGroup className="grid gap-6 md:grid-cols-2 md:gap-8">
               <StaggerItem>
-                <Link href="/attune" className="group block h-full">
+                <Link
+                  href="/apply/mentorship"
+                  className="group block h-full"
+                >
                   <article className="card card-hover relative flex h-full flex-col p-7 md:p-8">
                     <div className="eyebrow mb-4">
                       Ongoing · 1-on-1
@@ -364,11 +370,11 @@ export default function HomePage() {
               className="flex flex-wrap gap-3 md:justify-end"
             >
               <ShineButton>
-                <CTA href="/cohort" variant="primary">
+                <CTA href="/apply/cohort" variant="primary">
                   Apply for the Cohort
                 </CTA>
               </ShineButton>
-              <CTA href="/attune" variant="secondary">
+              <CTA href="/apply/mentorship" variant="secondary">
                 Apply for Attune
               </CTA>
             </Reveal>

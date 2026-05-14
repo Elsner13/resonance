@@ -3,8 +3,10 @@
 import { useEffect, useRef } from "react";
 
 export function SuccessState({
+  headline = "See you on the call.",
   bookedTimeDisplay,
 }: {
+  headline?: string;
   bookedTimeDisplay?: string;
 }) {
   const liveRef = useRef<HTMLParagraphElement>(null);
@@ -30,7 +32,7 @@ export function SuccessState({
       <div className="eyebrow eyebrow-signal mb-5">Application sent</div>
 
       <h2 id="success-heading" className="text-bone balance">
-        See you on the call.
+        {headline}
       </h2>
 
       {bookedTimeDisplay && (

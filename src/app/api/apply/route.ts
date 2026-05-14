@@ -2,12 +2,18 @@ import { NextResponse } from "next/server";
 import { Resend } from "resend";
 import { OperatorNotificationEmail } from "@/emails/operator-notification";
 import { ApplicantConfirmationEmail } from "@/emails/applicant-confirmation";
+import {
+  APPLY_CONFIG,
+  isApplyType,
+  type ApplyType,
+} from "@/lib/apply-config";
 
 export const runtime = "nodejs";
 
 const FROM_EMAIL = "Sam Elsner <sam@thesamelsner.com>";
 
 interface ApplyPayload {
+  type: ApplyType;
   fullName: string;
   email: string;
   phone?: string;
@@ -24,6 +30,7 @@ function bad(message: string, status = 400) {
 }
 
 function validate(p: Partial<ApplyPayload>): p is ApplyPayload {
+  if (!p.type || !isApplyType(p.type)) return false;
   if (!p.fullName || p.fullName.trim().length < 2) return false;
   if (!p.email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(p.email)) return false;
   if (!p.workingOn || p.workingOn.trim().length < 100) return false;
@@ -33,67 +40,54 @@ function validate(p: Partial<ApplyPayload>): p is ApplyPayload {
 }
 
 /**
- * Best-effort Kit subscribe using the Kit v4 API.
- *
- * Two-step flow (v4 has no single-shot form-subscribe endpoint):
- *  1) POST /v4/subscribers       -> create or upsert the subscriber
+ * Push applicant into the correct Kit form via the v4 API. Two-step:
+ *  1) POST /v4/subscribers       -> create / upsert subscriber
  *  2) POST /v4/forms/{id}/subscribers/{subscriber_id}
- *                                -> add that subscriber to the form
+ *                                -> add to the form
  *
- * Silently logs and returns false on any failure — never blocks the
- * form submission, since the operator email is the source of truth.
+ * Best-effort: never blocks the form submission. Operator email is the
+ * source of truth.
  */
-async function pushToKit(payload: ApplyPayload): Promise<boolean> {
+async function pushToKit(
+  email: string,
+  fullName: string,
+  kitFormId: number,
+): Promise<boolean> {
   const apiKey = process.env.KIT_API_KEY;
-  const formId = process.env.KIT_COHORT_FORM_ID;
-  if (!apiKey || !formId) {
-    console.info("[kit] skipped: missing KIT_API_KEY or KIT_COHORT_FORM_ID");
+  if (!apiKey) {
+    console.info("[kit] skipped: missing KIT_API_KEY");
     return false;
   }
-
   const baseHeaders = {
     "X-Kit-Api-Key": apiKey,
     "Content-Type": "application/json",
     Accept: "application/json",
   };
-
   try {
-    const firstName = payload.fullName.trim().split(/\s+/)[0];
-
-    // Step 1 — create / upsert the subscriber (Kit v4 is idempotent on email)
+    const firstName = fullName.trim().split(/\s+/)[0];
     const subRes = await fetch("https://api.kit.com/v4/subscribers", {
       method: "POST",
       headers: baseHeaders,
       body: JSON.stringify({
-        email_address: payload.email,
+        email_address: email,
         first_name: firstName,
       }),
     });
-
     if (!subRes.ok) {
       const text = await subRes.text();
       console.error("[kit] subscriber create failed:", subRes.status, text);
       return false;
     }
-
-    const subData = (await subRes.json()) as {
-      subscriber?: { id?: number };
-    };
+    const subData = (await subRes.json()) as { subscriber?: { id?: number } };
     const subscriberId = subData.subscriber?.id;
     if (!subscriberId) {
       console.error("[kit] no subscriber.id in response:", subData);
       return false;
     }
-
-    // Step 2 — add subscriber to the Cohort Application form
     const formRes = await fetch(
-      `https://api.kit.com/v4/forms/${formId}/subscribers/${subscriberId}`,
-      {
-        method: "POST",
-        headers: baseHeaders,
-      },
+      `https://api.kit.com/v4/forms/${kitFormId}/subscribers/${subscriberId}`,
+      { method: "POST", headers: baseHeaders },
     );
-
     if (!formRes.ok) {
       const text = await formRes.text();
       console.error(
@@ -101,19 +95,17 @@ async function pushToKit(payload: ApplyPayload): Promise<boolean> {
         formRes.status,
         text,
         "form_id=",
-        formId,
+        kitFormId,
         "sub_id=",
         subscriberId,
       );
-      // Subscriber was created globally; that's still partially useful.
       return false;
     }
-
     console.info(
       "[kit] subscribed",
-      payload.email,
+      email,
       "→ form",
-      formId,
+      kitFormId,
       "(sub_id",
       subscriberId,
       ")",
@@ -145,28 +137,29 @@ export async function POST(req: Request) {
     );
   }
 
+  const cfg = APPLY_CONFIG[payload.type];
   const resend = new Resend(apiKey);
   const firstName = payload.fullName.trim().split(/\s+/)[0];
 
-  // Send both emails in parallel. If either fails we still surface success
-  // to the user as long as the operator email lands — the operator email is
-  // the contract.
   const [operatorResult, applicantResult] = await Promise.allSettled([
     resend.emails.send({
       from: FROM_EMAIL,
       to: notifyEmail,
       replyTo: payload.email,
-      subject: `Cohort application — ${payload.fullName}`,
+      subject: cfg.operatorEmailSubject(payload.fullName),
       react: OperatorNotificationEmail(payload),
     }),
     resend.emails.send({
       from: FROM_EMAIL,
       to: payload.email,
       replyTo: "sam@thesamelsner.com",
-      subject: "I got it.",
+      subject: cfg.applicantEmailSubject,
       react: ApplicantConfirmationEmail({
         firstName,
         bookedTimeDisplay: payload.bookedTimeDisplay,
+        prepNote: cfg.prepNote,
+        prepReading: cfg.prepReading,
+        tagline: cfg.tagline,
       }),
     }),
   ]);
@@ -195,7 +188,9 @@ export async function POST(req: Request) {
   }
 
   // Kit push runs after the emails. Best-effort, doesn't affect response.
-  pushToKit(payload).catch((err) => console.error("[kit] unhandled:", err));
+  pushToKit(payload.email, payload.fullName, cfg.kitFormId).catch((err) =>
+    console.error("[kit] unhandled:", err),
+  );
 
   return NextResponse.json({
     ok: true,

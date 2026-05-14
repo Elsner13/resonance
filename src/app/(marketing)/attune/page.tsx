@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { Container } from "@/components/site/Container";
-import { TallyEmbed } from "@/components/site/TallyEmbed";
+import { CTA } from "@/components/site/CTA";
 import { Reveal, StaggerGroup, StaggerItem } from "@/components/motion/Reveal";
 import { HeroHeadline } from "@/components/motion/HeroHeadline";
 import { SignalUnderline } from "@/components/motion/SignalUnderline";
@@ -10,9 +10,6 @@ export const metadata: Metadata = {
   description:
     "Attune. Ongoing 1-on-1 mentorship with Sam Elsner. For creators ready to become antifragile. Application only.",
 };
-
-// Tally form ID for the Attune 1-on-1 mentorship application — https://tally.so/r/ODdylp
-const TALLY_FORM_ID = "ODdylp";
 
 const INSIDE = [
   {
@@ -202,17 +199,14 @@ export default function AttunePage() {
               </div>
             </Reveal>
 
-            <Reveal delay={0.25} className="mt-12">
-              <TallyEmbed
-                formId={TALLY_FORM_ID}
-                title="Attune Mentorship Application"
-              />
-            </Reveal>
-
-            <Reveal delay={0.35}>
-              <p className="mt-8 text-center font-sans text-sm text-bone/65">
-                Monthly and yearly options available. Pricing shared after
-                application review.
+            <Reveal delay={0.25} className="mt-14 text-center">
+              <CTA href="/apply/mentorship" variant="primary">
+                Book the call. Then we begin.
+              </CTA>
+              <p className="mt-6 font-sans text-sm text-bone/65">
+                One screen. Pick a time, send the form, you&apos;re in
+                the room. Monthly and yearly options available, pricing
+                shared after application review.
               </p>
             </Reveal>
           </div>

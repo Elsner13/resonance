@@ -2,9 +2,11 @@
 
 import { useEffect, useId, useRef, useState } from "react";
 import { cn } from "@/lib/utils";
+import type { ApplyType } from "@/lib/apply-config";
 import type { BookingPayload } from "./CalScheduler";
 
 interface Props {
+  type: ApplyType;
   booking: BookingPayload;
   onSuccess: (info: { displayTime?: string }) => void;
 }
@@ -18,7 +20,7 @@ const MIN_REFLECTION_LENGTH = 100;
  * application section (#0c1117) so input surfaces use literal light hex
  * (consistent with /cohort + /attune Tally form sections).
  */
-export function ApplicationForm({ booking, onSuccess }: Props) {
+export function ApplicationForm({ type, booking, onSuccess }: Props) {
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const formRef = useRef<HTMLFormElement>(null);
@@ -43,6 +45,7 @@ export function ApplicationForm({ booking, onSuccess }: Props) {
     const data = new FormData(form);
 
     const payload = {
+      type,
       fullName: String(data.get("fullName") ?? "").trim(),
       email: String(data.get("email") ?? "").trim(),
       phone: String(data.get("phone") ?? "").trim() || undefined,
@@ -66,7 +69,7 @@ export function ApplicationForm({ booking, onSuccess }: Props) {
 
     setSubmitting(true);
     try {
-      const res = await fetch("/api/cohort-apply", {
+      const res = await fetch("/api/apply", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),

@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { Container } from "@/components/site/Container";
-import { TallyEmbed } from "@/components/site/TallyEmbed";
+import { CTA } from "@/components/site/CTA";
 import { Reveal, StaggerGroup, StaggerItem } from "@/components/motion/Reveal";
 import { HeroHeadline } from "@/components/motion/HeroHeadline";
 import { SignalUnderline } from "@/components/motion/SignalUnderline";
@@ -10,9 +10,6 @@ export const metadata: Metadata = {
   description:
     "90 days. 5 creators. Starting June 15. Application only. The Resonance Cohort by Sam Elsner.",
 };
-
-// Tally form ID for The Resonance Cohort application — https://tally.so/r/BzAgvK
-const TALLY_FORM_ID = "BzAgvK";
 
 const INSIDE = [
   {
@@ -162,17 +159,13 @@ export default function CohortPage() {
               </div>
             </Reveal>
 
-            <Reveal delay={0.25} className="mt-12">
-              <TallyEmbed
-                formId={TALLY_FORM_ID}
-                title="Resonance Cohort Application"
-              />
-            </Reveal>
-
-            <Reveal delay={0.35}>
-              <p className="mt-8 text-center font-sans text-sm text-bone/65">
-                Pricing shared after application review. Payment plans
-                available for qualified applicants.
+            <Reveal delay={0.25} className="mt-14 text-center">
+              <CTA href="/apply/cohort" variant="primary">
+                Book the call. Then we begin.
+              </CTA>
+              <p className="mt-6 font-sans text-sm text-bone/65">
+                One screen. Pick a time, send the form, you&apos;re in
+                the room. Pricing shared after application review.
               </p>
             </Reveal>
           </div>

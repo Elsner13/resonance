@@ -10,24 +10,29 @@ import {
   Section,
   Text,
 } from "@react-email/components";
-import {
-  COHORT_PREP_NOTE,
-  COHORT_PREP_READING,
-  COHORT_TAGLINE,
-} from "@/lib/cohort-prep";
+import type { ApplyConfig } from "@/lib/apply-config";
 
 interface ApplicantConfirmationProps {
   firstName: string;
   bookedTimeDisplay?: string;
+  prepNote: string;
+  prepReading: ApplyConfig["prepReading"];
+  tagline: string;
 }
 
 /**
  * Email sent to applicants after they book + submit the form.
  * Warm, on-voice, one prep instruction. Not a marketing email.
+ *
+ * All type-specific copy comes in as props from apply-config so the
+ * template stays a pure renderer.
  */
 export function ApplicantConfirmationEmail({
   firstName,
   bookedTimeDisplay,
+  prepNote,
+  prepReading,
+  tagline,
 }: ApplicantConfirmationProps) {
   return (
     <Html>
@@ -49,19 +54,21 @@ export function ApplicantConfirmationEmail({
             )}
           </Text>
 
-          <Text style={paragraph}>{COHORT_TAGLINE}</Text>
+          <Text style={paragraph}>{tagline}</Text>
 
           <Hr style={accentHr} />
 
-          <Heading style={h2}>Before the call</Heading>
+          <Section>
+            <Text style={h2}>Before the call</Text>
+          </Section>
 
-          <Text style={paragraph}>{COHORT_PREP_NOTE}</Text>
+          <Text style={paragraph}>{prepNote}</Text>
 
-          {COHORT_PREP_READING && (
+          {prepReading && (
             <Text style={paragraph}>
               If you want something to read first:{" "}
-              <Link href={COHORT_PREP_READING.url} style={link}>
-                {COHORT_PREP_READING.label}
+              <Link href={prepReading.url} style={link}>
+                {prepReading.label}
               </Link>
               .
             </Text>

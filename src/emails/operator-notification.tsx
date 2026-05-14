@@ -9,8 +9,10 @@ import {
   Section,
   Text,
 } from "@react-email/components";
+import type { ApplyType } from "@/lib/apply-config";
 
 interface OperatorNotificationProps {
+  type: ApplyType;
   fullName: string;
   email: string;
   phone?: string;
@@ -22,11 +24,17 @@ interface OperatorNotificationProps {
   bookedTimeDisplay?: string;
 }
 
+const TYPE_LABELS: Record<ApplyType, string> = {
+  cohort: "Cohort",
+  mentorship: "Attune (1-on-1 mentorship)",
+};
+
 /**
- * Email sent to Sam when a new cohort application lands.
- * Clean plain-text-leaning layout — this is operator mail, not marketing.
+ * Email sent to Sam when a new application lands.
+ * Clean plain-text-leaning layout — operator mail, not marketing.
  */
 export function OperatorNotificationEmail({
+  type,
   fullName,
   email,
   phone,
@@ -39,10 +47,12 @@ export function OperatorNotificationEmail({
   return (
     <Html>
       <Head />
-      <Preview>{`New cohort application from ${fullName}`}</Preview>
+      <Preview>{`New ${TYPE_LABELS[type]} application from ${fullName}`}</Preview>
       <Body style={body}>
         <Container style={container}>
-          <Heading style={h1}>New Cohort Application</Heading>
+          <Heading style={h1}>
+            New {TYPE_LABELS[type]} Application
+          </Heading>
           <Hr style={hr} />
 
           <Section style={section}>
@@ -73,7 +83,9 @@ export function OperatorNotificationEmail({
             <Text style={label}>What are you working on right now?</Text>
             <Text style={paragraph}>{workingOn}</Text>
 
-            <Text style={label}>What&apos;s the constraint you can&apos;t get past?</Text>
+            <Text style={label}>
+              What&apos;s the constraint you can&apos;t get past?
+            </Text>
             <Text style={paragraph}>{constraint}</Text>
 
             <Text style={label}>What would success in 90 days look like?</Text>
@@ -90,7 +102,7 @@ export function OperatorNotificationEmail({
           <Hr style={hr} />
 
           <Text style={footer}>
-            Sent from thesamelsner.com /apply
+            Sent from thesamelsner.com /apply/{type}
           </Text>
         </Container>
       </Body>
