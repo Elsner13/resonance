@@ -33,9 +33,15 @@ function validate(p: Partial<ApplyPayload>): p is ApplyPayload {
 }
 
 /**
- * Best-effort Kit subscribe. Silently logs and returns false if anything
- * is misconfigured — never blocks the form submission, since the operator
- * email is the source of truth.
+ * Best-effort Kit subscribe using the Kit v4 API.
+ *
+ * Two-step flow (v4 has no single-shot form-subscribe endpoint):
+ *  1) POST /v4/subscribers       -> create or upsert the subscriber
+ *  2) POST /v4/forms/{id}/subscribers/{subscriber_id}
+ *                                -> add that subscriber to the form
+ *
+ * Silently logs and returns false on any failure — never blocks the
+ * form submission, since the operator email is the source of truth.
  */
 async function pushToKit(payload: ApplyPayload): Promise<boolean> {
   const apiKey = process.env.KIT_API_KEY;
@@ -44,31 +50,74 @@ async function pushToKit(payload: ApplyPayload): Promise<boolean> {
     console.info("[kit] skipped: missing KIT_API_KEY or KIT_COHORT_FORM_ID");
     return false;
   }
+
+  const baseHeaders = {
+    "X-Kit-Api-Key": apiKey,
+    "Content-Type": "application/json",
+    Accept: "application/json",
+  };
+
   try {
     const firstName = payload.fullName.trim().split(/\s+/)[0];
-    const res = await fetch(
-      `https://api.kit.com/v3/forms/${formId}/subscribe`,
-      {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          api_key: apiKey,
-          email: payload.email,
-          first_name: firstName,
-          fields: {
-            phone: payload.phone ?? "",
-            applied_at: new Date().toISOString(),
-            booked_time: payload.bookedTimeDisplay ?? "",
-          },
-          tags: ["cohort-applicant", "slot-first"],
-        }),
-      },
-    );
-    if (!res.ok) {
-      const text = await res.text();
-      console.error("[kit] subscribe failed:", res.status, text);
+
+    // Step 1 — create / upsert the subscriber (Kit v4 is idempotent on email)
+    const subRes = await fetch("https://api.kit.com/v4/subscribers", {
+      method: "POST",
+      headers: baseHeaders,
+      body: JSON.stringify({
+        email_address: payload.email,
+        first_name: firstName,
+      }),
+    });
+
+    if (!subRes.ok) {
+      const text = await subRes.text();
+      console.error("[kit] subscriber create failed:", subRes.status, text);
       return false;
     }
+
+    const subData = (await subRes.json()) as {
+      subscriber?: { id?: number };
+    };
+    const subscriberId = subData.subscriber?.id;
+    if (!subscriberId) {
+      console.error("[kit] no subscriber.id in response:", subData);
+      return false;
+    }
+
+    // Step 2 — add subscriber to the Cohort Application form
+    const formRes = await fetch(
+      `https://api.kit.com/v4/forms/${formId}/subscribers/${subscriberId}`,
+      {
+        method: "POST",
+        headers: baseHeaders,
+      },
+    );
+
+    if (!formRes.ok) {
+      const text = await formRes.text();
+      console.error(
+        "[kit] add-to-form failed:",
+        formRes.status,
+        text,
+        "form_id=",
+        formId,
+        "sub_id=",
+        subscriberId,
+      );
+      // Subscriber was created globally; that's still partially useful.
+      return false;
+    }
+
+    console.info(
+      "[kit] subscribed",
+      payload.email,
+      "→ form",
+      formId,
+      "(sub_id",
+      subscriberId,
+      ")",
+    );
     return true;
   } catch (err) {
     console.error("[kit] subscribe threw:", err);
