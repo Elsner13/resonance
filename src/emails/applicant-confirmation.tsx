@@ -100,14 +100,13 @@ const container: React.CSSProperties = {
 
 const h1: React.CSSProperties = {
   fontFamily:
-    "Georgia, 'Times New Roman', serif",
-  fontStyle: "italic",
-  fontSize: "32px",
-  fontWeight: 600,
+    "-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif",
+  fontSize: "30px",
+  fontWeight: 700,
   color: "#141413",
   margin: "0 0 20px",
-  letterSpacing: "-0.02em",
-  lineHeight: 1.15,
+  letterSpacing: "-0.025em",
+  lineHeight: 1.1,
 };
 
 const h2: React.CSSProperties = {
@@ -117,7 +116,7 @@ const h2: React.CSSProperties = {
   fontWeight: 600,
   textTransform: "uppercase",
   letterSpacing: "0.14em",
-  color: "#B22222",
+  color: "#FD363B",
   margin: "0 0 12px",
 };
 
@@ -141,13 +140,13 @@ const hr: React.CSSProperties = {
 };
 
 const accentHr: React.CSSProperties = {
-  borderColor: "#B22222",
+  borderColor: "#FD363B",
   borderTopWidth: "1px",
   width: "60px",
   margin: "32px 0 24px",
 };
 
 const link: React.CSSProperties = {
-  color: "#B22222",
+  color: "#FD363B",
   textDecoration: "underline",
 };

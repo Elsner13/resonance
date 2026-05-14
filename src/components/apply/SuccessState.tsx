@@ -23,21 +23,20 @@ export function SuccessState({
 
       <div
         aria-hidden="true"
-        className="mx-auto mb-10 h-px"
-        style={{ width: "60px", background: "var(--crimson, #B22222)" }}
+        className="mx-auto mb-10 h-px bg-signal"
+        style={{ width: "60px" }}
       />
 
-      <h2 id="success-heading" className="apply-h1">
+      <div className="eyebrow eyebrow-signal mb-5">Application sent</div>
+
+      <h2 id="success-heading" className="text-bone balance">
         See you on the call.
       </h2>
 
       {bookedTimeDisplay && (
-        <p className="apply-lede mt-4">
+        <p className="copy-lg mt-6 text-bone/85 pretty">
           Locked for{" "}
-          <strong style={{ color: "var(--bone, #EDEBE0)" }}>
-            {bookedTimeDisplay}
-          </strong>
-          .
+          <strong className="text-bone">{bookedTimeDisplay}</strong>.
         </p>
       )}
 
@@ -56,21 +55,12 @@ export function SuccessState({
 
 function SuccessBullet({ children }: { children: React.ReactNode }) {
   return (
-    <li
-      className="flex gap-4 items-start"
-      style={{ color: "var(--bone, #EDEBE0)" }}
-    >
+    <li className="flex gap-4 items-start text-bone">
       <span
         aria-hidden="true"
-        style={{
-          width: "16px",
-          height: "1px",
-          background: "var(--crimson, #B22222)",
-          marginTop: "0.7em",
-          flexShrink: 0,
-        }}
+        className="flex-shrink-0 mt-[0.7em] h-px w-4 bg-signal"
       />
-      <span style={{ fontSize: "16px", lineHeight: 1.55 }}>{children}</span>
+      <span className="font-sans text-base leading-relaxed">{children}</span>
     </li>
   );
 }

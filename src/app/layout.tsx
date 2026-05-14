@@ -1,11 +1,5 @@
 import type { Metadata } from "next";
-import {
-  Geist,
-  Geist_Mono,
-  Source_Serif_4,
-  Fraunces,
-  DM_Sans,
-} from "next/font/google";
+import { Geist, Geist_Mono, Source_Serif_4 } from "next/font/google";
 import Script from "next/script";
 import "./globals.css";
 
@@ -21,22 +15,6 @@ const geistMono = Geist_Mono({
 
 const sourceSerif = Source_Serif_4({
   variable: "--font-serif",
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
-});
-
-// Fonts for the /apply brand-within-brand. Fraunces italic for display,
-// DM Sans for body/UI. Loaded globally so the /apply layout can reference
-// them via CSS variables.
-const fraunces = Fraunces({
-  variable: "--font-fraunces",
-  subsets: ["latin"],
-  style: ["normal", "italic"],
-  weight: ["400", "500", "600", "700"],
-});
-
-const dmSans = DM_Sans({
-  variable: "--font-dm-sans",
   subsets: ["latin"],
   weight: ["400", "500", "600", "700"],
 });
@@ -102,7 +80,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} ${sourceSerif.variable} ${fraunces.variable} ${dmSans.variable}`}
+        className={`${geistSans.variable} ${geistMono.variable} ${sourceSerif.variable}`}
       >
         <Script id="theme-fouc-guard" strategy="beforeInteractive">
           {FOUC_GUARD}

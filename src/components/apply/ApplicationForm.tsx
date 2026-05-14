@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useId, useRef, useState } from "react";
+import { cn } from "@/lib/utils";
 import type { BookingPayload } from "./CalScheduler";
 
 interface Props {
@@ -13,9 +14,9 @@ const MIN_REFLECTION_LENGTH = 100;
 /**
  * The application form. Revealed after Cal.com fires `bookingSuccessful`.
  *
- * Fields pre-fill from the booking payload where available. Submits to
- * /api/cohort-apply. On success, calls `onSuccess` so the page can render
- * the SuccessState panel.
+ * Styled to match the rest of the site — sits inside the always-dark
+ * application section (#0c1117) so input surfaces use literal light hex
+ * (consistent with /cohort + /attune Tally form sections).
  */
 export function ApplicationForm({ booking, onSuccess }: Props) {
   const [submitting, setSubmitting] = useState(false);
@@ -24,8 +25,7 @@ export function ApplicationForm({ booking, onSuccess }: Props) {
   const liveRef = useRef<HTMLParagraphElement>(null);
   const headingId = useId();
 
-  // Announce to screen readers when the form mounts (i.e. is revealed
-  // after booking). One-shot.
+  // Announce the form's reveal to screen readers, one-shot.
   useEffect(() => {
     if (liveRef.current) {
       liveRef.current.textContent =
@@ -55,7 +55,6 @@ export function ApplicationForm({ booking, onSuccess }: Props) {
       bookedTimeDisplay: booking.displayTime,
     };
 
-    // Client-side length validation before hitting the server.
     const failed = (["workingOn", "constraint", "successIn90Days"] as const)
       .filter((k) => payload[k].length < MIN_REFLECTION_LENGTH);
     if (failed.length > 0) {
@@ -92,7 +91,6 @@ export function ApplicationForm({ booking, onSuccess }: Props) {
 
   return (
     <>
-      {/* Live region — announces the form's appearance to screen readers */}
       <p ref={liveRef} aria-live="polite" className="sr-only"></p>
 
       <form
@@ -102,16 +100,9 @@ export function ApplicationForm({ booking, onSuccess }: Props) {
         className="w-full"
         noValidate
       >
-        <header className="mb-10">
-          <p className="apply-eyebrow">Step 2</p>
-          <h2 id={headingId} className="apply-h2">
-            Tell me what you&apos;re bringing.
-          </h2>
-          <p className="apply-lede">
-            Five questions. Honest answers. The three reflection prompts
-            need at least 100 characters of real thought each.
-          </p>
-        </header>
+        <h3 id={headingId} className="sr-only">
+          Application form
+        </h3>
 
         <div className="grid gap-6">
           <FormField
@@ -163,16 +154,20 @@ export function ApplicationForm({ booking, onSuccess }: Props) {
         </div>
 
         {error && (
-          <p role="alert" className="apply-error mt-6">
+          <p
+            role="alert"
+            className="mt-6 px-4 py-3 border-l-2 border-signal text-sm font-sans text-[#faf9f5]"
+            style={{ background: "rgba(253, 54, 59, 0.10)" }}
+          >
             {error}
           </p>
         )}
 
-        <div className="mt-10">
+        <div className="mt-10 flex justify-center">
           <button
             type="submit"
             disabled={submitting}
-            className="apply-submit"
+            className="btn btn-primary disabled:opacity-60 disabled:cursor-not-allowed"
           >
             {submitting ? "Sending…" : "Send it"}
           </button>
@@ -202,10 +197,10 @@ function FormField({
   const id = `f-${name}`;
   return (
     <div>
-      <label htmlFor={id} className="apply-label">
+      <label htmlFor={id} className="apply-field-label">
         {label}
-        {required && <span className="apply-label-req">*</span>}
-        {optional && <span className="apply-label-opt"> (optional)</span>}
+        {required && <span className="text-signal ml-0.5">*</span>}
+        {optional && <span className="text-[#faf9f5]/40"> (optional)</span>}
       </label>
       <input
         id={id}
@@ -214,7 +209,7 @@ function FormField({
         required={required}
         defaultValue={defaultValue}
         autoComplete={autoComplete}
-        className="apply-input"
+        className="apply-field-input"
       />
     </div>
   );
@@ -237,10 +232,10 @@ function FormTextarea({
   const [count, setCount] = useState(0);
   return (
     <div>
-      <label htmlFor={id} className="apply-label">
+      <label htmlFor={id} className="apply-field-label">
         {label}
-        {required && <span className="apply-label-req">*</span>}
-        {optional && <span className="apply-label-opt"> (optional)</span>}
+        {required && <span className="text-signal ml-0.5">*</span>}
+        {optional && <span className="text-[#faf9f5]/40"> (optional)</span>}
       </label>
       <textarea
         id={id}
@@ -248,13 +243,14 @@ function FormTextarea({
         required={required}
         rows={4}
         onChange={(e) => setCount(e.target.value.length)}
-        className="apply-textarea"
+        className={cn("apply-field-input apply-field-textarea")}
       />
       {minChars && (
         <p
-          className={`apply-count ${
-            count >= minChars ? "apply-count-ok" : ""
-          }`}
+          className={cn(
+            "mt-2 font-sans text-xs",
+            count >= minChars ? "text-signal" : "text-[#faf9f5]/40",
+          )}
         >
           {count} / {minChars} characters
         </p>
