@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import Cal, { getCalApi } from "@calcom/embed-react";
 
 export interface BookingPayload {
@@ -31,6 +31,49 @@ export function CalScheduler({
   eventSlug: string;
   onBooked: (payload: BookingPayload) => void;
 }) {
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  // When a user picks a date on mobile, Cal.com expands the embed to
+  // reveal the timeslots. Watch the container's height — when it grows
+  // (and we're on a narrow viewport where the slots would otherwise sit
+  // below the fold), smooth-scroll so the slot list comes into view.
+  // No-op on desktop where slots sit beside the calendar.
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const target = containerRef.current;
+    if (!target) return;
+
+    let prevHeight = 0;
+    let cooldown = false;
+    const ro = new ResizeObserver((entries) => {
+      for (const entry of entries) {
+        const newHeight = entry.contentRect.height;
+        const isMobile = window.matchMedia("(max-width: 768px)").matches;
+        // Only react to significant growth on mobile, after the first
+        // measurement. 100px threshold filters out micro-resizes.
+        if (
+          isMobile &&
+          prevHeight > 0 &&
+          newHeight > prevHeight + 100 &&
+          !cooldown
+        ) {
+          cooldown = true;
+          // Defer so Cal.com finishes its internal layout pass first.
+          window.setTimeout(() => {
+            target.scrollIntoView({ behavior: "smooth", block: "end" });
+            // Release the cooldown after the scroll settles.
+            window.setTimeout(() => {
+              cooldown = false;
+            }, 700);
+          }, 80);
+        }
+        prevHeight = newHeight;
+      }
+    });
+    ro.observe(target);
+    return () => ro.disconnect();
+  }, []);
+
   useEffect(() => {
     let cancelled = false;
     (async () => {
@@ -91,6 +134,7 @@ export function CalScheduler({
 
   return (
     <div
+      ref={containerRef}
       className="w-full overflow-hidden bg-bone border border-rule rounded-lg"
       style={{ minHeight: "640px" }}
     >
