@@ -1,18 +1,16 @@
 "use client";
 
 import { motion } from "framer-motion";
-import type { ReactNode } from "react";
-import { Children, isValidElement } from "react";
+import type { ReactElement, ReactNode } from "react";
+import { Children, cloneElement, isValidElement } from "react";
 
 /**
  * Hero headline with word-by-word stagger reveal on mount.
- * Pass plain strings or wrap accent words in JSX (e.g. <SignalUnderline>) — those
- * are animated as a single unit.
+ * Restrained, editorial motion — no blur, just subtle opacity + translateY.
  *
- * Usage:
- *   <HeroHeadline>
- *     Perform when it <SignalUnderline>counts</SignalUnderline>.
- *   </HeroHeadline>
+ * Wrap sentences in <span className="block"> for dedicated lines.
+ * The component recursively tokenizes text inside wrappers so each
+ * word still animates individually while respecting block layout.
  */
 export function HeroHeadline({
   children,
@@ -35,37 +33,43 @@ export function HeroHeadline({
         hidden: {},
         visible: {
           transition: {
-            staggerChildren: 0.045,
-            delayChildren: 0.1,
+            staggerChildren: 0.04,
+            delayChildren: 0.08,
           },
         },
       }}
       className={className}
     >
       {tokens.map((tok, i) => (
-        <motion.span
-          key={i}
-          variants={{
-            hidden: { opacity: 0, y: 18, filter: "blur(6px)" },
-            visible: {
-              opacity: 1,
-              y: 0,
-              filter: "blur(0px)",
-              transition: { duration: 0.7, ease: [0.16, 1, 0.3, 1] },
-            },
-          }}
-          className="inline-block whitespace-pre-wrap"
-        >
-          {tok}
-        </motion.span>
+        <WordSpan key={i}>{tok}</WordSpan>
       ))}
     </MotionTag>
   );
 }
 
+function WordSpan({ children }: { children: ReactNode }) {
+  return (
+    <motion.span
+      variants={{
+        hidden: { opacity: 0, y: 12 },
+        visible: {
+          opacity: 1,
+          y: 0,
+          transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1] },
+        },
+      }}
+      className="inline-block whitespace-pre-wrap"
+    >
+      {children}
+    </motion.span>
+  );
+}
+
 /**
  * Walk children, splitting plain text by word but keeping JSX nodes whole.
- * Returns an array of strings (with trailing spaces) and JSX nodes.
+ * If a JSX node contains string children, recursively tokenize them so
+ * words inside wrappers (like <span className="block">) still animate
+ * individually.
  */
 function tokenize(children: ReactNode): ReactNode[] {
   const out: ReactNode[] = [];
@@ -73,7 +77,6 @@ function tokenize(children: ReactNode): ReactNode[] {
   Children.forEach(children, (child) => {
     if (typeof child === "string") {
       const words = child.split(/(\s+)/).filter(Boolean);
-      // collapse: pair word with following space if any
       for (let i = 0; i < words.length; i++) {
         const w = words[i];
         const next = words[i + 1];
@@ -87,7 +90,28 @@ function tokenize(children: ReactNode): ReactNode[] {
         }
       }
     } else if (isValidElement(child)) {
-      out.push(child);
+      const el = child as ReactElement<{ children?: ReactNode; className?: string }>;
+      const inner = el.props.children;
+
+      // If the element has text children, recursively tokenize them
+      // and wrap the result back inside the original element.
+      if (
+        typeof inner === "string" ||
+        (Array.isArray(inner) && inner.some((c) => typeof c === "string"))
+      ) {
+        const innerTokens = tokenize(inner);
+        out.push(
+          cloneElement(el, {
+            ...el.props,
+            children: innerTokens.map((tok, i) => (
+              <WordSpan key={i}>{tok}</WordSpan>
+            )),
+          })
+        );
+      } else {
+        // Leaf JSX node (like SignalUnderline) — keep as one token.
+        out.push(child);
+      }
     } else if (typeof child === "number") {
       out.push(String(child));
     }

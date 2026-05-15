@@ -7,6 +7,10 @@ import { SignalUnderline } from "@/components/motion/SignalUnderline";
 import { Reveal, StaggerGroup, StaggerItem } from "@/components/motion/Reveal";
 import { ShineButton } from "@/components/motion/ShineButton";
 import { MarqueeRow } from "@/components/motion/MarqueeRow";
+import { Testimonials } from "@/components/site/Testimonials";
+import { FAQ } from "@/components/site/FAQ";
+import { SubstackEmbed } from "@/components/site/SubstackEmbed";
+import { getSenjaTestimonials } from "@/lib/senja";
 
 const MARQUEE = [
   "Frequency",
@@ -19,65 +23,71 @@ const MARQUEE = [
   "Signal",
 ];
 
-export default function HomePage() {
+export default async function HomePage() {
+  const testimonials = await getSenjaTestimonials(6);
+
   return (
     <>
-      {/* ── Hero ── */}
+      {/* ── Hero: Anthropic two-column editorial ── */}
       <section className="relative overflow-hidden border-b border-rule">
         <GridBg variant="dots" />
-        <Container className="relative py-24 md:py-32">
-          <div className="mx-auto max-w-3xl text-center">
-            <HeroHeadline className="balance">
-              Cut the noise. Find your frequency.{" "}
-              <SignalUnderline delay={0.85}>Become antifragile.</SignalUnderline>
-            </HeroHeadline>
-            <Reveal
-              as="p"
-              delay={0.5}
-              duration={0.7}
-              className="copy-lg mt-8 mx-auto max-w-2xl pretty text-ink/85"
-            >
-              The Resonance Method™. Not another framework. Not another
-              funnel. Not another stack of tactics. A protocol for creators
-              ready to broadcast from alignment.
-            </Reveal>
-            <Reveal
-              delay={0.7}
-              className="mt-10 flex flex-col items-center gap-5"
-            >
-              <ShineButton>
-                <CTA href="/apply/cohort" variant="primary">
-                  Apply for the Cohort
-                </CTA>
-              </ShineButton>
-              <Link
-                href="/apply/mentorship"
-                className="text-link font-sans text-base"
+        <Container className="relative py-20 md:py-28 lg:py-36">
+          <div className="grid gap-12 md:grid-cols-2 md:gap-16 lg:gap-24 items-end">
+            <div>
+              <HeroHeadline className="balance">
+                <span className="block">Cut the noise</span>
+                <span className="block">Find your frequency</span>
+                <span className="block">
+                  <SignalUnderline delay={0.85}>Become antifragile</SignalUnderline>
+                </span>
+              </HeroHeadline>
+            </div>
+            <div>
+              <Reveal
+                as="p"
+                delay={0.4}
+                duration={0.7}
+                className="copy-lg pretty text-ink/80 max-w-lg"
               >
-                Or apply for 1-on-1 mentorship
-              </Link>
-            </Reveal>
+                The Resonance Method™. Not another framework. Not another
+                funnel. A protocol for creators ready to broadcast from
+                alignment.
+              </Reveal>
+              <Reveal
+                delay={0.6}
+                className="mt-8 flex flex-wrap items-center gap-4"
+              >
+                <ShineButton>
+                  <CTA href="/apply/cohort" variant="primary">
+                    Apply for the Cohort
+                  </CTA>
+                </ShineButton>
+                <CTA href="/apply/mentorship" variant="secondary">
+                  Apply for 1-on-1
+                </CTA>
+              </Reveal>
+            </div>
           </div>
         </Container>
       </section>
 
       {/* ── Marquee credibility band ── */}
-      <div className="border-b border-rule bg-bone py-6">
-        <MarqueeRow speed={70} items={MARQUEE} itemClassName="text-ink/70" />
+      <div className="border-b border-rule bg-bone py-5">
+        <MarqueeRow speed={70} items={MARQUEE} itemClassName="text-ink/60" />
       </div>
 
       {/* ── The Gap ── */}
       <section className="section">
         <Container>
-          <div className="mx-auto max-w-[720px]">
+          <div className="grid gap-12 md:grid-cols-[1fr_1.4fr] md:gap-20 lg:gap-28">
             <Reveal>
-              <div className="eyebrow eyebrow-signal mb-5">The Gap</div>
+              <div className="eyebrow eyebrow-signal mb-4">The Gap</div>
               <h2 className="balance">
                 You don&apos;t have a productivity problem. You have a{" "}
                 <span className="text-signal">frequency</span> problem.
               </h2>
             </Reveal>
-            <Reveal delay={0.1} className="copy mt-8 space-y-5 text-ink/90">
+            <Reveal delay={0.1} className="copy space-y-5 text-ink/85 max-w-xl">
               <p>
                 You&apos;ve built the funnel. Bought the CRM. Hired the VA.
                 Configured the agent. Every quarter you stack one more tool
@@ -100,7 +110,6 @@ export default function HomePage() {
                 the creators who hire me to do the same.
               </p>
             </Reveal>
-
           </div>
         </Container>
       </section>
@@ -108,14 +117,14 @@ export default function HomePage() {
       {/* ── The Method (dark inverted) ── */}
       <section className="section bg-ink text-bone">
         <Container>
-          <div className="grid gap-12 md:grid-cols-[1fr_1.4fr] md:gap-20">
+          <div className="grid gap-10 md:grid-cols-[1fr_1.4fr] md:gap-20 lg:gap-28">
             <Reveal>
-              <div className="eyebrow text-bone/60 mb-5">The Method</div>
+              <div className="eyebrow text-bone/50 mb-4">The Method</div>
               <h2 className="text-bone balance">
                 The Resonance Method™
               </h2>
             </Reveal>
-            <Reveal delay={0.15} className="copy-lg pretty text-bone/80">
+            <Reveal delay={0.15} className="copy-lg pretty text-bone/75 max-w-xl">
               <p>
                 The protocol is not addition. It is subtraction. It is
                 calibration. It is broadcast.
@@ -128,33 +137,33 @@ export default function HomePage() {
             stagger={0.12}
           >
             <StaggerItem className="bg-ink p-8 md:p-10">
-              <div className="font-sans text-sm uppercase tracking-[0.18em] text-signal mb-4">
+              <div className="font-sans text-sm text-signal mb-3">
                 Phase 1
               </div>
               <h3 className="text-bone">Excavation</h3>
-              <p className="copy mt-4 text-bone/75 pretty">
+              <p className="copy mt-4 text-bone/70 pretty">
                 Cut the noise. Every tool you don&apos;t need. Every belief
                 that isn&apos;t yours. Every system you&apos;ve outgrown.
                 Audit them all. Bury them all.
               </p>
             </StaggerItem>
             <StaggerItem className="bg-ink p-8 md:p-10">
-              <div className="font-sans text-sm uppercase tracking-[0.18em] text-signal mb-4">
+              <div className="font-sans text-sm text-signal mb-3">
                 Phase 2
               </div>
               <h3 className="text-bone">Calibration</h3>
-              <p className="copy mt-4 text-bone/75 pretty">
+              <p className="copy mt-4 text-bone/70 pretty">
                 15 minutes a day. Not for productivity. For frequency. Run
                 the Daily Frequency Protocol until antifragile is not a
                 concept but a baseline.
               </p>
             </StaggerItem>
             <StaggerItem className="bg-ink p-8 md:p-10">
-              <div className="font-sans text-sm uppercase tracking-[0.18em] text-signal mb-4">
+              <div className="font-sans text-sm text-signal mb-3">
                 Phase 3
               </div>
               <h3 className="text-bone">Broadcast</h3>
-              <p className="copy mt-4 text-bone/75 pretty">
+              <p className="copy mt-4 text-bone/70 pretty">
                 Launch. Create. Fill the room. You are not chasing signal
                 anymore. You are the signal.
               </p>
@@ -162,7 +171,7 @@ export default function HomePage() {
           </StaggerGroup>
 
           <Reveal delay={0.4}>
-            <p className="mt-10 font-sans text-sm text-bone/60">
+            <p className="mt-10 font-sans text-sm text-bone/50">
               Astrology and numerology woven in as alignment tools, not fluff.
             </p>
           </Reveal>
@@ -172,14 +181,14 @@ export default function HomePage() {
       {/* ── Proof ── */}
       <section className="section border-t border-rule">
         <Container>
-          <div className="mx-auto max-w-[720px]">
+          <div className="grid gap-10 md:grid-cols-[1fr_1.4fr] md:gap-20 lg:gap-28">
             <Reveal>
-              <div className="eyebrow mb-5">Proof</div>
+              <div className="eyebrow mb-4">Proof</div>
               <h2 className="balance">From setup to signal.</h2>
             </Reveal>
-            <Reveal delay={0.1}>
-              <blockquote className="mt-10">
-                <p className="font-serif text-2xl italic leading-snug text-ink balance">
+            <Reveal delay={0.1} className="max-w-xl">
+              <blockquote>
+                <p className="font-serif text-xl md:text-2xl italic leading-snug text-ink balance">
                   &ldquo;I spent two years trying to out-work my environment.
                   Tools. Tactics. Discipline. None of it was the bottleneck.
                   The frequency I was broadcasting was. The Resonance Method
@@ -194,37 +203,40 @@ export default function HomePage() {
         </Container>
       </section>
 
+      {/* ── Testimonials ── */}
+      <Testimonials testimonials={testimonials} />
+
       {/* ── Three rooms (programs) ── */}
       <section className="section border-t border-rule">
         <Container>
           <Reveal>
-            <div className="grid gap-8 md:grid-cols-[1.1fr_1fr] md:gap-16">
+            <div className="grid gap-8 md:grid-cols-[1.1fr_1fr] md:gap-16 lg:gap-24">
               <div>
-                <div className="eyebrow mb-5">Three rooms. One frequency.</div>
+                <div className="eyebrow mb-4">Three rooms. One frequency.</div>
                 <h2 className="balance">
                   Pick your container. The work is the same.
                 </h2>
               </div>
-              <div className="copy-lg pretty self-end text-ink/85">
+              <div className="copy-lg pretty self-end text-ink/80 max-w-lg">
                 Each is a different intensity of the same protocol.
                 Becoming the kind of creator the moment respects.
               </div>
             </div>
           </Reveal>
 
-          <div className="mt-12 grid gap-6 md:gap-8">
+          <div className="mt-14 grid gap-6 md:gap-8">
             <Reveal>
               <Link href="/apply/cohort" className="group block">
                 <article className="card card-hover relative grid gap-8 p-8 md:grid-cols-[1.4fr_1fr] md:gap-12 md:p-12">
                   <div>
-                    <div className="eyebrow eyebrow-signal mb-5">
+                    <div className="eyebrow eyebrow-signal mb-4">
                       12 Weeks · Live
                       <span className="ml-3 text-muted">· 5 Spots</span>
                     </div>
-                    <h3 className="text-3xl font-semibold leading-[1.1] tracking-tightest md:text-4xl balance">
+                    <h3 className="text-2xl md:text-3xl font-semibold leading-[1.1] tracking-tight balance">
                       The Resonance Cohort
                     </h3>
-                    <div className="copy mt-5 max-w-xl pretty text-ink/85">
+                    <div className="copy mt-5 max-w-xl pretty text-ink/80">
                       <p>
                         12 weeks. 5 creators. Starting June 15. Weekly
                         group calls. A Daily Frequency Protocol you run
@@ -268,14 +280,14 @@ export default function HomePage() {
                   className="group block h-full"
                 >
                   <article className="card card-hover relative flex h-full flex-col p-7 md:p-8">
-                    <div className="eyebrow mb-4">
+                    <div className="eyebrow mb-3">
                       Ongoing · 1-on-1
                       <span className="ml-2 text-muted">· Application only</span>
                     </div>
-                    <h3 className="font-sans text-xl font-semibold leading-[1.15] tracking-tightest text-ink md:text-2xl balance">
+                    <h3 className="font-sans text-xl font-semibold leading-[1.15] tracking-tight text-ink md:text-2xl balance">
                       Attune
                     </h3>
-                    <div className="copy mt-4 grow pretty text-ink/85">
+                    <div className="copy mt-4 grow pretty text-ink/80">
                       <p>
                         Ongoing 1-on-1 mentorship for creators ready to
                         become antifragile. Weekly calls. Daily DM
@@ -312,11 +324,11 @@ export default function HomePage() {
               <StaggerItem>
                 <Link href="/resonance" className="group block h-full">
                   <article className="card card-hover relative flex h-full flex-col p-7 md:p-8">
-                    <div className="eyebrow mb-4">Free · Weekly</div>
-                    <h3 className="font-sans text-xl font-semibold leading-[1.15] tracking-tightest text-ink md:text-2xl balance">
+                    <div className="eyebrow mb-3">Free · Weekly</div>
+                    <h3 className="font-sans text-xl font-semibold leading-[1.15] tracking-tight text-ink md:text-2xl balance">
                       Resonance
                     </h3>
-                    <div className="copy mt-4 grow pretty text-ink/85">
+                    <div className="copy mt-4 grow pretty text-ink/80">
                       <p>
                         The broadcast. One post per week. No publishing
                         calendar. No content strategy. Whatever frequency
@@ -354,12 +366,45 @@ export default function HomePage() {
         </Container>
       </section>
 
+      {/* ── FAQ ── */}
+      <FAQ />
+
+      {/* ── Email capture (dark) ── */}
+      <section
+        className="section dark-locked border-t border-rule"
+        style={{ background: "#0c1117" }}
+      >
+        <Container>
+          <div className="grid gap-10 md:grid-cols-2 md:gap-16 lg:gap-24 items-end">
+            <Reveal>
+              <div className="eyebrow eyebrow-signal mb-4">Resonance</div>
+              <h2 className="text-bone balance">
+                Not ready to apply? Start with the signal.
+              </h2>
+            </Reveal>
+            <div>
+              <Reveal delay={0.1}>
+                <p className="copy-lg text-bone/75 pretty max-w-lg">
+                  One email a week. No sequences. No upsells. When the
+                  frequency stops being yours, you unsubscribe.
+                </p>
+              </Reveal>
+              <Reveal delay={0.2} className="mt-8">
+                <div className="max-w-md">
+                  <SubstackEmbed publication="samelsner" />
+                </div>
+              </Reveal>
+            </div>
+          </div>
+        </Container>
+      </section>
+
       {/* ── Final CTA ── */}
       <section className="section border-t border-rule">
         <Container>
-          <div className="grid items-end gap-8 md:grid-cols-[1.5fr_1fr] md:gap-16">
+          <div className="grid items-end gap-10 md:grid-cols-[1.5fr_1fr] md:gap-16 lg:gap-24">
             <Reveal>
-              <div className="eyebrow eyebrow-signal mb-5">Start here</div>
+              <div className="eyebrow eyebrow-signal mb-4">Start here</div>
               <h2 className="balance">
                 The frequency is already in you. The question is whether
                 you&apos;re ready to broadcast it.

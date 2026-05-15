@@ -41,22 +41,24 @@ const INSIDE = [
 export default function AttunePage() {
   return (
     <>
-      {/* ── Hero ── */}
-      <section className="flex min-h-[70vh] items-center border-b border-rule">
-        <Container>
-          <div className="mx-auto max-w-3xl text-center">
-            <Reveal>
-              <div className="eyebrow eyebrow-signal mb-6">
-                Ongoing · 1-on-1 · Application only
-              </div>
-            </Reveal>
-            <HeroHeadline className="balance">
-              <SignalUnderline delay={0.75}>Attune</SignalUnderline>.
-            </HeroHeadline>
+      {/* ── Hero: two-column editorial ── */}
+      <section className="flex min-h-[60vh] items-center border-b border-rule">
+        <Container className="py-20 md:py-28">
+          <div className="grid gap-10 md:grid-cols-2 md:gap-16 lg:gap-24 items-end">
+            <div>
+              <Reveal>
+                <div className="eyebrow eyebrow-signal mb-5">
+                  Ongoing · 1-on-1 · Application only
+                </div>
+              </Reveal>
+              <HeroHeadline className="balance">
+                <SignalUnderline delay={0.75}>Attune</SignalUnderline>.
+              </HeroHeadline>
+            </div>
             <Reveal
               as="p"
-              delay={0.5}
-              className="copy-lg mt-8 pretty mx-auto max-w-2xl text-ink/85"
+              delay={0.4}
+              className="copy-lg pretty text-ink/80 max-w-lg"
             >
               Ongoing 1-on-1 mentorship for creators done playing the
               funnel game and ready to broadcast from frequency.
@@ -69,16 +71,16 @@ export default function AttunePage() {
       {/* ── The Pitch ── */}
       <section className="section">
         <Container>
-          <div className="mx-auto max-w-[720px]">
+          <div className="grid gap-10 md:grid-cols-[1fr_1.4fr] md:gap-20 lg:gap-28">
             <Reveal>
-              <div className="eyebrow eyebrow-signal mb-5">The Truth</div>
+              <div className="eyebrow eyebrow-signal mb-4">The Truth</div>
               <h2 className="balance">
                 You don&apos;t need another funnel. You need a{" "}
                 <span className="text-signal">frequency</span> that funnels
                 can&apos;t break.
               </h2>
             </Reveal>
-            <Reveal delay={0.15} className="copy mt-8 space-y-5 text-ink/90">
+            <Reveal delay={0.1} className="copy space-y-5 text-ink/85 max-w-xl">
               <p>
                 I see you. You&apos;ve built the thing. You&apos;ve got the
                 offer, the audience, the proof of concept. But you&apos;re
@@ -107,14 +109,18 @@ export default function AttunePage() {
       {/* ── What's Inside ── */}
       <section className="section border-t border-rule">
         <Container>
-          <Reveal className="mx-auto max-w-[720px]">
-            <div className="eyebrow eyebrow-signal mb-5">Attune</div>
-            <h2 className="balance">What&apos;s inside.</h2>
-            <p className="copy-lg mt-5 text-ink/75 pretty">
-              Six instruments. One nervous system. Everything tuned to
-              you, not to a curriculum someone else built for someone
-              else.
-            </p>
+          <Reveal className="grid gap-8 md:grid-cols-[1fr_1.4fr] md:gap-20 lg:gap-28">
+            <div>
+              <div className="eyebrow eyebrow-signal mb-4">Attune</div>
+              <h2 className="balance">What&apos;s inside.</h2>
+            </div>
+            <div className="copy-lg pretty text-ink/75 max-w-xl">
+              <p>
+                Six instruments. One nervous system. Everything tuned to
+                you, not to a curriculum someone else built for someone
+                else.
+              </p>
+            </div>
           </Reveal>
 
           <StaggerGroup
@@ -124,13 +130,13 @@ export default function AttunePage() {
             {INSIDE.map((item, i) => (
               <StaggerItem key={item.title}>
                 <article className="card card-hover relative flex h-full flex-col p-7 md:p-8">
-                  <div className="font-sans text-3xl font-bold tracking-tightest text-signal md:text-4xl">
+                  <div className="font-sans text-3xl font-semibold tracking-tight text-signal md:text-4xl">
                     {String(i + 1).padStart(2, "0")}
                   </div>
-                  <h3 className="mt-4 font-sans text-xl font-semibold leading-[1.2] tracking-tightest text-ink md:text-2xl balance">
+                  <h3 className="mt-4 font-sans text-xl font-semibold leading-[1.2] tracking-tight text-ink md:text-2xl balance">
                     {item.title}
                   </h3>
-                  <p className="copy mt-3 text-ink/85 pretty">{item.body}</p>
+                  <p className="copy mt-3 text-ink/80 pretty">{item.body}</p>
                 </article>
               </StaggerItem>
             ))}
@@ -138,21 +144,21 @@ export default function AttunePage() {
         </Container>
       </section>
 
-      {/* ── Application (single dark section — Investment + Apply merged) ── */}
+      {/* ── Application (single dark section) ── */}
       <section
         className="section dark-locked border-t border-rule"
         style={{ background: "#0c1117" }}
       >
         <Container>
-          <div className="mx-auto max-w-[720px]">
-            <Reveal className="text-center">
+          <div className="grid gap-10 md:grid-cols-[1fr_1.4fr] md:gap-20 lg:gap-28">
+            <Reveal>
               {/* OG Attune mark — slashed null */}
               <svg
                 aria-hidden="true"
-                width="56"
-                height="56"
+                width="48"
+                height="48"
                 viewBox="0 0 64 64"
-                className="mx-auto mb-8 text-signal"
+                className="mb-6 text-signal"
                 fill="none"
                 stroke="currentColor"
                 strokeWidth="2.5"
@@ -162,53 +168,57 @@ export default function AttunePage() {
                 <line x1="14" y1="50" x2="50" y2="14" />
               </svg>
 
-              <div className="eyebrow eyebrow-signal mb-5">
+              <div className="eyebrow eyebrow-signal mb-4">
                 Apply for Attune
               </div>
               <h2 className="text-bone balance">
                 12 spots open. Application only.
               </h2>
-              <p className="copy-lg mt-6 text-bone/85 pretty">
-                Applications reviewed within 48 hours. If you&apos;re a fit,
-                you&apos;ll book a 15-minute Calibration Call with me before
-                either of us commits.
-              </p>
             </Reveal>
-
-            <Reveal
-              delay={0.15}
-              className="mt-10 mx-auto max-w-[560px] grid gap-6 sm:grid-cols-2 text-left"
-            >
-              <div className="border-t border-bone/15 pt-5">
-                <div className="font-sans text-xs font-semibold uppercase tracking-[0.18em] text-signal mb-2">
-                  For
-                </div>
-                <p className="copy text-bone/90 pretty">
-                  Creators done playing the funnel game and ready to
-                  broadcast from frequency.
+            <div className="max-w-xl">
+              <Reveal delay={0.1}>
+                <p className="copy-lg text-bone/80 pretty">
+                  Applications reviewed within 48 hours. If you&apos;re a fit,
+                  you&apos;ll book a 15-minute Calibration Call with me before
+                  either of us commits.
                 </p>
-              </div>
-              <div className="border-t border-bone/15 pt-5">
-                <div className="font-sans text-xs font-semibold uppercase tracking-[0.18em] text-bone/40 mb-2">
-                  Not for
-                </div>
-                <p className="copy text-bone/90 pretty">
-                  Anyone looking for a course, a template, or a 7-figure
-                  shortcut.
-                </p>
-              </div>
-            </Reveal>
+              </Reveal>
 
-            <Reveal delay={0.25} className="mt-14 text-center">
-              <CTA href="/apply/mentorship" variant="primary">
-                Book the call. Then we begin.
-              </CTA>
-              <p className="mt-6 font-sans text-sm text-bone/65">
-                One screen. Pick a time, send the form, you&apos;re in
-                the room. Monthly and yearly options available, pricing
-                shared after application review.
-              </p>
-            </Reveal>
+              <Reveal
+                delay={0.15}
+                className="mt-10 grid gap-6 sm:grid-cols-2 text-left"
+              >
+                <div className="border-t border-bone/15 pt-5">
+                  <div className="font-sans text-xs font-medium text-signal mb-2">
+                    For
+                  </div>
+                  <p className="copy text-bone/85 pretty">
+                    Creators done playing the funnel game and ready to
+                    broadcast from frequency.
+                  </p>
+                </div>
+                <div className="border-t border-bone/15 pt-5">
+                  <div className="font-sans text-xs font-medium text-bone/40 mb-2">
+                    Not for
+                  </div>
+                  <p className="copy text-bone/85 pretty">
+                    Anyone looking for a course, a template, or a 7-figure
+                    shortcut.
+                  </p>
+                </div>
+              </Reveal>
+
+              <Reveal delay={0.25} className="mt-12">
+                <CTA href="/apply/mentorship" variant="primary">
+                  Book the call. Then we begin.
+                </CTA>
+                <p className="mt-5 font-sans text-sm text-bone/50">
+                  One screen. Pick a time, send the form, you&apos;re in
+                  the room. Monthly and yearly options available, pricing
+                  shared after application review.
+                </p>
+              </Reveal>
+            </div>
           </div>
         </Container>
       </section>

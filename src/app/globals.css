@@ -3,8 +3,9 @@
 @config "../../tailwind.config.ts";
 
 /* ─────────────────────────────────────────────────────────────
-   Resonance — light, editorial design system
-   Inspired by anthropic.com. Single accent: signal red (#FD363B).
+   Resonance — Anthropic Glasswing-inspired editorial system
+   Warm ivory surfaces, high-contrast type, generous whitespace.
+   Signal red (#FD363B) preserved as the singular accent.
    ───────────────────────────────────────────────────────────── */
 
 @theme inline {
@@ -30,7 +31,7 @@
   --token-muted: #6b6b65;
   --background: var(--token-bone);
   --foreground: var(--token-ink);
-  --grid-dot: rgba(20, 20, 19, 0.10);
+  --grid-dot: rgba(20, 20, 19, 0.08);
   color-scheme: light;
 }
 
@@ -42,7 +43,7 @@
   --token-muted: #a8a8a3;
   --background: var(--token-bone);
   --foreground: var(--token-ink);
-  --grid-dot: rgba(255, 255, 255, 0.07);
+  --grid-dot: rgba(255, 255, 255, 0.06);
   color-scheme: dark;
 }
 
@@ -57,6 +58,13 @@
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-rendering: optimizeLegibility;
+    scroll-behavior: smooth;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
   }
 
   body {
@@ -74,33 +82,43 @@
     color: var(--token-bone);
   }
 
-  /* Editorial type defaults */
+  .dark ::selection {
+    background: #FD363B;
+    color: #ffffff;
+  }
+
+  :focus-visible {
+    outline: 2px solid #FD363B;
+    outline-offset: 2px;
+    border-radius: 2px;
+  }
+
+  /* Editorial type defaults — Anthropic scale */
   h1, h2, h3, h4, h5 {
     font-family: var(--font-sans), system-ui, sans-serif;
     font-weight: 600;
-    letter-spacing: -0.02em;
+    letter-spacing: 0px;
     color: var(--token-ink);
   }
 
   h1 {
-    font-size: clamp(2.125rem, 6.5vw, 4.25rem);
-    line-height: 1.08;
+    font-size: clamp(2.375rem, 5.5vw, 3.1875rem);
+    line-height: 1.1026;
     font-weight: 700;
-    letter-spacing: -0.03em;
     overflow-wrap: break-word;
     word-wrap: break-word;
   }
 
   h2 {
-    font-size: clamp(1.625rem, 3.6vw, 2.5rem);
-    line-height: 1.15;
+    font-size: clamp(1.875rem, 3.8vw, 2.4375rem);
+    line-height: 1.2051;
     overflow-wrap: break-word;
     word-wrap: break-word;
   }
 
   h3 {
-    font-size: clamp(1.125rem, 2vw, 1.5rem);
-    line-height: 1.25;
+    font-size: clamp(1.25rem, 2.4vw, 1.875rem);
+    line-height: 1.04;
     overflow-wrap: break-word;
   }
 
@@ -134,44 +152,46 @@
     padding-inline: clamp(1.25rem, 4vw, 2.5rem);
   }
 
-  /* Section spacing */
+  /* Section spacing — generous Anthropic rhythm */
   .section {
-    padding-block: clamp(4.5rem, 9vw, 9rem);
+    padding-block: clamp(4.75rem, 10vw, 9.375rem);
   }
 
   .section-tight {
-    padding-block: clamp(3rem, 6vw, 5rem);
+    padding-block: clamp(3.25rem, 6vw, 4.75rem);
   }
 
-  /* Buttons — square (0 radius), editorial, signal-red primary */
+  /* Buttons — Anthropic style: 4px radius, restrained, no shadow */
   .btn {
     display: inline-flex;
     align-items: center;
     justify-content: center;
     gap: 0.5rem;
-    min-height: 52px;
-    min-width: 140px;
-    padding: 1rem 2rem;
-    border-radius: 0;
-    font-family: var(--font-sans), system-ui, sans-serif;
+    min-height: 40px;
+    min-width: 120px;
+    padding: 8px 16px;
+    border-radius: 4px;
+    font-family: var(--font-serif), Georgia, serif;
     font-size: 1rem;
-    font-weight: 600;
-    letter-spacing: -0.005em;
-    line-height: 1;
+    font-weight: 400;
+    letter-spacing: 0px;
+    line-height: 1.5;
     transition: background-color 200ms ease, color 200ms ease, border-color 200ms ease, opacity 200ms ease;
     cursor: pointer;
     user-select: none;
     white-space: nowrap;
+    text-decoration: none;
   }
 
-  /* Primary = signal red, per the new spec. */
+  /* Primary = signal red (brand accent), white text */
   .btn-primary {
     background: #FD363B;
     color: #ffffff;
     border: 1px solid #FD363B;
   }
   .btn-primary:hover {
-    opacity: 0.9;
+    background: #B72327;
+    border-color: #B72327;
   }
 
   .btn-secondary {
@@ -202,6 +222,8 @@
     padding-inline: 0;
     min-height: 0;
     height: auto;
+    font-family: var(--font-serif), Georgia, serif;
+    font-weight: 500;
   }
   .btn-ghost:hover {
     color: #FD363B;
@@ -219,13 +241,13 @@
     color: #FD363B;
   }
 
-  /* Card — quiet container with hairline rule */
+  /* Card — quiet container with hairline rule, no shadow */
   .card {
     background: var(--token-bone);
     border: 1px solid var(--token-rule);
     border-radius: 8px;
-    padding: 1.5rem;
-    transition: border-color 200ms ease, transform 200ms ease;
+    padding: 16px;
+    transition: border-color 200ms ease;
   }
   .card-hover:hover {
     border-color: var(--token-ink);
@@ -233,11 +255,10 @@
 
   /* Eyebrow — small label above sections */
   .eyebrow {
-    font-family: var(--font-sans), system-ui, sans-serif;
-    font-size: 0.8125rem;
+    font-family: var(--font-serif), Georgia, serif;
+    font-size: 0.875rem;
     font-weight: 500;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
+    letter-spacing: 0px;
     color: var(--token-muted);
   }
 
@@ -248,15 +269,15 @@
   /* Editorial body — serif copy block */
   .copy {
     font-family: var(--font-serif), Georgia, serif;
-    font-size: 1.0625rem;
-    line-height: 1.65;
+    font-size: 1rem;
+    line-height: 1.5;
     color: var(--token-ink);
   }
 
   .copy-lg {
     font-family: var(--font-serif), Georgia, serif;
-    font-size: 1.25rem;
-    line-height: 1.5;
+    font-size: 1.125rem;
+    line-height: 1.4;
     color: var(--token-ink);
   }
 
@@ -270,32 +291,17 @@
     font-size: 0.9375rem;
     font-weight: 500;
     color: var(--token-ink);
+    letter-spacing: 0px;
     transition: color 200ms ease;
   }
   .navlink:hover {
-    color: #FD363B;
+    color: var(--token-muted);
   }
 
   /* Hairline rule */
   .rule {
     height: 1px;
     background: var(--token-rule);
-  }
-
-  /* Signal underline accent — for hero word */
-  .signal-underline {
-    position: relative;
-    display: inline-block;
-  }
-  .signal-underline::after {
-    content: "";
-    position: absolute;
-    left: 0;
-    right: 0;
-    bottom: -0.06em;
-    height: 0.08em;
-    background: #FD363B;
-    border-radius: 2px;
   }
 }
 
@@ -331,20 +337,6 @@
   .dark-locked .border-bone\/15 { border-color: rgba(250, 249, 245, 0.15); }
   .dark-locked .border-bone\/20 { border-color: rgba(250, 249, 245, 0.2); }
   .dark-locked .bg-bone\/15 { background-color: rgba(250, 249, 245, 0.15); }
-  .grain {
-    position: relative;
-    isolation: isolate;
-  }
-  .grain::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    z-index: -1;
-    pointer-events: none;
-    opacity: 0.025;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-    background-size: 256px 256px;
-  }
 }
 
 /* ─── Keyframes ─── */
@@ -354,87 +346,39 @@
   to { opacity: 1; transform: translateY(0); }
 }
 
-/* Subtle premium shine sweep — primary CTAs.
-   Per Dan Toruno brand direction: replace floating motion with a
-   restrained shine every few seconds. */
-@keyframes shine-sweep {
-  0%, 70%, 100% {
-    transform: translateX(-120%) skewX(-18deg);
-    opacity: 0;
-  }
-  78% {
-    opacity: 0.55;
-  }
-  92% {
-    transform: translateX(220%) skewX(-18deg);
-    opacity: 0;
-  }
+@keyframes marquee-scroll {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
 }
 
-.shine-btn {
-  position: relative;
-  isolation: isolate;
-  border-radius: 4px;
+@keyframes page-enter {
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
 
-.shine-btn::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  border-radius: inherit;
-  overflow: hidden;
-  pointer-events: none;
-  z-index: 1;
+.animate-page-enter {
+  animation: page-enter 0.4s ease-out;
 }
 
-.shine-btn::after {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 35%;
-  height: 100%;
-  background: linear-gradient(
-    100deg,
-    transparent 0%,
-    rgba(255, 255, 255, 0.0) 30%,
-    rgba(255, 255, 255, 0.45) 50%,
-    rgba(255, 255, 255, 0.0) 70%,
-    transparent 100%
-  );
-  transform: translateX(-120%) skewX(-18deg);
-  animation: shine-sweep 6.5s ease-in-out infinite;
-  animation-delay: 1.2s;
-  border-radius: inherit;
-  pointer-events: none;
-  z-index: 2;
-  mix-blend-mode: overlay;
+/* Signal underline draw-in (replaces GSAP) */
+@keyframes signal-draw {
+  from { transform: scaleX(0); }
+  to { transform: scaleX(1); }
 }
 
-.shine-btn > * {
-  position: relative;
-  z-index: 0;
+.signal-underline-draw {
+  transform: scaleX(0);
+  animation: signal-draw 0.85s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .shine-btn::after {
+  .signal-underline-draw {
     animation: none;
-    display: none;
-  }
-}
-
-@media (pointer: coarse) {
-  .shine-btn::after {
-    animation-duration: 9s;
+    transform: scaleX(1);
   }
 }
 
 /* ─── View Transitions — smooth radial theme swap ─── */
-/*
- * When the theme toggles, the new theme paints from a circular reveal
- * centered on the click point. Chrome/Edge/Safari support this natively;
- * Firefox falls back to an instant swap (still respects user choice).
- */
 ::view-transition-old(root),
 ::view-transition-new(root) {
   animation: none;
@@ -457,17 +401,15 @@
   z-index: 1;
 }
 
-/* All color/background transitions respect prefers-reduced-motion via the JS. */
 html {
   transition: background-color 0.3s ease, color 0.3s ease;
 }
-
 
 /* ─── /apply form inputs (used inside the always-dark application section) ─── */
 
 .apply-field-label {
   display: block;
-  font-family: var(--font-sans), system-ui, sans-serif;
+  font-family: var(--font-serif), Georgia, serif;
   font-size: 14px;
   font-weight: 500;
   color: #faf9f5;
@@ -481,7 +423,7 @@ html {
   color: #faf9f5;
   background: rgba(250, 249, 245, 0.04);
   border: 1px solid rgba(250, 249, 245, 0.15);
-  border-radius: 0;
+  border-radius: 4px;
   padding: 14px 16px;
   min-height: 48px;
   outline: none;
@@ -532,7 +474,7 @@ html {
   }
 }
 
-/* sr-only utility (was previously scoped under [data-apply-scope]) */
+/* sr-only utility */
 .sr-only {
   position: absolute;
   width: 1px;

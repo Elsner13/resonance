@@ -4,16 +4,16 @@ import { motion, type Variants } from "framer-motion";
 import type { ReactNode } from "react";
 
 /**
- * Generic in-view fade-up reveal. Premium ease (Anthropic-feel: subtle, slow, tight).
- * Pass `delay` for staggered sibling reveals; set `as` for semantic element.
+ * Generic in-view fade-up reveal. Restrained editorial motion —
+ * subtle opacity + translateY, no blur. Premium ease.
  */
 export function Reveal({
   children,
   delay = 0,
-  y = 16,
+  y = 14,
   className,
   once = true,
-  duration = 0.7,
+  duration = 0.65,
   as = "div",
 }: {
   children: ReactNode;
@@ -25,11 +25,10 @@ export function Reveal({
   as?: "div" | "section" | "header" | "article" | "li" | "h1" | "h2" | "h3" | "p";
 }) {
   const variants: Variants = {
-    hidden: { opacity: 0, y, filter: "blur(4px)" },
+    hidden: { opacity: 0, y },
     visible: {
       opacity: 1,
       y: 0,
-      filter: "blur(0px)",
       transition: {
         duration,
         delay,
@@ -55,7 +54,6 @@ export function Reveal({
 
 /**
  * Staggered children container — pass <Reveal> children inside for sequenced entry.
- * The container itself doesn't animate; children stagger their own entrances.
  */
 export function StaggerGroup({
   children,
@@ -92,7 +90,7 @@ export function StaggerGroup({
 export function StaggerItem({
   children,
   className,
-  y = 16,
+  y = 14,
 }: {
   children: ReactNode;
   className?: string;
@@ -101,12 +99,11 @@ export function StaggerItem({
   return (
     <motion.div
       variants={{
-        hidden: { opacity: 0, y, filter: "blur(4px)" },
+        hidden: { opacity: 0, y },
         visible: {
           opacity: 1,
           y: 0,
-          filter: "blur(0px)",
-          transition: { duration: 0.65, ease: [0.16, 1, 0.3, 1] },
+          transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1] },
         },
       }}
       className={className}

@@ -23,7 +23,7 @@ const config: Config = {
         shell: "76rem",
       },
       letterSpacing: {
-        tightest: "-0.03em",
+        tightest: "-0.02em",
       },
       keyframes: {
         "fade-up": {

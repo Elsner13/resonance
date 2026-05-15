@@ -7,6 +7,7 @@ import {
   isApplyType,
   type ApplyType,
 } from "@/lib/apply-config";
+import { pushToTally } from "@/lib/tally";
 
 export const runtime = "nodejs";
 
@@ -45,8 +46,7 @@ function validate(p: Partial<ApplyPayload>): p is ApplyPayload {
  *  2) POST /v4/forms/{id}/subscribers/{subscriber_id}
  *                                -> add to the form
  *
- * Best-effort: never blocks the form submission. Operator email is the
- * source of truth.
+ * Best-effort: never blocks the form submission.
  */
 async function pushToKit(
   email: string,
@@ -191,6 +191,29 @@ export async function POST(req: Request) {
   pushToKit(payload.email, payload.fullName, cfg.kitFormId).catch((err) =>
     console.error("[kit] unhandled:", err),
   );
+
+  // Tally push — auto-maps fields by question label.
+  const tallyApiKey = process.env.TALLY_API_KEY;
+  const tallyFormId =
+    payload.type === "cohort"
+      ? process.env.TALLY_COHORT_FORM_ID
+      : process.env.TALLY_MENTORSHIP_FORM_ID;
+
+  if (tallyApiKey && tallyFormId) {
+    pushToTally(tallyFormId, tallyApiKey, {
+      fullName: payload.fullName,
+      email: payload.email,
+      phone: payload.phone,
+      workingOn: payload.workingOn,
+      constraint: payload.constraint,
+      successIn90Days: payload.successIn90Days,
+      anythingElse: payload.anythingElse,
+      bookedTimeDisplay: payload.bookedTimeDisplay,
+      program: payload.type,
+    }).catch((err) => console.error("[tally] unhandled:", err));
+  } else {
+    console.info("[tally] skipped: missing TALLY_API_KEY or form ID");
+  }
 
   return NextResponse.json({
     ok: true,

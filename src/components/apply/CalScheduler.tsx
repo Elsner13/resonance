@@ -1,26 +1,56 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import Cal, { getCalApi } from "@calcom/embed-react";
 
 export interface BookingPayload {
-  /** ISO datetime if Cal provided it */
   startTime?: string;
-  /** Human-readable display string */
   displayTime?: string;
-  /** Email if Cal provided it */
   email?: string;
-  /** Full name if Cal provided it */
   name?: string;
 }
 
+const STORAGE_KEY = "resonance-booking";
+
+function readStoredBooking(): BookingPayload | null {
+  if (typeof window === "undefined") return null;
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (!raw) return null;
+    const parsed = JSON.parse(raw);
+    // Only trust bookings from the last 30 minutes
+    const ts = parsed?._ts as number | undefined;
+    if (!ts || Date.now() - ts > 30 * 60 * 1000) {
+      localStorage.removeItem(STORAGE_KEY);
+      return null;
+    }
+    const { _ts, ...payload } = parsed;
+    return payload as BookingPayload;
+  } catch {
+    return null;
+  }
+}
+
+function storeBooking(payload: BookingPayload) {
+  if (typeof window === "undefined") return;
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify({ ...payload, _ts: Date.now() }));
+  } catch {
+    // ignore quota errors
+  }
+}
+
+export function clearStoredBooking() {
+  if (typeof window === "undefined") return;
+  localStorage.removeItem(STORAGE_KEY);
+}
+
 /**
- * Cal.com inline scheduler. Light theme with site signal red as the
- * brand accent, sits inside a bone container with a rule border to match
- * the rest of the site.
- *
- * Fires onBooked with whatever payload Cal exposes — email + time if
- * available, so the form below can prefill.
+ * Cal.com inline scheduler with multiple fallback mechanisms:
+ * 1. Cal API bookingSuccessful callback
+ * 2. Direct postMessage listener from Cal.com iframe
+ * 3. localStorage persistence so a refresh recovers state
+ * 4. Manual "Continue" button as last resort
  */
 export function CalScheduler({
   username,
@@ -32,12 +62,20 @@ export function CalScheduler({
   onBooked: (payload: BookingPayload) => void;
 }) {
   const containerRef = useRef<HTMLDivElement>(null);
+  const onBookedRef = useRef(onBooked);
+  onBookedRef.current = onBooked;
+  const [booked, setBooked] = useState(false);
+  const [stored, setStored] = useState<BookingPayload | null>(null);
 
-  // When a user picks a date on mobile, Cal.com expands the embed to
-  // reveal the timeslots. Watch the container's height — when it grows
-  // (and we're on a narrow viewport where the slots would otherwise sit
-  // below the fold), smooth-scroll so the slot list comes into view.
-  // No-op on desktop where slots sit beside the calendar.
+  // On mount: check if we already have a stored booking
+  useEffect(() => {
+    const existing = readStoredBooking();
+    if (existing) {
+      setStored(existing);
+    }
+  }, []);
+
+  // Mobile: auto-scroll when Cal expands
   useEffect(() => {
     if (typeof window === "undefined") return;
     const target = containerRef.current;
@@ -49,8 +87,6 @@ export function CalScheduler({
       for (const entry of entries) {
         const newHeight = entry.contentRect.height;
         const isMobile = window.matchMedia("(max-width: 768px)").matches;
-        // Only react to significant growth on mobile, after the first
-        // measurement. 100px threshold filters out micro-resizes.
         if (
           isMobile &&
           prevHeight > 0 &&
@@ -58,10 +94,8 @@ export function CalScheduler({
           !cooldown
         ) {
           cooldown = true;
-          // Defer so Cal.com finishes its internal layout pass first.
           window.setTimeout(() => {
             target.scrollIntoView({ behavior: "smooth", block: "end" });
-            // Release the cooldown after the scroll settles.
             window.setTimeout(() => {
               cooldown = false;
             }, 700);
@@ -74,6 +108,7 @@ export function CalScheduler({
     return () => ro.disconnect();
   }, []);
 
+  // Primary: Cal API callback
   useEffect(() => {
     let cancelled = false;
     (async () => {
@@ -97,55 +132,139 @@ export function CalScheduler({
         hideEventTypeDetails: false,
         layout: "month_view",
       });
+
       cal("on", {
         action: "bookingSuccessful",
         callback: (event: unknown) => {
-          const detail = (event as { detail?: unknown })?.detail;
-          const data = (detail as { data?: unknown })?.data;
-          if (!data || typeof data !== "object") {
-            onBooked({});
-            return;
-          }
-          const dataObj = data as Record<string, unknown>;
-          const booking = (dataObj.booking ?? {}) as Record<string, unknown>;
-          const startTime =
-            typeof booking.startTime === "string"
-              ? booking.startTime
-              : typeof dataObj.date === "string"
-              ? dataObj.date
-              : undefined;
-          const attendees = booking.attendees as
-            | Array<{ email?: string; name?: string }>
-            | undefined;
-          const attendee = attendees?.[0];
-          onBooked({
-            startTime,
-            displayTime: startTime ? formatDisplayTime(startTime) : undefined,
-            email: attendee?.email,
-            name: attendee?.name,
-          });
+          const payload = extractPayload(event);
+          storeBooking(payload);
+          setBooked(true);
+          onBookedRef.current(payload);
         },
       });
     })();
     return () => {
       cancelled = true;
     };
-  }, [onBooked]);
+  }, []);
+
+  // Fallback: listen for Cal.com postMessage events directly
+  useEffect(() => {
+    function handleMessage(e: MessageEvent) {
+      const data = e.data;
+      if (!data || typeof data !== "object") return;
+      // Cal.com sends various message types; look for booking confirmation
+      const type = (data as Record<string, unknown>).type as string | undefined;
+      const event = (data as Record<string, unknown>).event as string | undefined;
+      const msgData = (data as Record<string, unknown>).data as Record<string, unknown> | undefined;
+
+      if (
+        type === "CAL:BOOKING_SUCCESSFUL" ||
+        type === "bookingSuccessful" ||
+        event === "bookingSuccessful" ||
+        event === "booking_successful"
+      ) {
+        const payload = extractPayload(msgData ?? data);
+        storeBooking(payload);
+        setBooked(true);
+        onBookedRef.current(payload);
+      }
+    }
+
+    window.addEventListener("message", handleMessage);
+    return () => window.removeEventListener("message", handleMessage);
+  }, []);
+
+  function handleManualContinue(payload: BookingPayload) {
+    storeBooking(payload);
+    onBookedRef.current(payload);
+  }
 
   return (
-    <div
-      ref={containerRef}
-      className="w-full overflow-hidden bg-bone border border-rule rounded-lg"
-      style={{ minHeight: "640px" }}
-    >
-      <Cal
-        namespace="cohort-apply"
-        calLink={`${username}/${eventSlug}`}
-        style={{ width: "100%", height: "100%", overflow: "scroll" }}
-        config={{ layout: "month_view", theme: "light" }}
-      />
+    <div ref={containerRef} className="space-y-6">
+      <div
+        className="w-full overflow-hidden bg-bone border border-rule rounded-lg"
+        style={{ minHeight: "640px" }}
+      >
+        <Cal
+          namespace="apply-scheduler"
+          calLink={`${username}/${eventSlug}`}
+          style={{ width: "100%", height: "100%", overflow: "scroll" }}
+          config={{ layout: "month_view", theme: "light" }}
+        />
+      </div>
+
+      {/* Fallback UI */}
+      {(booked || stored) && (
+        <div className="flex items-center justify-between gap-4 rounded-lg border border-signal bg-signal/5 p-4">
+          <p className="font-sans text-sm text-ink">
+            {stored?.displayTime
+              ? `Booking detected for ${stored.displayTime}`
+              : "Booking detected"}
+          </p>
+          <button
+            type="button"
+            onClick={() => handleManualContinue(stored ?? {})}
+            className="btn btn-primary shrink-0"
+          >
+            Continue to application
+          </button>
+        </div>
+      )}
+
+      {!booked && !stored && (
+        <p className="text-center font-sans text-sm text-muted">
+          Already booked a call?{" "}
+          <button
+            type="button"
+            onClick={() => {
+              const existing = readStoredBooking();
+              if (existing) {
+                handleManualContinue(existing);
+              }
+            }}
+            className="text-link"
+          >
+            Continue to application →
+          </button>
+        </p>
+      )}
     </div>
   );
+}
+
+function extractPayload(event: unknown): BookingPayload {
+  const detail = (event as { detail?: unknown })?.detail;
+  const data = (detail as { data?: unknown })?.data ??
+    (event as { data?: unknown })?.data ??
+    event;
+
+  if (!data || typeof data !== "object") {
+    return {};
+  }
+
+  const dataObj = data as Record<string, unknown>;
+  const booking = (dataObj.booking ?? {}) as Record<string, unknown>;
+  const startTime =
+    typeof booking.startTime === "string"
+      ? booking.startTime
+      : typeof dataObj.date === "string"
+      ? dataObj.date
+      : typeof dataObj.startTime === "string"
+      ? dataObj.startTime
+      : undefined;
+
+  const attendees = booking.attendees as
+    | Array<{ email?: string; name?: string }>
+    | undefined;
+  const attendee = attendees?.[0];
+
+  return {
+    startTime,
+    displayTime: startTime ? formatDisplayTime(startTime) : undefined,
+    email: attendee?.email,
+    name: attendee?.name,
+  };
 }
 
 function formatDisplayTime(iso: string): string {

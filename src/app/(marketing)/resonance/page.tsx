@@ -15,7 +15,6 @@ export const metadata: Metadata = {
     "Resonance. The broadcast. One post per week. Whatever frequency Sam Elsner is holding.",
 };
 
-// Revalidate this page hourly so latest posts stay fresh.
 export const revalidate = 3600;
 
 export default async function ResonancePage() {
@@ -23,22 +22,24 @@ export default async function ResonancePage() {
 
   return (
     <>
-      {/* ── Hero ── */}
-      <section className="flex min-h-[60vh] items-center border-b border-rule">
-        <Container>
-          <div className="mx-auto max-w-3xl text-center">
-            <Reveal>
-              <div className="eyebrow eyebrow-signal mb-6">
-                The broadcast · Weekly · Free
-              </div>
-            </Reveal>
-            <HeroHeadline className="balance">
-              <SignalUnderline delay={0.75}>Resonance</SignalUnderline>.
-            </HeroHeadline>
+      {/* ── Hero: two-column editorial ── */}
+      <section className="flex min-h-[55vh] items-center border-b border-rule">
+        <Container className="py-20 md:py-28">
+          <div className="grid gap-10 md:grid-cols-2 md:gap-16 lg:gap-24 items-end">
+            <div>
+              <Reveal>
+                <div className="eyebrow eyebrow-signal mb-5">
+                  The broadcast · Weekly · Free
+                </div>
+              </Reveal>
+              <HeroHeadline className="balance">
+                <SignalUnderline delay={0.75}>Resonance</SignalUnderline>.
+              </HeroHeadline>
+            </div>
             <Reveal
               as="p"
-              delay={0.5}
-              className="copy-lg mt-8 pretty mx-auto max-w-2xl text-ink/85"
+              delay={0.4}
+              className="copy-lg pretty text-ink/80 max-w-lg"
             >
               One post per week. No publishing calendar. No content
               strategy. Whatever frequency I&apos;m holding when I sit
@@ -55,7 +56,7 @@ export default async function ResonancePage() {
           <Container>
             <div className="grid items-end gap-8 md:grid-cols-[1fr_auto] md:gap-12">
               <Reveal>
-                <div className="eyebrow eyebrow-signal mb-5">
+                <div className="eyebrow eyebrow-signal mb-4">
                   Latest signals
                 </div>
                 <h2 className="balance">The most recent broadcasts.</h2>
@@ -85,27 +86,22 @@ export default async function ResonancePage() {
         style={{ background: "#0c1117" }}
       >
         <Container>
-          <div className="mx-auto max-w-[720px]">
-            <Reveal className="text-center">
-              <div className="eyebrow eyebrow-signal mb-5">Subscribe</div>
+          <div className="grid gap-10 md:grid-cols-2 md:gap-16 lg:gap-24 items-end">
+            <Reveal>
+              <div className="eyebrow eyebrow-signal mb-4">Subscribe</div>
               <h2 className="text-bone balance">
                 Get the next signal in your inbox.
               </h2>
-              <p className="copy-lg mt-6 text-bone/75 pretty">
-                Free. One email a week. No sequences. No upsells. No
-                tricks. When the frequency stops being yours, you
-                unsubscribe.
-              </p>
             </Reveal>
-
-            <Reveal delay={0.15} className="mt-10">
-              <div className="mx-auto max-w-md">
-                <SubstackEmbed publication="samelsner" />
-              </div>
-            </Reveal>
-
-            <Reveal delay={0.25}>
-              <div className="mt-10 flex justify-center">
+            <div>
+              <Reveal delay={0.1}>
+                <p className="copy-lg text-bone/75 pretty max-w-lg">
+                  Free. One email a week. No sequences. No upsells. No
+                  tricks. When the frequency stops being yours, you
+                  unsubscribe.
+                </p>
+              </Reveal>
+              <Reveal delay={0.2} className="mt-8">
                 <ShineButton>
                   <CTA
                     href="https://samelsner.substack.com/"
@@ -114,9 +110,15 @@ export default async function ResonancePage() {
                     Read on Substack
                   </CTA>
                 </ShineButton>
-              </div>
-            </Reveal>
+              </Reveal>
+            </div>
           </div>
+
+          <Reveal delay={0.25} className="mt-16">
+            <div className="mx-auto max-w-md">
+              <SubstackEmbed publication="samelsner" />
+            </div>
+          </Reveal>
         </Container>
       </section>
     </>

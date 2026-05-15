@@ -6,8 +6,9 @@ import { Container } from "@/components/site/Container";
 import {
   CalScheduler,
   type BookingPayload,
+  clearStoredBooking,
 } from "@/components/apply/CalScheduler";
-import { ApplicationForm } from "@/components/apply/ApplicationForm";
+import { TallyEmbed } from "@/components/apply/TallyEmbed";
 import { SuccessState } from "@/components/apply/SuccessState";
 import { Reveal } from "@/components/motion/Reveal";
 import { HeroHeadline } from "@/components/motion/HeroHeadline";
@@ -18,6 +19,53 @@ type Phase = "scheduling" | "form" | "success";
 
 interface PageProps {
   params: Promise<{ type: string }>;
+}
+
+const PHASE_KEY = "resonance-apply-phase";
+const BOOKING_KEY = "resonance-booking";
+
+function readStoredPhase(): Phase | null {
+  if (typeof window === "undefined") return null;
+  try {
+    const raw = localStorage.getItem(PHASE_KEY);
+    if (!raw) return null;
+    const parsed = JSON.parse(raw);
+    const ts = parsed?._ts as number | undefined;
+    if (!ts || Date.now() - ts > 30 * 60 * 1000) {
+      localStorage.removeItem(PHASE_KEY);
+      return null;
+    }
+    return parsed.phase as Phase;
+  } catch {
+    return null;
+  }
+}
+
+function storePhase(phase: Phase) {
+  if (typeof window === "undefined") return;
+  try {
+    localStorage.setItem(PHASE_KEY, JSON.stringify({ phase, _ts: Date.now() }));
+  } catch {
+    // ignore
+  }
+}
+
+function readStoredBooking(): BookingPayload | null {
+  if (typeof window === "undefined") return null;
+  try {
+    const raw = localStorage.getItem(BOOKING_KEY);
+    if (!raw) return null;
+    const parsed = JSON.parse(raw);
+    const ts = parsed?._ts as number | undefined;
+    if (!ts || Date.now() - ts > 30 * 60 * 1000) {
+      localStorage.removeItem(BOOKING_KEY);
+      return null;
+    }
+    const { _ts, ...payload } = parsed;
+    return payload as BookingPayload;
+  } catch {
+    return null;
+  }
 }
 
 export default function ApplyPage({ params }: PageProps) {
@@ -31,6 +79,23 @@ export default function ApplyPage({ params }: PageProps) {
     string | undefined
   >();
 
+  // Restore state from localStorage on mount
+  useEffect(() => {
+    const savedPhase = readStoredPhase();
+    const savedBooking = readStoredBooking();
+    if (savedPhase && savedPhase !== "scheduling") {
+      setPhase(savedPhase);
+      if (savedBooking) {
+        setBooking(savedBooking);
+      }
+    }
+  }, []);
+
+  // Persist phase changes
+  useEffect(() => {
+    storePhase(phase);
+  }, [phase]);
+
   const username = process.env.NEXT_PUBLIC_CAL_USERNAME ?? "samelsner";
 
   const handleBooked = useCallback((payload: BookingPayload) => {
@@ -39,9 +104,11 @@ export default function ApplyPage({ params }: PageProps) {
   }, []);
 
   const handleSubmitted = useCallback(
-    (info: { displayTime?: string }) => {
-      setSubmittedDisplayTime(info.displayTime ?? booking.displayTime);
+    (info?: { displayTime?: string }) => {
+      setSubmittedDisplayTime(info?.displayTime ?? booking.displayTime);
       setPhase("success");
+      clearStoredBooking();
+      localStorage.removeItem(PHASE_KEY);
     },
     [booking.displayTime],
   );
@@ -65,26 +132,75 @@ export default function ApplyPage({ params }: PageProps) {
     }
   }, [phase]);
 
+  const steps = [
+    { label: "Book call", active: phase === "scheduling", done: phase !== "scheduling" },
+    { label: "Application", active: phase === "form", done: phase === "success" },
+    { label: "Confirmed", active: phase === "success", done: false },
+  ];
+
   return (
     <>
-      {/* ── Hero ── */}
-      <section className="flex min-h-[60vh] items-center border-b border-rule">
-        <Container>
-          <div className="mx-auto max-w-3xl text-center">
-            <Reveal>
-              <div className="eyebrow eyebrow-signal mb-6">{cfg.eyebrow}</div>
-            </Reveal>
-            <HeroHeadline className="balance">
-              {cfg.headline}{" "}
-              <SignalUnderline delay={0.75}>
-                {cfg.headlineAccent}
-              </SignalUnderline>
-              {cfg.headlineTrail}
-            </HeroHeadline>
+      {/* ── Progress indicator ── */}
+      <div className="border-b border-rule bg-bone">
+        <Container className="py-4">
+          <div className="flex items-center gap-3">
+            {steps.map((step, i) => (
+              <div key={step.label} className="flex items-center gap-3">
+                <div className="flex items-center gap-2">
+                  <span
+                    className={`flex h-6 w-6 items-center justify-center rounded-full text-xs font-medium ${
+                      step.done
+                        ? "bg-signal text-white"
+                        : step.active
+                        ? "bg-ink text-bone"
+                        : "bg-rule text-muted"
+                    }`}
+                  >
+                    {step.done ? (
+                      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3">
+                        <path d="M5 12l5 5L20 7" />
+                      </svg>
+                    ) : (
+                      i + 1
+                    )}
+                  </span>
+                  <span
+                    className={`hidden font-sans text-sm sm:block ${
+                      step.active || step.done ? "text-ink font-medium" : "text-muted"
+                    }`}
+                  >
+                    {step.label}
+                  </span>
+                </div>
+                {i < steps.length - 1 && (
+                  <div className={`h-px w-6 md:w-10 ${step.done ? "bg-signal" : "bg-rule"}`} />
+                )}
+              </div>
+            ))}
+          </div>
+        </Container>
+      </div>
+
+      {/* ── Hero: two-column editorial ── */}
+      <section className="flex min-h-[50vh] items-center border-b border-rule">
+        <Container className="py-16 md:py-24">
+          <div className="grid gap-8 md:grid-cols-2 md:gap-16 lg:gap-24 items-end">
+            <div>
+              <Reveal>
+                <div className="eyebrow eyebrow-signal mb-5">{cfg.eyebrow}</div>
+              </Reveal>
+              <HeroHeadline className="balance">
+                {cfg.headline}{" "}
+                <SignalUnderline delay={0.75}>
+                  {cfg.headlineAccent}
+                </SignalUnderline>
+                {cfg.headlineTrail}
+              </HeroHeadline>
+            </div>
             <Reveal
               as="p"
-              delay={0.5}
-              className="copy-lg mt-8 pretty mx-auto max-w-2xl text-ink/85"
+              delay={0.4}
+              className="copy-lg pretty text-ink/80 max-w-lg"
             >
               {cfg.subhead}
             </Reveal>
@@ -96,25 +212,27 @@ export default function ApplyPage({ params }: PageProps) {
       {phase === "scheduling" && (
         <section className="section border-t border-rule">
           <Container>
-            <div className="mx-auto max-w-[720px]">
+            <div className="grid gap-10 md:grid-cols-[1fr_1.4fr] md:gap-20 lg:gap-28">
               <Reveal>
-                <div className="eyebrow eyebrow-signal mb-5">
+                <div className="eyebrow eyebrow-signal mb-4">
                   {cfg.step1Eyebrow}
                 </div>
                 <h2 className="balance">{cfg.step1Headline}</h2>
-                <p className="copy-lg mt-5 text-ink/75 pretty">
+              </Reveal>
+              <Reveal delay={0.1} className="max-w-xl">
+                <p className="copy-lg text-ink/75 pretty">
                   {cfg.step1Lede}
                 </p>
               </Reveal>
-
-              <Reveal delay={0.15} className="mt-12">
-                <CalScheduler
-                  username={username}
-                  eventSlug={cfg.calEventSlug}
-                  onBooked={handleBooked}
-                />
-              </Reveal>
             </div>
+
+            <Reveal delay={0.15} className="mt-14">
+              <CalScheduler
+                username={username}
+                eventSlug={cfg.calEventSlug}
+                onBooked={handleBooked}
+              />
+            </Reveal>
           </Container>
         </section>
       )}
@@ -128,7 +246,7 @@ export default function ApplyPage({ params }: PageProps) {
             style={{ background: "#0c1117" }}
           >
             <Container>
-              <div className="mx-auto max-w-[720px] flex items-center justify-center gap-3 py-6 text-center text-[#faf9f5]">
+              <div className="mx-auto max-w-[720px] flex items-center justify-center gap-3 py-5 text-center text-[#faf9f5]">
                 <span
                   aria-hidden="true"
                   className="inline-block h-2 w-2 rounded-full bg-signal"
@@ -147,25 +265,27 @@ export default function ApplyPage({ params }: PageProps) {
             style={{ background: "#0c1117" }}
           >
             <Container>
-              <div className="mx-auto max-w-[720px]">
-                <Reveal className="text-center">
-                  <div className="eyebrow eyebrow-signal mb-5">
+              <div className="grid gap-10 md:grid-cols-[1fr_1.4fr] md:gap-20 lg:gap-28">
+                <Reveal>
+                  <div className="eyebrow eyebrow-signal mb-4">
                     {cfg.step2Eyebrow}
                   </div>
                   <h2 className="text-bone balance">{cfg.step2Headline}</h2>
-                  <p className="copy-lg mt-6 text-bone/85 pretty">
+                </Reveal>
+                <Reveal delay={0.1} className="max-w-xl">
+                  <p className="copy-lg text-bone/80 pretty">
                     {cfg.step2Lede}
                   </p>
                 </Reveal>
-
-                <Reveal delay={0.15} className="mt-12">
-                  <ApplicationForm
-                    type={type}
-                    booking={booking}
-                    onSuccess={handleSubmitted}
-                  />
-                </Reveal>
               </div>
+
+              <Reveal delay={0.15} className="mt-14">
+                <TallyEmbed
+                  type={type}
+                  booking={booking}
+                  onSubmitted={handleSubmitted}
+                />
+              </Reveal>
             </Container>
           </section>
         </>

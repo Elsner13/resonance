@@ -1,12 +1,12 @@
 "use client";
 
-import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
 import type { ReactNode } from "react";
 
 /**
  * Infinite horizontal marquee — used for credibility / values strip.
  * Pauses on hover; respects reduced-motion via media query.
+ * Uses CSS animation for better performance and reliable hover-pause.
  */
 export function MarqueeRow({
   items,
@@ -21,7 +21,7 @@ export function MarqueeRow({
   className?: string;
   itemClassName?: string;
 }) {
-  const total = items.length;
+  const duration = Math.max(20, items.length * speed * 0.4);
 
   return (
     <div
@@ -36,17 +36,14 @@ export function MarqueeRow({
           "linear-gradient(90deg, transparent, black 8%, black 92%, transparent)",
       }}
     >
-      <motion.div
-        className="flex shrink-0 items-center whitespace-nowrap will-change-transform"
-        animate={{ x: ["0%", "-50%"] }}
-        transition={{
-          duration: speed,
-          ease: "linear",
-          repeat: Infinity,
+      <div
+        className="flex w-max items-center will-change-transform group-hover:[animation-play-state:paused]"
+        style={{
+          animation: `marquee-scroll ${duration}s linear infinite`,
         }}
-        style={{ width: "max-content" }}
       >
-        {[...items, ...items].map((item, i) => (
+        {/* Duplicate 4x to ensure seamless loop on all screen sizes */}
+        {[...items, ...items, ...items, ...items].map((item, i) => (
           <span
             key={i}
             className={cn(
@@ -58,10 +55,9 @@ export function MarqueeRow({
             <span aria-hidden className="text-signal">
               {separator}
             </span>
-            {(i + 1) % total === 0 ? null : null}
           </span>
         ))}
-      </motion.div>
+      </div>
     </div>
   );
 }
