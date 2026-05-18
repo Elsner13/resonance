@@ -34,7 +34,7 @@ export function StickyCTA() {
           </p>
         </div>
         <CTA
-          href="https://cal.com/samelsner/discovery"
+          href="https://cal.com/samelsner/discovery-call"
           variant="primary"
           className="min-w-0 px-4 py-2 text-sm"
         >

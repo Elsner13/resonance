@@ -71,7 +71,7 @@ export default async function HomePage() {
               >
                 <ShineButton>
                   <CTA
-                    href="https://cal.com/samelsner/discovery"
+                    href="https://cal.com/samelsner/discovery-call"
                     variant="primary"
                   >
                     Book Free Discovery Call
@@ -421,7 +421,7 @@ export default async function HomePage() {
               {/* Discovery Call */}
               <StaggerItem>
                 <a
-                  href="https://cal.com/samelsner/discovery"
+                  href="https://cal.com/samelsner/discovery-call"
                   target="_blank"
                   rel="noreferrer noopener"
                   className="group block h-full"
@@ -527,7 +527,7 @@ export default async function HomePage() {
             >
               <ShineButton>
                 <CTA
-                  href="https://cal.com/samelsner/discovery"
+                  href="https://cal.com/samelsner/discovery-call"
                   variant="primary"
                 >
                   Book Free Discovery Call

@@ -4,7 +4,7 @@ import { Container } from "./Container";
 const FOOTER_NAV = [
   { href: "/cohort", label: "Cohort" },
   { href: "/attune", label: "Attune" },
-  { href: "https://cal.com/samelsner/discovery", label: "Discovery Call", external: true },
+  { href: "https://cal.com/samelsner/discovery-call", label: "Discovery Call", external: true },
 ];
 
 const SOCIAL = [

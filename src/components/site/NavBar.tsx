@@ -11,7 +11,7 @@ import { cn } from "@/lib/utils";
 const NAV = [
   { href: "/cohort", label: "Cohort" },
   { href: "/attune", label: "Attune" },
-  { href: "https://cal.com/samelsner/discovery", label: "Discovery Call", external: true },
+  { href: "https://cal.com/samelsner/discovery-call", label: "Discovery Call", external: true },
 ];
 
 export function NavBar() {
