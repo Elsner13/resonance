@@ -2,10 +2,9 @@ import Link from "next/link";
 import { Container } from "./Container";
 
 const FOOTER_NAV = [
-  { href: "/resonance", label: "Resonance" },
   { href: "/cohort", label: "Cohort" },
   { href: "/attune", label: "Attune" },
-  { href: "/apply/cohort", label: "Apply" },
+  { href: "https://cal.com/samelsner/discovery", label: "Discovery Call", external: true },
 ];
 
 const SOCIAL = [
@@ -49,15 +48,27 @@ export function Footer() {
 
           {/* Nav */}
           <nav className="flex flex-wrap items-center gap-6">
-            {FOOTER_NAV.map((item) => (
-              <Link
-                key={item.href}
-                href={item.href}
-                className="font-sans text-sm text-muted transition-colors hover:text-ink"
-              >
-                {item.label}
-              </Link>
-            ))}
+            {FOOTER_NAV.map((item) =>
+              item.external ? (
+                <a
+                  key={item.href}
+                  href={item.href}
+                  target="_blank"
+                  rel="noreferrer noopener"
+                  className="font-sans text-sm text-muted transition-colors hover:text-ink"
+                >
+                  {item.label}
+                </a>
+              ) : (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  className="font-sans text-sm text-muted transition-colors hover:text-ink"
+                >
+                  {item.label}
+                </Link>
+              )
+            )}
           </nav>
 
           {/* Social */}

@@ -9,9 +9,9 @@ import { ThemeToggle } from "./ThemeToggle";
 import { cn } from "@/lib/utils";
 
 const NAV = [
-  { href: "/resonance", label: "Resonance" },
   { href: "/cohort", label: "Cohort" },
   { href: "/attune", label: "Attune" },
+  { href: "https://cal.com/samelsner/discovery", label: "Discovery Call", external: true },
 ];
 
 export function NavBar() {
@@ -63,16 +63,27 @@ export function NavBar() {
         <nav className="hidden items-center gap-7 md:flex">
           {NAV.map((item) => {
             const active = pathname === item.href;
-            return (
+            const linkClasses = cn(
+              "relative py-1 font-sans text-[0.9375rem] font-medium transition-colors",
+              active
+                ? "text-ink"
+                : "text-ink/60 hover:text-ink",
+            );
+            return item.external ? (
+              <a
+                key={item.href}
+                href={item.href}
+                target="_blank"
+                rel="noreferrer noopener"
+                className={linkClasses}
+              >
+                {item.label}
+              </a>
+            ) : (
               <Link
                 key={item.href}
                 href={item.href}
-                className={cn(
-                  "relative py-1 font-sans text-[0.9375rem] font-medium transition-colors",
-                  active
-                    ? "text-ink"
-                    : "text-ink/60 hover:text-ink",
-                )}
+                className={linkClasses}
               >
                 {item.label}
                 {active && (
@@ -130,17 +141,31 @@ export function NavBar() {
         <Container className="flex flex-col gap-1 py-4">
           {NAV.map((item, i) => {
             const active = pathname === item.href;
-            return (
+            const linkClasses = cn(
+              "py-3 text-base font-sans font-medium transition-all duration-200",
+              active
+                ? "text-signal translate-x-1"
+                : "text-ink/70 hover:text-ink hover:translate-x-1",
+            );
+            return item.external ? (
+              <a
+                key={item.href}
+                href={item.href}
+                target="_blank"
+                rel="noreferrer noopener"
+                className={linkClasses}
+                style={{
+                  transitionDelay: open ? `${i * 40}ms` : "0ms",
+                }}
+              >
+                {item.label}
+              </a>
+            ) : (
               <Link
                 key={item.href}
                 href={item.href}
                 onClick={() => setOpen(false)}
-                className={cn(
-                  "py-3 text-base font-sans font-medium transition-all duration-200",
-                  active
-                    ? "text-signal translate-x-1"
-                    : "text-ink/70 hover:text-ink hover:translate-x-1",
-                )}
+                className={linkClasses}
                 style={{
                   transitionDelay: open ? `${i * 40}ms` : "0ms",
                 }}

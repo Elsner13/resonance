@@ -40,6 +40,12 @@ function cleanTestimonialText(text: string): string {
   return lines.join(" ").trim();
 }
 
+const ICEBREAKER_STORY = {
+  name: "Icebreaker Meet",
+  title: "Women's Track · Division III",
+  text: "December. A women's track program. Division III. I stepped in as assistant coach and ran the Resonance protocol — not on their training, on their frequency. 12 school records fell in a single indoor season. Not because I changed their workouts. Because I changed what they were broadcasting from. That's what this method does. It doesn't add volume. It tunes the signal.",
+};
+
 export function Testimonials({ testimonials }: Props) {
   if (testimonials.length === 0) return null;
 
@@ -60,6 +66,33 @@ export function Testimonials({ testimonials }: Props) {
         </Reveal>
 
         <StaggerGroup className="mt-14 grid gap-6" stagger={0.1}>
+          {/* Icebreaker Meet story — hardcoded testimonial card */}
+          <StaggerItem>
+            <article className="card card-hover p-7 md:p-8">
+              <div className="flex gap-6 items-start">
+                <div className="flex-shrink-0">
+                  <div className="flex h-14 w-14 items-center justify-center rounded-full bg-signal text-white font-sans text-lg font-semibold">
+                    {getInitials(ICEBREAKER_STORY.name)}
+                  </div>
+                </div>
+                <div className="min-w-0 flex-1">
+                  <blockquote className="copy pretty text-ink/85">
+                    &ldquo;{ICEBREAKER_STORY.text}&rdquo;
+                  </blockquote>
+                  <div className="mt-4 flex items-center gap-2">
+                    <p className="font-sans text-sm font-medium text-ink">
+                      {ICEBREAKER_STORY.name}
+                    </p>
+                    <p className="font-sans text-xs text-muted">
+                      {ICEBREAKER_STORY.title}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </article>
+          </StaggerItem>
+
+          {/* Senja testimonials */}
           {testimonials.map((t) => {
             const cleanedText = cleanTestimonialText(t.text);
             return (

@@ -27,12 +27,18 @@ export function StickyCTA() {
       <div className="flex items-center justify-between gap-4 px-5 py-3">
         <div>
           <p className="font-sans text-sm font-medium text-ink">
-            The Resonance Cohort
+            Book a Free Discovery Call
           </p>
-          <p className="font-sans text-xs text-muted">5 spots · Closes June 10</p>
+          <p className="font-sans text-xs text-muted">
+            20 min · No pitch · Limited spots
+          </p>
         </div>
-        <CTA href="/apply/cohort" variant="primary" className="min-w-0 px-4 py-2 text-sm">
-          Apply
+        <CTA
+          href="https://cal.com/samelsner/discovery"
+          variant="primary"
+          className="min-w-0 px-4 py-2 text-sm"
+        >
+          Book Call
         </CTA>
       </div>
     </div>

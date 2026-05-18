@@ -23,7 +23,7 @@ const SITE = {
   name: "Sam Elsner",
   url: "https://thesamelsner.com",
   description:
-    "Cut the noise. Find your frequency. Become antifragile. The Resonance Method — an ecological alignment protocol for creators who are done optimizing and ready to resonate.",
+    "Sam Elsner helps creators cut the noise, find their frequency, and become antifragile. The Resonance Method — an ecological alignment protocol for creators who are done optimizing and ready to resonate. Book a free discovery call.",
 };
 
 export const metadata: Metadata = {
@@ -54,7 +54,7 @@ export const metadata: Metadata = {
         url: "/og-image.png",
         width: 1200,
         height: 630,
-        alt: "Sam Elsner — Cut the noise. Find your frequency.",
+        alt: "Sam Elsner — Cut the noise. Find your frequency. Become antifragile.",
       },
     ],
   },

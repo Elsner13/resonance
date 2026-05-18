@@ -63,6 +63,7 @@ export async function getSenjaTestimonials(
 
     return data.testimonials
       .filter((t) => t.approved)
+      .filter((t) => !/archetype quiz/i.test(t.text)) // remove fake testimonials
       .map((t) => ({
         id: t.id,
         text: cleanText(t.text),

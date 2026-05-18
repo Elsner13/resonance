@@ -5,6 +5,10 @@ import { Container } from "./Container";
 
 const FAQS = [
   {
+    q: "How much does it cost?",
+    a: "The Resonance Cohort is $2,500 at the founding rate (full price $5,000). Attune mentorship is $1,500/month. Both are application-only because fit matters more than fee. If you're the right frequency, we'll make it work. If you're not, no amount of money changes that.",
+  },
+  {
     q: "Is this another course?",
     a: "No. There is no curriculum, no modules, no worksheets. The Cohort is a container. The mentorship is a tuning fork. Both are designed to reveal what's already in you — not to install something from the outside.",
   },
@@ -22,11 +26,7 @@ const FAQS = [
   },
   {
     q: "How do I know if I'm ready?",
-    a: "If you're exhausted from optimizing and still feel like you're broadcasting static, you're ready. If you're looking for a hack to 10x your output in 30 days, you're not.",
-  },
-  {
-    q: "What's the investment?",
-    a: "Pricing is shared after application review — because the fit matters more than the fee. If you're the right frequency, we'll make it work. If you're not, no amount of money changes that.",
+    a: "If you're exhausted from optimizing and still feel like you're broadcasting static, you're ready. If you're looking for a hack to 10x your output in 30 days, you're not. Book a free discovery call and I'll tell you honestly if this is the right fit.",
   },
 ];
 

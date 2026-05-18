@@ -34,11 +34,23 @@ export default async function HomePage() {
         <Container className="relative py-20 md:py-28 lg:py-36">
           <div className="grid gap-12 md:grid-cols-2 md:gap-16 lg:gap-24 items-end">
             <div>
+              {/* Social proof eyebrow */}
+              <Reveal
+                as="p"
+                delay={0.15}
+                duration={0.6}
+                className="mb-5 font-sans text-sm text-muted"
+              >
+                Trusted by creators and founders who are done optimizing and
+                ready to resonate.
+              </Reveal>
               <HeroHeadline className="balance">
-                <span className="block">Cut the noise</span>
-                <span className="block">Find your frequency</span>
+                <span className="block">Cut the noise.</span>
+                <span className="block">Find your frequency.</span>
                 <span className="block">
-                  <SignalUnderline delay={0.85}>Become antifragile</SignalUnderline>
+                  <SignalUnderline delay={0.85}>
+                    Become antifragile.
+                  </SignalUnderline>
                 </span>
               </HeroHeadline>
             </div>
@@ -58,13 +70,21 @@ export default async function HomePage() {
                 className="mt-8 flex flex-wrap items-center gap-4"
               >
                 <ShineButton>
-                  <CTA href="/apply/cohort" variant="primary">
-                    Apply for the Cohort
+                  <CTA
+                    href="https://cal.com/samelsner/discovery"
+                    variant="primary"
+                  >
+                    Book Free Discovery Call
                   </CTA>
                 </ShineButton>
-                <CTA href="/apply/mentorship" variant="secondary">
-                  Apply for 1-on-1
+                <CTA href="#pricing" variant="secondary">
+                  See Pricing
                 </CTA>
+              </Reveal>
+              <Reveal delay={0.75} className="mt-4">
+                <p className="font-sans text-xs text-muted">
+                  20 minutes. No pitch. Just signal.
+                </p>
               </Reveal>
             </div>
           </div>
@@ -76,12 +96,50 @@ export default async function HomePage() {
         <MarqueeRow speed={70} items={MARQUEE} itemClassName="text-ink/60" />
       </div>
 
-      {/* ── The Gap ── */}
+      {/* ── Social proof stats band ── */}
+      <section className="section-tight border-b border-rule">
+        <Container>
+          <div className="grid gap-8 md:grid-cols-3 md:gap-12">
+            <Reveal>
+              <div className="text-center md:text-left">
+                <p className="font-sans text-3xl font-bold tracking-tight text-ink md:text-4xl">
+                  ~10,000
+                </p>
+                <p className="mt-1.5 font-sans text-sm text-muted">
+                  Athletes coached
+                </p>
+              </div>
+            </Reveal>
+            <Reveal delay={0.08}>
+              <div className="text-center md:text-left">
+                <p className="font-sans text-3xl font-bold tracking-tight text-ink md:text-4xl">
+                  2×
+                </p>
+                <p className="mt-1.5 font-sans text-sm text-muted">
+                  NCAA National Champion
+                </p>
+              </div>
+            </Reveal>
+            <Reveal delay={0.16}>
+              <div className="text-center md:text-left">
+                <p className="font-sans text-3xl font-bold tracking-tight text-ink md:text-4xl">
+                  12
+                </p>
+                <p className="mt-1.5 font-sans text-sm text-muted">
+                  School records broken in one season
+                </p>
+              </div>
+            </Reveal>
+          </div>
+        </Container>
+      </section>
+
+      {/* ── The Problem ── */}
       <section className="section">
         <Container>
           <div className="grid gap-12 md:grid-cols-[1fr_1.4fr] md:gap-20 lg:gap-28">
             <Reveal>
-              <div className="eyebrow eyebrow-signal mb-4">The Gap</div>
+              <div className="eyebrow eyebrow-signal mb-4">The Problem</div>
               <h2 className="balance">
                 You don&apos;t have a productivity problem. You have a{" "}
                 <span className="text-signal">frequency</span> problem.
@@ -165,7 +223,8 @@ export default async function HomePage() {
               <h3 className="text-bone">Broadcast</h3>
               <p className="copy mt-4 text-bone/70 pretty">
                 Launch. Create. Fill the room. You are not chasing signal
-                anymore. You are the signal.
+                anymore. You are the signal. And the right people feel it
+                before you explain it.
               </p>
             </StaggerItem>
           </StaggerGroup>
@@ -184,17 +243,35 @@ export default async function HomePage() {
           <div className="grid gap-10 md:grid-cols-[1fr_1.4fr] md:gap-20 lg:gap-28">
             <Reveal>
               <div className="eyebrow mb-4">Proof</div>
-              <h2 className="balance">From setup to signal.</h2>
+              <h2 className="balance">
+                12 school records in one season.
+              </h2>
             </Reveal>
             <Reveal delay={0.1} className="max-w-xl">
-              <blockquote>
-                <p className="font-serif text-xl md:text-2xl italic leading-snug text-ink balance">
+              <div className="copy space-y-5 text-ink/85 pretty">
+                <p>
+                  December. A women&apos;s track program. Division III. I
+                  stepped in as assistant coach and ran the Resonance
+                  protocol — not on their training, on their frequency.
+                </p>
+                <p>
+                  12 school records fell in a single indoor season. Not
+                  because I changed their workouts. Because I changed what
+                  they were broadcasting from.
+                </p>
+                <p>
+                  That&apos;s what this method does. It doesn&apos;t add
+                  volume. It tunes the signal.
+                </p>
+              </div>
+              <blockquote className="mt-8 border-l-2 border-signal pl-5">
+                <p className="font-serif text-lg italic leading-snug text-ink balance">
                   &ldquo;I spent two years trying to out-work my environment.
                   Tools. Tactics. Discipline. None of it was the bottleneck.
                   The frequency I was broadcasting was. The Resonance Method
                   is what I built to fix it.&rdquo;
                 </p>
-                <footer className="mt-6 font-sans text-sm text-muted">
+                <footer className="mt-3 font-sans text-sm text-muted">
                   Sam Elsner, Resonance #001
                 </footer>
               </blockquote>
@@ -206,32 +283,36 @@ export default async function HomePage() {
       {/* ── Testimonials ── */}
       <Testimonials testimonials={testimonials} />
 
-      {/* ── Three rooms (programs) ── */}
-      <section className="section border-t border-rule">
+      {/* ── Programs (pricing-transparent) ── */}
+      <section id="pricing" className="section border-t border-rule">
         <Container>
           <Reveal>
             <div className="grid gap-8 md:grid-cols-[1.1fr_1fr] md:gap-16 lg:gap-24">
               <div>
-                <div className="eyebrow mb-4">Three rooms. One frequency.</div>
+                <div className="eyebrow eyebrow-signal mb-4">
+                  Two containers. One frequency.
+                </div>
                 <h2 className="balance">
-                  Pick your container. The work is the same.
+                  Pick your intensity. The work is the same.
                 </h2>
               </div>
               <div className="copy-lg pretty self-end text-ink/80 max-w-lg">
-                Each is a different intensity of the same protocol.
-                Becoming the kind of creator the moment respects.
+                <p>
+                  Each is a different intensity of the same protocol.
+                  Becoming the kind of creator the moment respects.
+                </p>
               </div>
             </div>
           </Reveal>
 
           <div className="mt-14 grid gap-6 md:gap-8">
+            {/* Cohort */}
             <Reveal>
               <Link href="/apply/cohort" className="group block">
                 <article className="card card-hover relative grid gap-8 p-8 md:grid-cols-[1.4fr_1fr] md:gap-12 md:p-12">
                   <div>
                     <div className="eyebrow eyebrow-signal mb-4">
-                      12 Weeks · Live
-                      <span className="ml-3 text-muted">· 5 Spots</span>
+                      12 Weeks · Live · Application only
                     </div>
                     <h3 className="text-2xl md:text-3xl font-semibold leading-[1.1] tracking-tight balance">
                       The Resonance Cohort
@@ -245,8 +326,16 @@ export default async function HomePage() {
                         leave it expelled. There is no third option.
                       </p>
                     </div>
-                    <p className="mt-6 font-sans text-sm text-muted">
-                      Application only · Closes June 10
+                    <div className="mt-6 flex flex-wrap items-center gap-3">
+                      <span className="font-sans text-2xl font-bold tracking-tight text-ink">
+                        $2,500
+                      </span>
+                      <span className="font-sans text-sm text-muted">
+                        Founding rate (normally $5,000)
+                      </span>
+                    </div>
+                    <p className="mt-2 font-sans text-sm text-muted">
+                      5 founding spots · Closes June 10
                     </p>
                   </div>
                   <div className="flex flex-col items-start justify-end md:items-end md:text-right">
@@ -274,6 +363,7 @@ export default async function HomePage() {
             </Reveal>
 
             <StaggerGroup className="grid gap-6 md:grid-cols-2 md:gap-8">
+              {/* Attune */}
               <StaggerItem>
                 <Link
                   href="/apply/mentorship"
@@ -281,8 +371,7 @@ export default async function HomePage() {
                 >
                   <article className="card card-hover relative flex h-full flex-col p-7 md:p-8">
                     <div className="eyebrow mb-3">
-                      Ongoing · 1-on-1
-                      <span className="ml-2 text-muted">· Application only</span>
+                      Ongoing · 1-on-1 · Application only
                     </div>
                     <h3 className="font-sans text-xl font-semibold leading-[1.15] tracking-tight text-ink md:text-2xl balance">
                       Attune
@@ -296,8 +385,16 @@ export default async function HomePage() {
                         container, not a course.
                       </p>
                     </div>
-                    <p className="mt-5 font-sans text-sm text-muted">
-                      Monthly or yearly · Application only
+                    <div className="mt-5 flex flex-wrap items-center gap-3">
+                      <span className="font-sans text-2xl font-bold tracking-tight text-ink">
+                        $1,500
+                      </span>
+                      <span className="font-sans text-sm text-muted">
+                        /month
+                      </span>
+                    </div>
+                    <p className="mt-1 font-sans text-sm text-muted">
+                      3 spots available · Monthly or yearly
                     </p>
                     <span className="mt-6 inline-flex items-center gap-1.5 font-sans text-sm font-medium text-ink transition-colors group-hover:text-signal">
                       Apply for Attune
@@ -321,27 +418,37 @@ export default async function HomePage() {
                 </Link>
               </StaggerItem>
 
+              {/* Discovery Call */}
               <StaggerItem>
-                <Link href="/resonance" className="group block h-full">
+                <a
+                  href="https://cal.com/samelsner/discovery"
+                  target="_blank"
+                  rel="noreferrer noopener"
+                  className="group block h-full"
+                >
                   <article className="card card-hover relative flex h-full flex-col p-7 md:p-8">
-                    <div className="eyebrow mb-3">Free · Weekly</div>
+                    <div className="eyebrow mb-3">Free · 20 minutes</div>
                     <h3 className="font-sans text-xl font-semibold leading-[1.15] tracking-tight text-ink md:text-2xl balance">
-                      Resonance
+                      Discovery Call
                     </h3>
                     <div className="copy mt-4 grow pretty text-ink/80">
                       <p>
-                        The broadcast. One post per week. No publishing
-                        calendar. No content strategy. Whatever frequency
-                        I&apos;m holding when I sit down to write.
-                        What&apos;s real. What&apos;s aligned. What will
-                        cut through your own noise.
+                        Not sure which container fits? Book a free 20-minute
+                        call. No pitch. I&apos;ll ask about your signal,
+                        your bottlenecks, and whether the protocol is the
+                        right fit. If it&apos;s not, I&apos;ll tell you.
                       </p>
                     </div>
-                    <p className="mt-5 font-sans text-sm text-muted">
-                      Every week · Free
+                    <div className="mt-5 flex flex-wrap items-center gap-3">
+                      <span className="font-sans text-2xl font-bold tracking-tight text-signal">
+                        Free
+                      </span>
+                    </div>
+                    <p className="mt-1 font-sans text-sm text-muted">
+                      Limited availability · Book below
                     </p>
                     <span className="mt-6 inline-flex items-center gap-1.5 font-sans text-sm font-medium text-ink transition-colors group-hover:text-signal">
-                      Read the latest
+                      Book Free Call
                       <svg
                         width="14"
                         height="14"
@@ -359,7 +466,7 @@ export default async function HomePage() {
                       </svg>
                     </span>
                   </article>
-                </Link>
+                </a>
               </StaggerItem>
             </StaggerGroup>
           </div>
@@ -406,21 +513,28 @@ export default async function HomePage() {
             <Reveal>
               <div className="eyebrow eyebrow-signal mb-4">Start here</div>
               <h2 className="balance">
-                The frequency is already in you. The question is whether
-                you&apos;re ready to broadcast it.
+                Still deciding? Talk to me first.
               </h2>
+              <p className="mt-4 copy-lg pretty text-ink/75 max-w-lg">
+                The frequency is already in you. The question is whether
+                you&apos;re ready to broadcast it. Book a free 20-minute
+                call and we&apos;ll find out together.
+              </p>
             </Reveal>
             <Reveal
               delay={0.15}
               className="flex flex-wrap gap-3 md:justify-end"
             >
               <ShineButton>
-                <CTA href="/apply/cohort" variant="primary">
-                  Apply for the Cohort
+                <CTA
+                  href="https://cal.com/samelsner/discovery"
+                  variant="primary"
+                >
+                  Book Free Discovery Call
                 </CTA>
               </ShineButton>
-              <CTA href="/apply/mentorship" variant="secondary">
-                Apply for Attune
+              <CTA href="#pricing" variant="secondary">
+                See Pricing
               </CTA>
             </Reveal>
           </div>
